@@ -10,7 +10,7 @@ appRoot
             .when('/contact', { templateUrl: '/home/contact', controller: 'ContactController' })
             .when('/about', { templateUrl: '/home/about', controller: 'AboutController' })
             .when('/demo', { templateUrl: '/home/demo', controller: 'DemoController' })
-            .when('/angular', { templateUrl: '/home/angular' })
+            .when('/learn', { templateUrl: '/home/learn', controller: 'LearnController'  })
             .otherwise({ redirectTo: '/home' });
     }])
     .controller('RootController', ['$scope', '$route', '$routeParams', '$location', function ($scope, $route, $routeParams, $location) {

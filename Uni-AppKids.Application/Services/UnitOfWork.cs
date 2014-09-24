@@ -21,17 +21,27 @@ namespace Uni_AppKids.Application.Services
         private readonly UniAppKidsDbContext context = new UniAppKidsDbContext();
 
         private GenericRepository<PhraseDictionary> phraseDictionaryRepository;
+
+        private PhraseDictionaryRepository speciPhraseDictionaryRepo;
+
+        private bool disposed = false;
  
 
         public GenericRepository<PhraseDictionary> PhraseDictionaryRepository
         {
             get
             {
-                if (this.phraseDictionaryRepository == null)
-                {
-                    this.phraseDictionaryRepository = new GenericRepository<PhraseDictionary>(this.context);
-                }
-                return this.phraseDictionaryRepository;
+                return this.phraseDictionaryRepository
+                       ?? (this.phraseDictionaryRepository = new GenericRepository<PhraseDictionary>(this.context));
+            }
+        }
+
+        public GenericRepository<PhraseDictionary> SpecPhraseDictionaryRepository
+        {
+            get
+            {
+                return this.phraseDictionaryRepository
+                       ?? (this.phraseDictionaryRepository = new PhraseDictionaryRepository(this.context));
             }
         }
 
@@ -40,9 +50,13 @@ namespace Uni_AppKids.Application.Services
             this.context.SaveChanges();
         }
 
-        private bool disposed = false;
+       public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
-        protected virtual void Dispose(bool disposing)
+         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
             {
@@ -51,13 +65,8 @@ namespace Uni_AppKids.Application.Services
                     this.context.Dispose();
                 }
             }
-            this.disposed = true;
-        }
 
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
+            this.disposed = true;
         }
     }
 }

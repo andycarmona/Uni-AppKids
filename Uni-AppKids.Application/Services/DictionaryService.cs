@@ -31,8 +31,8 @@ namespace Uni_AppKids.Application.Services
         public List<PhraseDictionaryDto> GetPhraseDictionaries()
         {
             GetMappedEntities();
-
-            var phraseDictionaries = unitOfWork.PhraseDictionaryRepository.Get();
+            var phraseDictionaries = unitOfWork.SpecPhraseDictionaryRepository.GetDictionaries();
+            //var phraseDictionaries = unitOfWork.PhraseDictionaryRepository.Get();
 
             var dictionaryList = Mapper.Map<List<PhraseDictionary>, List<PhraseDictionaryDto>>(phraseDictionaries.ToList());
             return dictionaryList;

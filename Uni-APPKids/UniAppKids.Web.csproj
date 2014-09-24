@@ -283,6 +283,7 @@
     <Content Include="Scripts\app\contact.js" />
     <Content Include="Scripts\app\demo.js" />
     <Content Include="Scripts\app\directives.js" />
+    <Content Include="Scripts\app\learn.js" />
     <Content Include="Scripts\app\main.js" />
     <Content Include="Scripts\app\services.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -351,7 +352,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Main.cshtml" />
-    <Content Include="Views\Home\angular.cshtml" />
+    <Content Include="Views\Home\Learn.cshtml" />
     <Content Include="Views\Home\Demo.cshtml" />
     <Content Include="Scripts\version.json" />
   </ItemGroup>

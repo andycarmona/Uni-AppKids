@@ -24,7 +24,7 @@
             return View();
         }
 
-        public ActionResult Angular()
+        public ActionResult Learn()
         {
             return View();
         }

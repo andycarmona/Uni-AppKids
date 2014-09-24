@@ -15,6 +15,6 @@ namespace Uni_AppKids.Core.Interface
 
     public interface IPhraseDictionaryRepository 
     {
-        List<PhraseDictionary> GetDictionaries();
+        IEnumerable<PhraseDictionary> GetDictionaries();
     }
 }

@@ -1,4 +1,13 @@
-﻿namespace Uni_AppKids.Database.Repositories
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="GenericRepository.cs" company="Uni-app">
+//   -
+// </copyright>
+// <summary>
+//   -
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Uni_AppKids.Database.Repositories
 {
     using System;
     using System.Collections.Generic;
@@ -79,6 +88,13 @@
         {
             dbSet.Attach(entityToUpdate);
             context.Entry(entityToUpdate).State = EntityState.Modified;
+        }
+
+        public virtual IEnumerable<TEntity> GetDictionaries()
+        {
+            IQueryable<TEntity> query = dbSet;
+            return query;
+
         }
     }
 }

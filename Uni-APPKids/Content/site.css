@@ -3,6 +3,37 @@
     padding-bottom: 20px;
 }
 
+@media only screen and (min-width: 768px) {
+    /* tablets and desktop */
+      .phraseconte {
+        font-family: Dotum;
+        font-size: 50px;
+        font-weight: normal;
+        font-style: normal;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    /* phones */
+      .phraseconte {
+        font-family: Dotum;
+        font-size: 20px;
+        font-weight: normal;
+        font-style: normal;
+    }
+}
+
+@media only screen and (max-width: 767px) and (orientation: portrait) {
+    /* portrait phones */
+      .phraseconte {
+        font-family: Dotum;
+        font-size: 30px;
+        font-weight: normal;
+        font-style: normal;
+    }
+}
+
+}
 .grid-style {
     border: 1px solid rgb(212,212,212);
     min-height: 250px;
@@ -18,4 +49,64 @@
 .gender-text {
     margin: 0 5px;
     vertical-align: sub;
+}
+.top {
+	position: relative;
+	height: 33%;
+
+}
+.bottom {
+    position: relative;
+	height: 13%;
+}
+.content {
+	position: relative;
+	height: 53%;
+
+}
+.mainlayout {
+	position: relative;
+	height: 600px;
+background-color: #EAF50A;
+}
+.imagecanvas {
+	position: absolute;
+	height: inherit;
+	width: inherit;
+	right: 300px;
+}
+
+.topleft {
+	position: relative;
+	width: 33%;
+	float: left;
+	height: 100%;
+}
+.topcenter {
+	position: relative;
+	width: 33%;
+    float: left;
+	height: 100%;
+}
+.topright {
+	width: 33%;
+	height: 100%;
+	float: left;
+}
+.bottomleft {
+	position: relative;
+	width: 33%;
+	float: left;
+	height: 100%;
+}
+.bottomcenter {
+	position: relative;
+	width: 33%;
+    float: left;
+	height: 100%;
+}
+.bottomright {
+	width: 33%;
+	height: 100%;
+	float: left;
 }

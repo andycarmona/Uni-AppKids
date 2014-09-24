@@ -22,9 +22,19 @@ namespace Uni_AppKids.Database.Repositories
         {
         }
 
-        public List<PhraseDictionary> GetDictionaries()
+        //public override IEnumerable<PhraseDictionary> GetDictionaries
+        //{
+        //    get
+        //    {
+        //        IEnumerable<PhraseDictionary> ki = this.Get();
+        //        return ki;
+        //    }
+        //}
+
+        public override IEnumerable<PhraseDictionary> GetDictionaries()
         {
-            return null;
+            IEnumerable<PhraseDictionary> ki = this.Get();
+            return ki;
         }
     }
 }

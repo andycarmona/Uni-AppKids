@@ -32,7 +32,8 @@ namespace Uni_APPKids
                         "~/Scripts/app/main.js",
                         "~/Scripts/app/contact.js",
                         "~/Scripts/app/about.js",
-                        "~/Scripts/app/demo.js"
+                        "~/Scripts/app/demo.js",
+                        "~/Scripts/app/learn.js"
                         ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
