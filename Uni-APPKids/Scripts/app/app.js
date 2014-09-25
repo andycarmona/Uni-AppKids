@@ -1,6 +1,6 @@
 ﻿// Main configuration file. Sets up AngularJS module and routes and any other config objects
 
-var appRoot = angular.module('main', ['ngRoute', 'ngGrid', 'ngResource', 'angularStart.services', 'angularStart.directives']);     //Define the main module
+var appRoot = angular.module('main', ['ngRoute', 'ngGrid', 'ngResource', 'angularStart.services', 'angularStart.directives', 'ui.bootstrap']);     //Define the main module
 
 appRoot
     .config(['$routeProvider', function ($routeProvider) {

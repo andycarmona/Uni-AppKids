@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
-using System.Globalization;
-using System.Web.Mvc;
-using System.Web.Security;
-
-namespace Uni_APPKids.Models
+﻿namespace Uni_APPKids.Models
 {
-    using System.Data.Entity.ModelConfiguration.Conventions;
-    using System.Data.Linq.Mapping;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity;
 
     public class UsersContext : DbContext
     {
@@ -22,7 +14,7 @@ namespace Uni_APPKids.Models
         public DbSet<UserProfile> UserProfiles { get; set; }
     }
 
-    [Table]
+    [Table("UserProfile")]
     public class UserProfile
     {
         [Key]

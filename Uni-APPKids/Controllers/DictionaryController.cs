@@ -12,6 +12,7 @@ namespace Uni_APPKids.Controllers
     using System.Collections.Generic;
     using System.Web.Http;
 
+    using Uni_AppKids.Application.Dto;
     using Uni_AppKids.Application.Services;
 
     public class DictionaryController : ApiController
@@ -19,11 +20,11 @@ namespace Uni_APPKids.Controllers
         private readonly DictionaryService dictionaryService = new DictionaryService();
 
         // GET api/dictionary
-        public IEnumerable<string> Get()
+        public List<PhraseDictionaryDto> Get()
         {
             var dictionaries = dictionaryService.GetPhraseDictionaries();
-            var name = dictionaries[0].DictionaryName;
-            return new string[] { "value1", name };
+            //var name = dictionaries[0].DictionaryName;
+            return dictionaries;
         }
 
         // GET api/dictionary/5

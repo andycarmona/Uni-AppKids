@@ -9,6 +9,8 @@ using System.Web.Routing;
 
 namespace Uni_APPKids
 {
+    using Newtonsoft.Json;
+
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
 
@@ -17,7 +19,7 @@ namespace Uni_APPKids
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

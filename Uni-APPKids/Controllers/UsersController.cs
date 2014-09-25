@@ -22,6 +22,7 @@ namespace Uni_APPKids.Controllers
             new User{Id=4, FirstName="Vicky", LastName="Merry" ,Gender=Gender.Female, Mobile="9999999994",Email="vicky@demo.com", City="ol",State="ny", Country="usa",Zip="14760"},
             new User{Id=5, FirstName="Cena", LastName="Rego",Gender=Gender.Male, Mobile="9999999995",Email="cena@demo.com", City="as",State="tx", Country="usa",Zip="78610"}
         };
+
         public IEnumerable<User> Get()
         {
             // Return a static list of users

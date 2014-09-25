@@ -1,13 +1,16 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+       background-image: url('/images/bgNoisy.png');
+    background-color: #cccccc;
 }
 
 @media only screen and (min-width: 768px) {
     /* tablets and desktop */
       .phraseconte {
+           color: white;
         font-family: Dotum;
-        font-size: 50px;
+        font-size: 60px;
         font-weight: normal;
         font-style: normal;
     }
@@ -16,8 +19,9 @@
 @media only screen and (max-width: 767px) {
     /* phones */
       .phraseconte {
+          color: white;
         font-family: Dotum;
-        font-size: 20px;
+        font-size: 40px;
         font-weight: normal;
         font-style: normal;
     }
@@ -26,14 +30,15 @@
 @media only screen and (max-width: 767px) and (orientation: portrait) {
     /* portrait phones */
       .phraseconte {
+           color: white;
         font-family: Dotum;
-        font-size: 30px;
+        font-size: 40px;
         font-weight: normal;
         font-style: normal;
     }
 }
 
-}
+
 .grid-style {
     border: 1px solid rgb(212,212,212);
     min-height: 250px;
@@ -60,20 +65,31 @@
 	height: 13%;
 }
 .content {
-	position: relative;
-	height: 53%;
-
+    position: relative;
+	height: 300px;
+   
+     padding-top: 50px;
+    padding-bottom: 50px;
+    -webkit-border-radius: 52px;
+    -moz-border-radius: 52px;
+    -ms-border-radius: 52px;
+    border-radius: 52px;
+    border:4px solid #08122E;
+    background-color:#EB4242;
+    -webkit-box-shadow: #B3B3B3 19px 19px 19px;
+    -moz-box-shadow: #B3B3B3 19px 19px 19px;
+    -ms-box-shadow: #B3B3B3 19px 19px 19px;
+    box-shadow: #B3B3B3 19px 19px 19px;
 }
+
 .mainlayout {
 	position: relative;
 	height: 600px;
 background-color: #EAF50A;
 }
-.imagecanvas {
-	position: absolute;
-	height: inherit;
-	width: inherit;
-	right: 300px;
+.media {
+
+    padding-bottom: 20px;
 }
 
 .topleft {
@@ -83,16 +99,110 @@ background-color: #EAF50A;
 	height: 100%;
 }
 .topcenter {
-	position: relative;
-	width: 33%;
-    float: left;
-	height: 100%;
+    
+     padding-top: 50px;
+    padding-bottom: 50px;
+
 }
 .topright {
-	width: 33%;
-	height: 100%;
-	float: left;
+         padding-top: 30px;
+    padding-bottom: 30px;
+-webkit-border-radius: 80px;
+    -moz-border-radius: 80px;
+    -ms-border-radius: 80px;
+    border-radius: 80px;
+    border:2px solid #08122E;
+    background-color:#EB4242;
+    -webkit-box-shadow: #B3B3B3 19px 19px 19px;
+    -moz-box-shadow: #B3B3B3 19px 19px 19px;
+    -ms-box-shadow: #B3B3B3 19px 19px 19px;
+    box-shadow: #B3B3B3 19px 19px 19px;
 }
+.title {
+    color: #EB4242;
+}
+.bubble {
+    position: relative;
+padding: 9px;
+background: #FFFFFF;
+-webkit-border-radius: 26px;
+-moz-border-radius: 26px;
+    -ms-border-radius: 26px;
+    border-radius: 26px;
+border: #EB4242 solid 4px;
+}
+
+.bubble:after 
+{
+content: '';
+position: absolute;
+border-style: solid;
+border-width: 15px 15px 0;
+border-color: #FFFFFF transparent;
+display: block;
+width: 0;
+z-index: 1;
+margin-left: -15px;
+bottom: -15px;
+left: 27%;
+}
+
+.bubble:before 
+{
+content: '';
+position: absolute;
+border-style: solid;
+border-width: 18px 18px 0;
+border-color: #EB4242 transparent;
+display: block;
+width: 0;
+z-index: 0;
+margin-left: -18px;
+bottom: -22px;
+left: 27%;
+}
+.bubbleLeft 
+{
+position: relative;
+padding: 9px;
+background: #FFFFFF;
+-webkit-border-radius: 26px;
+-moz-border-radius: 26px;
+border-radius: 26px;
+border: #EB4242 solid 4px;
+}
+
+.bubbleLeft:after 
+{
+content: '';
+position: absolute;
+border-style: solid;
+border-width: 15px 15px 15px 0;
+border-color: transparent #FFFFFF;
+display: block;
+width: 0;
+z-index: 1;
+margin-top: -15px;
+left: -15px;
+top: 27%;
+}
+
+.bubbleLeft:before 
+{
+content: '';
+position: absolute;
+border-style: solid;
+border-width: 18px 18px 18px 0;
+border-color: transparent #EB4242;
+display: block;
+width: 0;
+z-index: 0;
+margin-top: -18px;
+left: -22px;
+top: 27%;
+}
+
+
 .bottomleft {
 	position: relative;
 	width: 33%;

@@ -20,7 +20,7 @@ appRoot.controller('DemoController', function ($scope, $location, $resource) {
     $scope.userGrid = {
         data: 'usersList',
         multiSelect: false,
-        selectedItems: $scope.selectedUsers,
+        selectedItems: $scope.selectedUser,
         enableColumnResize: false,
         columnDefs: [
             { field: 'firstName', displayName: 'First Name', width: '25%' },
