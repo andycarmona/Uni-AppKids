@@ -1,7 +1,16 @@
-﻿namespace Uni_AppKids.Application.Dto
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="PhraseDto.cs" company="Uni-app">
+//   -
+// </copyright>
+// <summary>
+//   -
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Uni_AppKids.Application.Dto
 {
     using System;
-    using System.Collections.Generic;
+   
 
     public class PhraseDto
     {
@@ -9,6 +18,6 @@
 
         public DateTime CreationTime { get; set; }
 
-        public List<WordDto> Words { get; set; }
+        public string WordsIds { get; set; }
     }
 }

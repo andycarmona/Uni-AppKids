@@ -17,6 +17,8 @@ namespace Uni_AppKids.Core.EntityModels
         [Key]
         public int PhraseDictionaryId { get; set; }
 
+        public string UserName { get; set; }
+
         public string DictionaryName { get; set; }
         
         public virtual List<Phrase> Phrases { get; set; }  

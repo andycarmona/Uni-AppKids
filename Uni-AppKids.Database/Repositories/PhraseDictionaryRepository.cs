@@ -10,6 +10,7 @@
 namespace Uni_AppKids.Database.Repositories
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     using Uni_AppKids.Core.EntityModels;
     using Uni_AppKids.Core.Interface;
@@ -22,19 +23,12 @@ namespace Uni_AppKids.Database.Repositories
         {
         }
 
-        //public override IEnumerable<PhraseDictionary> GetDictionaries
-        //{
-        //    get
-        //    {
-        //        IEnumerable<PhraseDictionary> ki = this.Get();
-        //        return ki;
-        //    }
-        //}
 
-        public override IEnumerable<PhraseDictionary> GetDictionaries()
+        public override IEnumerable<PhraseDictionary> GetUserDictionaries(string aUserName)
         {
-            IEnumerable<PhraseDictionary> ki = this.Get();
-            return ki;
+            IEnumerable<PhraseDictionary> listOfDictionaries = this.Get().Where(x => x.UserName == aUserName);
+            
+            return listOfDictionaries;
         }
     }
 }

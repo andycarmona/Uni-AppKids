@@ -22,10 +22,11 @@ namespace Uni_AppKids.Application.Services
 
         private GenericRepository<PhraseDictionary> phraseDictionaryRepository;
 
-        private PhraseDictionaryRepository speciPhraseDictionaryRepo;
+        private GenericRepository<Word> wordRepository;
+
 
         private bool disposed = false;
- 
+
 
         public GenericRepository<PhraseDictionary> PhraseDictionaryRepository
         {
@@ -36,13 +37,14 @@ namespace Uni_AppKids.Application.Services
             }
         }
 
-        public GenericRepository<PhraseDictionary> SpecPhraseDictionaryRepository
+        public GenericRepository<Word> WordRepository
         {
             get
             {
-                return this.phraseDictionaryRepository
-                       ?? (this.phraseDictionaryRepository = new PhraseDictionaryRepository(this.context));
+                return this.wordRepository
+                       ?? (this.wordRepository = new GenericRepository<Word>(this.context));
             }
+           
         }
 
         public void Save()

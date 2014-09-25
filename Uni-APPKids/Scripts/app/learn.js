@@ -1,56 +1,36 @@
 ﻿angular.module('main')
     .controller('LearnController', ['$scope', '$location', '$resource', function ($scope, $location, $resource) {
-    var dictionaryResource = $resource('/api/dictionary', {}, { update: { method: 'PUT' } });
 
-    $scope.dictionaryList = [];
+        var userName = "andy";
+        var wordIds = "2";
+        var dictionaryResource = $resource('/api/dictionary/:'+userName+'', { userName: "andy" }, { update: { method: 'PUT' } });
+        var wordResource =       $resource('/api/words/', { wordsIds: "2" }, { update: { method: 'PUT' } });
 
-    dictionaryResource.query(function (data) {
-        $scope.dictionaryList = [];
+        $scope.groups = [];
+    $scope.wordsId = [];
+   
+  dictionaryResource.query(function (data) {
+      $scope.groups = [];
         angular.forEach(data, function (dictionaryData) {
-            $scope.dictionaryList.push(dictionaryData);
+            $scope.groups.push(dictionaryData);
+        });
+  });
+    wordResource.query(function(data) {
+        $scope.wordsId = [];
+        angular.forEach(data, function(wordsdata) {
+            $scope.wordsId.push(wordsdata);
         });
     });
 
-    $scope.dictionary = 'ddd';
-        //example data
-    $scope.listdictionary = {
-        data: [{
-            id: 'id1',
-            name: 'name1'
-        }, {
-            id: 'id2',
-            name: 'name2'
-        }]
-    };
-
     $scope.oneAtATime = true;
 
-    $scope.groups = [
-      {
-          title: 'Dynamic Group Header - 1',
-          content: 'Dynamic Group Body - 1'
-      },
-      {
-          title: 'Dynamic Group Header - 2',
-          content: 'Dynamic Group Body - 2'
-      }
-    ];
-
-    $scope.items = ['Item 1', 'Item 2', 'Item 3'];
-
-    $scope.addItem = function () {
-        var newItemNo = $scope.items.length + 1;
-        $scope.items.push('Item ' + newItemNo);
-    };
+  
 
     $scope.status = {
         isFirstOpen: true,
         isFirstDisabled: false
     };
 
-        //set a new selection
-    $scope.setDictionary = function (cid) {
-        $scope.dictionary = cid;
-    }
+    
 
 }]);

@@ -1,11 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="DictionaryService.cs" company="Uni-App">
+//   -
+// </copyright>
+// <summary>
+//   -
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Uni_AppKids.Application.Services
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     using AutoMapper;
 
     using Uni_AppKids.Application.Dto;
@@ -13,7 +19,7 @@ namespace Uni_AppKids.Application.Services
 
     public class DictionaryService
     {
-        private UnitOfWork unitOfWork = new UnitOfWork();
+        private readonly UnitOfWork unitOfWork = new UnitOfWork();
 
         public PhraseDictionaryDto GetADictionary(int id)
         {
@@ -28,12 +34,11 @@ namespace Uni_AppKids.Application.Services
 
 
 
-        public List<PhraseDictionaryDto> GetPhraseDictionaries()
+        public List<PhraseDictionaryDto> GetUserPhraseDictionaries(string userName)
         {
             GetMappedEntities();
-            var phraseDictionaries = unitOfWork.SpecPhraseDictionaryRepository.GetDictionaries();
-            //var phraseDictionaries = unitOfWork.PhraseDictionaryRepository.Get();
-
+            var phraseDictionaries = unitOfWork.PhraseDictionaryRepository.GetUserDictionaries(userName);
+         
             var dictionaryList = Mapper.Map<List<PhraseDictionary>, List<PhraseDictionaryDto>>(phraseDictionaries.ToList());
             return dictionaryList;
         }

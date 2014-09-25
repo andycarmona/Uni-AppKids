@@ -14,8 +14,10 @@ namespace Uni_AppKids.Core.EntityModels
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public class Phrase 
+    public class Phrase
     {
+     
+
         public Phrase()
         {
             this.CreationTime = DateTime.Now;
@@ -33,6 +35,6 @@ namespace Uni_AppKids.Core.EntityModels
 
         public DateTime CreationTime { get; set; }
 
-        public List<Word> Words { get; set; }
+        public string WordsIds { get; set; }
     }
 }

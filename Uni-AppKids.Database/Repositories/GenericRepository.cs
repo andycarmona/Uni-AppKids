@@ -16,6 +16,7 @@ namespace Uni_AppKids.Database.Repositories
     using System.Linq;
     using System.Linq.Expressions;
 
+    using Uni_AppKids.Core.EntityModels;
     using Uni_AppKids.Database.EntityFramework;
 
     public class GenericRepository<TEntity> where TEntity : class
@@ -90,11 +91,17 @@ namespace Uni_AppKids.Database.Repositories
             context.Entry(entityToUpdate).State = EntityState.Modified;
         }
 
-        public virtual IEnumerable<TEntity> GetDictionaries()
+        public virtual IEnumerable<TEntity> GetUserDictionaries(string aUserName)
         {
             IQueryable<TEntity> query = dbSet;
             return query;
 
+        }
+
+        public virtual List<TEntity> GetListOfWordsForAPhrase(string wordsId)
+        {
+            List<TEntity> query = dbSet.ToList();
+            return query;
         }
     }
 }

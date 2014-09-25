@@ -184,6 +184,7 @@
     <Compile Include="Controllers\DictionaryController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\WordsController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -317,7 +318,6 @@
     <Content Include="template\accordion\accordion-group.html" />
     <Content Include="template\accordion\accordion.html" />
     <Content Include="Scripts\ui-bootstrap-0.8.0.min.js" />
-    <Content Include="Scripts\ui-bootstrap-tpls-0.8.0.js" />
     <Content Include="Scripts\ui-bootstrap-tpls-0.8.0.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

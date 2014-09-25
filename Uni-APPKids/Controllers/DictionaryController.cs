@@ -19,16 +19,16 @@ namespace Uni_APPKids.Controllers
     {
         private readonly DictionaryService dictionaryService = new DictionaryService();
 
-        // GET api/dictionary
-        public List<PhraseDictionaryDto> Get()
+
+        public List<PhraseDictionaryDto> Get(string userName)
         {
-            var dictionaries = dictionaryService.GetPhraseDictionaries();
-            //var name = dictionaries[0].DictionaryName;
+            var dictionaries = dictionaryService.GetUserPhraseDictionaries(userName);
+            
             return dictionaries;
         }
 
         // GET api/dictionary/5
-        public string Get(int id)
+        public string Get(int userId)
         {
             return "value";
         }

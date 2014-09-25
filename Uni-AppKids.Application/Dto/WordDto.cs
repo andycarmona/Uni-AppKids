@@ -12,7 +12,6 @@
 
         public DateTime CreationTime { get; set; }
 
-       
         public PhraseDto AssignedToPhrase { get; set; }
 
         public int AssignedPhraseId { get; set; }
