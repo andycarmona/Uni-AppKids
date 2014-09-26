@@ -13,5 +13,6 @@ namespace Uni_AppKids.Database.Repositories
 
     public class PhraseRepository : IPhraseRepository
     {
+      
     }
 }

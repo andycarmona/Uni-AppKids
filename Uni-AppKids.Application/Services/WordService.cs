@@ -8,17 +8,16 @@ namespace Uni_AppKids.Application.Services
 
     using Uni_AppKids.Application.Dto;
     using Uni_AppKids.Core.EntityModels;
-
- 
+       using Uni_AppKids.Database.Repositories;
 
     public class WordService
-    {   
+    {
         private readonly UnitOfWork unitOfWork = new UnitOfWork();
 
         public List<WordDto> GetListOfWordsForAPhrase(string wordsId)
         {
             GetMappedEntities();
-            var listOfWords = unitOfWork.WordRepository.GetListOfWordsForAPhrase(wordsId);
+            var listOfWords = unitOfWork.GetCustomWordRepository().GetListOfWordsForAPhrase(wordsId);
             var mappedListOfWords = Mapper.Map<List<Word>, List<WordDto>>(listOfWords);
             return mappedListOfWords;
         }

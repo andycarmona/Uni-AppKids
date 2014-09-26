@@ -10,4 +10,17 @@ angularStartDirectives.directive('testDirective', function () {             //us
         }
     };
 });
+angularStartDirectives.directive('myDirective', function() {
 
+    var uniqueId = 1;
+    return {
+        restrict: 'E',
+        scope: true,
+        template: '<input type="checkbox"/><label>open</label>',
+        link: function(scope, elem, attrs) {
+            var item = 'item' + uniqueId++;
+            elem.find('input').attr('id' , item);
+            elem.find('label').attr('for', item);
+        }
+    }
+})

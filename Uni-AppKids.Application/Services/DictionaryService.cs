@@ -25,7 +25,7 @@ namespace Uni_AppKids.Application.Services
         {
             GetMappedEntities();
 
-            var aDictionary = unitOfWork.PhraseDictionaryRepository.GetByID(id);
+            var aDictionary = unitOfWork.GetGenericPhraseDictionaryRepository().GetByID(id);
 
             var aPDictionary = Mapper.Map<PhraseDictionary, PhraseDictionaryDto>(aDictionary);
 
@@ -37,7 +37,7 @@ namespace Uni_AppKids.Application.Services
         public List<PhraseDictionaryDto> GetUserPhraseDictionaries(string userName)
         {
             GetMappedEntities();
-            var phraseDictionaries = unitOfWork.PhraseDictionaryRepository.GetUserDictionaries(userName);
+            var phraseDictionaries = unitOfWork.GetCustomPhraseDictionaryRepository().GetUserDictionaries(userName);
          
             var dictionaryList = Mapper.Map<List<PhraseDictionary>, List<PhraseDictionaryDto>>(phraseDictionaries.ToList());
             return dictionaryList;
@@ -47,10 +47,10 @@ namespace Uni_AppKids.Application.Services
         {
             //Logger.Info("Updating a dictionary for input: " + input);
 
-            var phraseDictionary = unitOfWork.PhraseDictionaryRepository.GetByID(input.DictionaryId);
+            var phraseDictionary = unitOfWork.GetGenericPhraseDictionaryRepository().GetByID(input.DictionaryId);
 
             phraseDictionary.DictionaryName = input.DictionaryName;
-            unitOfWork.PhraseDictionaryRepository.Update(phraseDictionary);
+            unitOfWork.GetGenericPhraseDictionaryRepository().Update(phraseDictionary);
         }
 
         public void CreatePhraseDictionary(CreatePhraseDictionaryInput input)
@@ -61,7 +61,7 @@ namespace Uni_AppKids.Application.Services
             var dictionaryEntity = new PhraseDictionary();
             dictionaryEntity = Mapper.Map<CreatePhraseDictionaryInput, PhraseDictionary>(input);
 
-            unitOfWork.PhraseDictionaryRepository.Insert(dictionaryEntity);
+            unitOfWork.GetGenericPhraseDictionaryRepository().Insert(dictionaryEntity);
         }
 
         private static void GetMappedEntities()

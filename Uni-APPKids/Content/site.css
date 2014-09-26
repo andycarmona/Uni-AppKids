@@ -130,6 +130,10 @@ background: #FFFFFF;
     -ms-border-radius: 26px;
     border-radius: 26px;
 border: #EB4242 solid 4px;
+  -webkit-box-shadow: #B3B3B3 19px 19px 19px;
+    -moz-box-shadow: #B3B3B3 19px 19px 19px;
+    -ms-box-shadow: #B3B3B3 19px 19px 19px;
+    box-shadow: #B3B3B3 19px 19px 19px;
 }
 
 .bubble:after 

@@ -31,6 +31,11 @@ namespace Uni_AppKids.Database.Repositories
             this.dbSet = context.Set<TEntity>();
         }
 
+        public GenericRepository()
+        {
+            
+        }
+
         public virtual IEnumerable<TEntity> Get(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
@@ -100,7 +105,7 @@ namespace Uni_AppKids.Database.Repositories
 
         public virtual List<TEntity> GetListOfWordsForAPhrase(string wordsId)
         {
-            List<TEntity> query = dbSet.ToList();
+            var query = new List<TEntity>(this.dbSet);
             return query;
         }
     }

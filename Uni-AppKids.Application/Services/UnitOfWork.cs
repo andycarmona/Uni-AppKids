@@ -11,41 +11,26 @@ namespace Uni_AppKids.Application.Services
 {
     using System;
 
+    using Uni_AppKids.Application.Interface;
     using Uni_AppKids.Core.EntityModels;
     using Uni_AppKids.Database.Repositories;
 
     using Uni_AppKids.Database.EntityFramework;
 
-    public class UnitOfWork : IDisposable
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private readonly UniAppKidsDbContext context = new UniAppKidsDbContext();
 
-        private GenericRepository<PhraseDictionary> phraseDictionaryRepository;
+        private GenericRepository<PhraseDictionary> genericPhraseDictionaryRepository;
 
-        private GenericRepository<Word> wordRepository;
+        private GenericRepository<Word> genericWordRepository;
+
+        private PhraseDictionaryRepository customPhraseDictionaryRepository;
+
+        private WordRepository customWordRepository;
 
 
         private bool disposed = false;
-
-
-        public GenericRepository<PhraseDictionary> PhraseDictionaryRepository
-        {
-            get
-            {
-                return this.phraseDictionaryRepository
-                       ?? (this.phraseDictionaryRepository = new GenericRepository<PhraseDictionary>(this.context));
-            }
-        }
-
-        public GenericRepository<Word> WordRepository
-        {
-            get
-            {
-                return this.wordRepository
-                       ?? (this.wordRepository = new GenericRepository<Word>(this.context));
-            }
-           
-        }
 
         public void Save()
         {
@@ -58,7 +43,33 @@ namespace Uni_AppKids.Application.Services
             GC.SuppressFinalize(this);
         }
 
-         protected virtual void Dispose(bool disposing)
+       
+
+        public PhraseDictionaryRepository GetCustomPhraseDictionaryRepository()
+        {
+            return this.customPhraseDictionaryRepository ?? (this.customPhraseDictionaryRepository = new PhraseDictionaryRepository(this.context));
+        }
+
+        public WordRepository GetCustomWordRepository()
+        {
+            return this.customWordRepository ?? (this.customWordRepository = new WordRepository(this.context));
+        }
+
+
+        public GenericRepository<PhraseDictionary> GetGenericPhraseDictionaryRepository()
+        {
+           
+                return this.genericPhraseDictionaryRepository
+                       ?? (this.genericPhraseDictionaryRepository = new GenericRepository<PhraseDictionary>(this.context));
+        }
+
+        public GenericRepository<Word> GetGenericWordRepository()
+        {
+            return this.genericWordRepository
+                  ?? (this.genericWordRepository = new GenericRepository<Word>(this.context));
+        }
+
+        protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
             {

@@ -23,6 +23,10 @@ namespace Uni_AppKids.Database.Repositories
         {
         }
 
+        public PhraseDictionaryRepository()
+        {
+        }
+
 
         public override IEnumerable<PhraseDictionary> GetUserDictionaries(string aUserName)
         {

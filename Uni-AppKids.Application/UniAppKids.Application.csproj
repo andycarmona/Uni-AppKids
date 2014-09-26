@@ -59,6 +59,7 @@
     <Compile Include="Dto\UpdatePhraseDictionaryInput.cs" />
     <Compile Include="Dto\WordDto.cs" />
     <Compile Include="Interface\IPhraseDictionaryService.cs" />
+    <Compile Include="Interface\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DictionaryService.cs" />
     <Compile Include="Services\UnitOfWork.cs" />
