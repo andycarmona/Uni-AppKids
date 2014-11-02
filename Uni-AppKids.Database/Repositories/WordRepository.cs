@@ -23,10 +23,16 @@ namespace Uni_AppKids.Database.Repositories
         {  
         }
 
-        public override List<Word> GetListOfWordsForAPhrase(string wordsId)
+        public override List<Word> GetListOfOrderedWordsForAPhrase(string wordsId)
         {
             var numbersId = wordsId.Split(',').Select(int.Parse).ToList();
-            var listOfOrderedWords = this.Get().Where(x => numbersId.Contains(x.WordId));
+            var rawListWord = this.Get().AsEnumerable();
+            var listOfOrderedWords = from np in rawListWord
+                            let index = numbersId.IndexOf(np.WordId) 
+                            where index >= 0
+                            orderby index ascending
+                            select np;
+     
             return listOfOrderedWords.ToList();
         }
     }

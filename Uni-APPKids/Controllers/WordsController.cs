@@ -9,7 +9,9 @@
 
 namespace Uni_APPKids.Controllers
 {
+    using System;
     using System.Collections.Generic;
+    using System.Net;
     using System.Web.Http;
     using System.Web.Routing;
 
@@ -19,14 +21,29 @@ namespace Uni_APPKids.Controllers
     public class WordsController : ApiController
     {
         private readonly WordService aWordService = new WordService();
+        private readonly PhraseService aPhraseService = new PhraseService();
 
-    
-        
         [HttpGet]
-        public List<WordDto> GetWordsList(string wordsId)
+        public List<WordDto> GetWordsList(int dictionaryId, int indexOfPhraseList)
         {
-            var listOfWords = this.aWordService.GetListOfWordsForAPhrase(wordsId);
-            return listOfWords;
+            string errorMessage;
+            try
+            {
+                var listOfPhrase = this.aPhraseService.GetListOfPhrase(dictionaryId);
+                var wordsId = listOfPhrase[indexOfPhraseList].WordsIds;
+                var listOfWords = this.aWordService.GetListOfWordsForAPhrase(wordsId);
+                return listOfWords;
+            }
+            catch (Exception e)
+            {
+                errorMessage = e.Message;
+            }
+
+            var listDefault = new List<WordDto>();
+            var aWord = new WordDto { WordName = errorMessage };
+            listDefault.Add(aWord);
+            return listDefault;
+  
         }
 
         // GET api/words/5

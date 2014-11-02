@@ -29,6 +29,8 @@ namespace Uni_AppKids.Application.Services
 
         private WordRepository customWordRepository;
 
+        private PhraseRepository phraseRepository;
+
 
         private bool disposed = false;
 
@@ -47,12 +49,18 @@ namespace Uni_AppKids.Application.Services
 
         public PhraseDictionaryRepository GetCustomPhraseDictionaryRepository()
         {
-            return this.customPhraseDictionaryRepository ?? (this.customPhraseDictionaryRepository = new PhraseDictionaryRepository(this.context));
+            return this.customPhraseDictionaryRepository ?? 
+                (this.customPhraseDictionaryRepository = new PhraseDictionaryRepository(this.context));
         }
 
         public WordRepository GetCustomWordRepository()
         {
             return this.customWordRepository ?? (this.customWordRepository = new WordRepository(this.context));
+        }
+
+        public PhraseRepository GetPhraseRepository()
+        {
+            return this.phraseRepository ?? (this.phraseRepository = new PhraseRepository(this.context));
         }
 
 

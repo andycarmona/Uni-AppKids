@@ -103,10 +103,12 @@ namespace Uni_AppKids.Database.Repositories
 
         }
 
-        public virtual List<TEntity> GetListOfWordsForAPhrase(string wordsId)
+        public virtual List<TEntity> GetListOfOrderedWordsForAPhrase(string wordsId)
         {
             var query = new List<TEntity>(this.dbSet);
             return query;
         }
+
+        
     }
 }

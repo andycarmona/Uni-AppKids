@@ -7,6 +7,6 @@
 
     public interface IWordsRepository
     {
-        List<Word> GetListOfWordsForAPhrase(string wordsId);
+        List<Word> GetListOfOrderedWordsForAPhrase(string wordsId);
     }
 }

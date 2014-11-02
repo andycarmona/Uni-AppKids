@@ -9,7 +9,12 @@
 
 namespace Uni_AppKids.Core.Interface
 {
-    public interface IPhraseRepository 
+    using System.Collections.Generic;
+
+    using Uni_AppKids.Core.EntityModels;
+
+    public interface IPhraseRepository
     {
+        List<Phrase> GetPhrasesInDictionary(int dictionaryId);
     }
 }

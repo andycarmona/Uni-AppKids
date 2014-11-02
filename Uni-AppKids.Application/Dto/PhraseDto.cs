@@ -14,6 +14,8 @@ namespace Uni_AppKids.Application.Dto
 
     public class PhraseDto
     {
+        public int PhraseId { get; set; }
+
         public string PhraseText { get; set; }
 
         public DateTime CreationTime { get; set; }

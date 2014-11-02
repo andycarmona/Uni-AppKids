@@ -7,16 +7,17 @@ namespace Uni_AppKids.Application.Services
     using Uni_AppKids.Application.Dto;
     using Uni_AppKids.Core.EntityModels;
 
-    public class WordService
+    public class PhraseService
     {
         private readonly UnitOfWork unitOfWork = new UnitOfWork();
 
-        public List<WordDto> GetListOfWordsForAPhrase(string wordsId)
+        public List<PhraseDto> GetListOfPhrase(int dictionaryId)
         {
             GetMappedEntities();
-            var listOfWords = unitOfWork.GetCustomWordRepository().GetListOfOrderedWordsForAPhrase(wordsId);
-            var mappedListOfWords = Mapper.Map<List<Word>, List<WordDto>>(listOfWords);
+            List<Phrase> listOfPhrases = unitOfWork.GetPhraseRepository().GetPhrasesInDictionary(dictionaryId);
+            var mappedListOfWords = Mapper.Map<List<Phrase>, List<PhraseDto>>(listOfPhrases);
             return mappedListOfWords;
+     
         }
 
         private static void GetMappedEntities()
@@ -27,6 +28,7 @@ namespace Uni_AppKids.Application.Services
                 .ForMember(c => c.Phrases, option => option.MapFrom(src => src.Phrases));
             Mapper.CreateMap<Phrase, PhraseDto>();
             Mapper.CreateMap<Word, WordDto>();
+          
         }
     }
 }
