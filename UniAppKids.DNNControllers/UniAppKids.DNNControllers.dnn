@@ -1,0 +1,40 @@
+<dotnetnuke type="Package" version="5.0">
+  <packages>
+    <package name="UniAppKids.DNNControllers" type="Module" version="00.00.01">
+      <friendlyName>UniAppKids.DNNControllers</friendlyName>
+      <description>Christoc.com UniAppKids.DNNControllers module</description>
+      <iconFile>Images/icon_extensions.gif</iconFile>
+      <owner>
+        <name>Christoc.com</name>
+        <organization>Christoc.com</organization>
+        <url>http://www.christoc.com</url>
+        <email>modules@christoc.com</email>
+      </owner>
+      <license src="License.txt"></license>
+      <releaseNotes src="ReleaseNotes.txt"></releaseNotes>
+      <dependencies>
+        <dependency type="CoreVersion">07.00.02</dependency>
+      </dependencies>
+      
+      <components>
+        <component type="ResourceFile">
+          <resourceFiles>
+            <basePath>DesktopModules/UniAppKids.DNNControllers</basePath>
+            <resourceFile>
+              <name>Resources.zip</name>
+            </resourceFile>
+          </resourceFiles>
+        </component>
+
+        <component type="Assembly">
+          <assemblies>
+            <assembly>
+              <name>UniAppKids.DNNControllers.dll</name>
+              <path>bin</path>
+            </assembly>
+          </assemblies>
+        </component>
+      </components>
+    </package>
+  </packages>
+</dotnetnuke>

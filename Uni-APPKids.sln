@@ -13,6 +13,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniAppKids.Application", "U
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniAppKids.Application.Test", "..\LearnSchoolApp\LearnSchool.Infrastructure.EntityFrameWork_Test\UniAppKids.Application.Test.csproj", "{4E04B5CE-F5F3-444E-BC2F-5C695FAF40FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniAppKids.DNNControllers", "UniAppKids.DNNControllers\UniAppKids.DNNControllers.csproj", "{7D61A32C-0F21-453F-A981-BD8E5A3A5304}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{DB32992F-BE18-4851-81E1-987D792065B1}"
+	ProjectSection(SolutionItems) = preProject
+		Build.proj = Build.proj
+		.build\MSBuild.Community.Tasks.dll = .build\MSBuild.Community.Tasks.dll
+		.build\MSBuild.Community.Tasks.targets = .build\MSBuild.Community.Tasks.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +48,10 @@ Global
 		{4E04B5CE-F5F3-444E-BC2F-5C695FAF40FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E04B5CE-F5F3-444E-BC2F-5C695FAF40FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E04B5CE-F5F3-444E-BC2F-5C695FAF40FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D61A32C-0F21-453F-A981-BD8E5A3A5304}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D61A32C-0F21-453F-A981-BD8E5A3A5304}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D61A32C-0F21-453F-A981-BD8E5A3A5304}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D61A32C-0F21-453F-A981-BD8E5A3A5304}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
