@@ -10,14 +10,11 @@
 namespace Uni_AppKids.Core.EntityModels
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     public class Phrase
     {
-     
-
         public Phrase()
         {
             this.CreationTime = DateTime.Now;

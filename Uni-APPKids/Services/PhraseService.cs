@@ -1,11 +1,14 @@
 ﻿
 
-namespace Uni_AppKids.Application.Services
+namespace Uni_APPKids.Services
 {
     using System.Collections.Generic;
+
     using AutoMapper;
-    using Uni_AppKids.Application.Dto;
+
     using Uni_AppKids.Core.EntityModels;
+
+    using Uni_APPKids.Dto;
 
     public class PhraseService
     {
@@ -14,7 +17,7 @@ namespace Uni_AppKids.Application.Services
         public List<PhraseDto> GetListOfPhrase(int dictionaryId)
         {
             GetMappedEntities();
-            List<Phrase> listOfPhrases = unitOfWork.GetPhraseRepository().GetPhrasesInDictionary(dictionaryId);
+            List<Phrase> listOfPhrases = this.unitOfWork.GetPhraseRepository().GetPhrasesInDictionary(dictionaryId);
             var mappedListOfWords = Mapper.Map<List<Phrase>, List<PhraseDto>>(listOfPhrases);
             return mappedListOfWords;
      

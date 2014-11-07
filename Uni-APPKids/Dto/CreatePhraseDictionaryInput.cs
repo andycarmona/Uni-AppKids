@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GetPhraseDictionaryOutput.cs" company="Uni-app">
+// <copyright file="CreatePhraseDictionaryInput.cs" company="uni-app">
 //   -
 // </copyright>
 // <summary>
@@ -7,17 +7,18 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Uni_AppKids.Application.Dto
+namespace Uni_APPKids.Dto
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
-    using Microsoft.Build.Framework;
-
-    public class GetPhraseDictionaryOutput 
+    public class CreatePhraseDictionaryInput 
     {
         [Required]
         public string DictionaryName { get; set; }
 
-       public List<PhraseDto> Phrases { get; set; }  
+        public int Id { get; set; }
+
+        public List<PhraseDto> Phrases { get; set; }  
     }
 }

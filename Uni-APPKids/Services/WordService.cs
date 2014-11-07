@@ -1,11 +1,14 @@
 ﻿
 
-namespace Uni_AppKids.Application.Services
+namespace Uni_APPKids.Services
 {
     using System.Collections.Generic;
+
     using AutoMapper;
-    using Uni_AppKids.Application.Dto;
+
     using Uni_AppKids.Core.EntityModels;
+
+    using Uni_APPKids.Dto;
 
     public class WordService
     {
@@ -14,7 +17,7 @@ namespace Uni_AppKids.Application.Services
         public List<WordDto> GetListOfWordsForAPhrase(string wordsId)
         {
             GetMappedEntities();
-            var listOfWords = unitOfWork.GetCustomWordRepository().GetListOfOrderedWordsForAPhrase(wordsId);
+            var listOfWords = this.unitOfWork.GetCustomWordRepository().GetListOfOrderedWordsForAPhrase(wordsId);
             var mappedListOfWords = Mapper.Map<List<Word>, List<WordDto>>(listOfWords);
             return mappedListOfWords;
         }

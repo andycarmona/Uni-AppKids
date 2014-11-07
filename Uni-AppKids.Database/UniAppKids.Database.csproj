@@ -33,9 +33,6 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\..\LearnSchoolApp\LearnSchool.Web\bin\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -72,12 +69,6 @@
     <Compile Include="Repositories\WordRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Uni-AppKids.Core\UniAppKids.Core.csproj">
-      <Project>{3DB56532-1518-420F-96F3-A27C45FB3F06}</Project>
-      <Name>UniAppKids.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -94,6 +85,12 @@
     <EmbeddedResource Include="Migrations\201409251512579_Add_UsernName_To_PhraseDictionary.resx">
       <DependentUpon>201409251512579_Add_UsernName_To_PhraseDictionary.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Uni-AppKids.Core\UniAppKids.Core.csproj">
+      <Project>{3db56532-1518-420f-96f3-a27c45fb3f06}</Project>
+      <Name>UniAppKids.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,4 +1,4 @@
-﻿namespace Uni_AppKids.Application.Dto
+﻿namespace Uni_APPKids.Dto
 {
     using System;
 

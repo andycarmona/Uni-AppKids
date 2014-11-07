@@ -7,11 +7,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Uni_AppKids.Application.Interface
+namespace Uni_APPKids.Interface
 {
     using System.Collections.Generic;
 
-    using Uni_AppKids.Application.Dto;
+    using Uni_APPKids.Dto;
 
     public interface IPhraseDictionaryService 
     {
