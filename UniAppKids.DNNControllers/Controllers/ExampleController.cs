@@ -1,5 +1,6 @@
 ﻿namespace UniAppKids.DNNControllers.Services
 {
+    using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
@@ -7,8 +8,21 @@
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Web.Api;
 
+    using UniAppKids.DNNControllers.Repository;
+    using UniAppKids.DNNControllers.Models;
+
+
+
     public class ExampleController : ControllerBase
     {
+        private readonly DictionaryRepository aRepository = new DictionaryRepository();
+
+        public List<PhraseDictionary> GetDictionary(string userName)
+        {
+            var dictionaries = aRepository.GetDictionaries();
+
+            return dictionaries;
+        }
         #region "Web Methods"
         [DnnAuthorize()]
         [HttpGet()]

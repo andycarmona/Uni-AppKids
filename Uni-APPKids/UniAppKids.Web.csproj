@@ -369,7 +369,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Main.cshtml" />
-    <Content Include="Views\Home\Learn.cshtml" />
     <Content Include="Views\Home\Demo.cshtml" />
     <Content Include="Scripts\version.json" />
   </ItemGroup>

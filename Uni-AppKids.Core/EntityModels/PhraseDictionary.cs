@@ -12,6 +12,7 @@ namespace Uni_AppKids.Core.EntityModels
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+
     public class PhraseDictionary 
     {
         [Key]

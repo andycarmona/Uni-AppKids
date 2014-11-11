@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityFramework\DNNUniAppContext.cs" />
     <Compile Include="EntityFramework\UniAppKidsDbContext.cs" />
     <Compile Include="Migrations\201409231500363_InitialCreate.cs" />
     <Compile Include="Migrations\201409231500363_InitialCreate.Designer.cs">
