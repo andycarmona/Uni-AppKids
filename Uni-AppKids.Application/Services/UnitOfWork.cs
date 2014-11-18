@@ -45,8 +45,6 @@ namespace Uni_AppKids.Application.Services
             GC.SuppressFinalize(this);
         }
 
-       
-
         public PhraseDictionaryRepository GetCustomPhraseDictionaryRepository()
         {
             return this.customPhraseDictionaryRepository ?? 
