@@ -7,15 +7,15 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Uni_AppKids.Application.Services
+namespace Uni_APPKids.Services
 {
     using System;
 
-    using Uni_AppKids.Application.Interface;
     using Uni_AppKids.Core.EntityModels;
+    using Uni_AppKids.Database.EntityFramework;
     using Uni_AppKids.Database.Repositories;
 
-    using Uni_AppKids.Database.EntityFramework;
+    using Uni_APPKids.Interface;
 
     public class UnitOfWork : IUnitOfWork, IDisposable
     {

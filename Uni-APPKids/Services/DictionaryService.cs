@@ -7,15 +7,16 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Uni_AppKids.Application.Services
+namespace Uni_APPKids.Services
 {
     using System.Collections.Generic;
     using System.Linq;
 
     using AutoMapper;
 
-    using Uni_AppKids.Application.Dto;
     using Uni_AppKids.Core.EntityModels;
+
+    using Uni_APPKids.Dto;
 
     public class DictionaryService
     {
@@ -25,7 +26,7 @@ namespace Uni_AppKids.Application.Services
         {
             GetMappedEntities();
 
-            var aDictionary = unitOfWork.GetGenericPhraseDictionaryRepository().GetByID(id);
+            var aDictionary = this.unitOfWork.GetGenericPhraseDictionaryRepository().GetByID(id);
 
             var aPDictionary = Mapper.Map<PhraseDictionary, PhraseDictionaryDto>(aDictionary);
 
@@ -37,7 +38,7 @@ namespace Uni_AppKids.Application.Services
         public List<PhraseDictionaryDto> GetUserPhraseDictionaries(string userName)
         {
             GetMappedEntities();
-            var phraseDictionaries = unitOfWork.GetCustomPhraseDictionaryRepository().GetUserDictionaries(userName);
+            var phraseDictionaries = this.unitOfWork.GetCustomPhraseDictionaryRepository().GetUserDictionaries(userName);
          
             var dictionaryList = Mapper.Map<List<PhraseDictionary>, List<PhraseDictionaryDto>>(phraseDictionaries.ToList());
             return dictionaryList;
@@ -47,10 +48,10 @@ namespace Uni_AppKids.Application.Services
         {
             //Logger.Info("Updating a dictionary for input: " + input);
 
-            var phraseDictionary = unitOfWork.GetGenericPhraseDictionaryRepository().GetByID(input.DictionaryId);
+            var phraseDictionary = this.unitOfWork.GetGenericPhraseDictionaryRepository().GetByID(input.DictionaryId);
 
             phraseDictionary.DictionaryName = input.DictionaryName;
-            unitOfWork.GetGenericPhraseDictionaryRepository().Update(phraseDictionary);
+            this.unitOfWork.GetGenericPhraseDictionaryRepository().Update(phraseDictionary);
         }
 
         public void CreatePhraseDictionary(CreatePhraseDictionaryInput input)
@@ -61,7 +62,7 @@ namespace Uni_AppKids.Application.Services
             var dictionaryEntity = new PhraseDictionary();
             dictionaryEntity = Mapper.Map<CreatePhraseDictionaryInput, PhraseDictionary>(input);
 
-            unitOfWork.GetGenericPhraseDictionaryRepository().Insert(dictionaryEntity);
+            this.unitOfWork.GetGenericPhraseDictionaryRepository().Insert(dictionaryEntity);
         }
 
         private static void GetMappedEntities()

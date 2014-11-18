@@ -1,4 +1,4 @@
-﻿namespace Uni_AppKids.Application.Interface
+﻿namespace Uni_APPKids.Interface
 {
     using Uni_AppKids.Core.EntityModels;
     using Uni_AppKids.Database.Repositories;

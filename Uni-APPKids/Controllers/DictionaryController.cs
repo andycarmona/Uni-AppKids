@@ -12,8 +12,8 @@ namespace Uni_APPKids.Controllers
     using System.Collections.Generic;
     using System.Web.Http;
 
-    using Uni_AppKids.Application.Dto;
-    using Uni_AppKids.Application.Services;
+    using Uni_APPKids.Dto;
+    using Uni_APPKids.Services;
 
     public class DictionaryController : ApiController
     {

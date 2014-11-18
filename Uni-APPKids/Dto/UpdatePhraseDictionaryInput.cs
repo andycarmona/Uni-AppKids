@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Uni_AppKids.Application.Dto
+namespace Uni_APPKids.Dto
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;

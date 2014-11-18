@@ -15,8 +15,8 @@ namespace Uni_APPKids.Controllers
     using System.Web.Http;
     using System.Web.Routing;
 
-    using Uni_AppKids.Application.Dto;
-    using Uni_AppKids.Application.Services;
+    using Uni_APPKids.Dto;
+    using Uni_APPKids.Services;
 
     public class WordsController : ApiController
     {
