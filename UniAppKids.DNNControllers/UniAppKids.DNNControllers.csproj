@@ -129,9 +129,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Uni-AppKids.Core\UniAppKids.Core.csproj">
-      <Project>{3DB56532-1518-420F-96F3-A27C45FB3F06}</Project>
-      <Name>UniAppKids.Core</Name>
+    <ProjectReference Include="..\Uni-AppKids.Application\UniAppKids.Application.csproj">
+      <Project>{30318a51-77e5-430d-bc63-3daddce80781}</Project>
+      <Name>UniAppKids.Application</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

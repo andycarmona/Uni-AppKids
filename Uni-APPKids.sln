@@ -1,10 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniAppKids.Web", "Uni-APPKids\UniAppKids.Web.csproj", "{9B8BF380-7F42-4F02-8107-2C03CA88527C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniAppKids.Core", "Uni-AppKids.Core\UniAppKids.Core.csproj", "{3DB56532-1518-420F-96F3-A27C45FB3F06}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniAppKids.Database", "Uni-AppKids.Database\UniAppKids.Database.csproj", "{BB14B4BE-D4CB-4F5F-8725-190BD919BF34}"
@@ -22,16 +20,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{DB3299
 		.build\MSBuild.Community.Tasks.targets = .build\MSBuild.Community.Tasks.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniAppSpel", "..\..\Documents\Visual Studio 2013\Projects\UniAppSpel\UniAppSpel\UniAppSpel.csproj", "{0FCEAEB6-5FE7-4FEF-9424-D1E9747EF31A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9B8BF380-7F42-4F02-8107-2C03CA88527C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B8BF380-7F42-4F02-8107-2C03CA88527C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B8BF380-7F42-4F02-8107-2C03CA88527C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B8BF380-7F42-4F02-8107-2C03CA88527C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3DB56532-1518-420F-96F3-A27C45FB3F06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3DB56532-1518-420F-96F3-A27C45FB3F06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DB56532-1518-420F-96F3-A27C45FB3F06}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -52,6 +48,10 @@ Global
 		{7D61A32C-0F21-453F-A981-BD8E5A3A5304}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D61A32C-0F21-453F-A981-BD8E5A3A5304}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D61A32C-0F21-453F-A981-BD8E5A3A5304}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FCEAEB6-5FE7-4FEF-9424-D1E9747EF31A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FCEAEB6-5FE7-4FEF-9424-D1E9747EF31A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FCEAEB6-5FE7-4FEF-9424-D1E9747EF31A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FCEAEB6-5FE7-4FEF-9424-D1E9747EF31A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

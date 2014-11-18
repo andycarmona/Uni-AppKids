@@ -11,15 +11,27 @@
     using UniAppKids.DNNControllers.Repository;
     using UniAppKids.DNNControllers.Models;
 
-
+    using Uni_AppKids.Application.Dto;
+    using Uni_AppKids.Application.Services;
 
     public class ExampleController : ControllerBase
     {
         private readonly DictionaryRepository aRepository = new DictionaryRepository();
+        private readonly DictionaryService externalDictionaryService= new DictionaryService();
 
+        [DnnAuthorize()]
+        [AcceptVerbs("GET", "POST")]
         public List<PhraseDictionary> GetDictionary(string userName)
         {
             var dictionaries = aRepository.GetDictionaries();
+
+            return dictionaries;
+        }
+        [DnnAuthorize()]
+        [AcceptVerbs("GET", "POST")]
+        public List<PhraseDictionaryDto> GetDictionaryFromEF(string userName)
+        {
+            var dictionaries = externalDictionaryService.GetUserPhraseDictionaries(userName);
 
             return dictionaries;
         }
