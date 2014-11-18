@@ -5,13 +5,13 @@ namespace Uni_AppKids.Database.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    public sealed partial class Added_ArrayInts_with_WordId : IMigrationMetadata
+    public sealed partial class DescriptionForWords : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Added_ArrayInts_with_WordId));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(DescriptionForWords));
         
         string IMigrationMetadata.Id
         {
-            get { return "201409251500191_Added_ArrayInts_with_WordId"; }
+            get { return "201411181611338_DescriptionForWords"; }
         }
         
         string IMigrationMetadata.Source
