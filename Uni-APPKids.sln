@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniAppKids.Database", "Uni-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniAppKids.Application", "Uni-AppKids.Application\UniAppKids.Application.csproj", "{30318A51-77E5-430D-BC63-3DADDCE80781}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniAppKids.Application.Test", "..\LearnSchoolApp\LearnSchool.Infrastructure.EntityFrameWork_Test\UniAppKids.Application.Test.csproj", "{4E04B5CE-F5F3-444E-BC2F-5C695FAF40FA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniAppKids.DNNControllers", "UniAppKids.DNNControllers\UniAppKids.DNNControllers.csproj", "{7D61A32C-0F21-453F-A981-BD8E5A3A5304}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{DB32992F-BE18-4851-81E1-987D792065B1}"
@@ -20,7 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{DB3299
 		.build\MSBuild.Community.Tasks.targets = .build\MSBuild.Community.Tasks.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniAppSpel", "..\..\Documents\Visual Studio 2013\Projects\UniAppSpel\UniAppSpel\UniAppSpel.csproj", "{0FCEAEB6-5FE7-4FEF-9424-D1E9747EF31A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniAppSpel", "Uni-AppSpel\UniAppSpel.csproj", "{0FCEAEB6-5FE7-4FEF-9424-D1E9747EF31A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,10 +38,6 @@ Global
 		{30318A51-77E5-430D-BC63-3DADDCE80781}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30318A51-77E5-430D-BC63-3DADDCE80781}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30318A51-77E5-430D-BC63-3DADDCE80781}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4E04B5CE-F5F3-444E-BC2F-5C695FAF40FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4E04B5CE-F5F3-444E-BC2F-5C695FAF40FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4E04B5CE-F5F3-444E-BC2F-5C695FAF40FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4E04B5CE-F5F3-444E-BC2F-5C695FAF40FA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7D61A32C-0F21-453F-A981-BD8E5A3A5304}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7D61A32C-0F21-453F-A981-BD8E5A3A5304}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D61A32C-0F21-453F-A981-BD8E5A3A5304}.Release|Any CPU.ActiveCfg = Release|Any CPU
