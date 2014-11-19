@@ -63,7 +63,7 @@
 
         for (; i < $scope.wordsInPhrases.length;) {
             if ($scope.wordsInPhrases[i].WordId == wordId) {
-                $scope.description = $scope.wordsInPhrases[i].WordName + ": " + $scope.wordsInPhrases[i].Image;
+                $scope.description = [$scope.wordsInPhrases[i].WordName] + ": " + $scope.wordsInPhrases[i].WordDescription;
                 $scope.sound = $scope.wordsInPhrases[i].SoundFile;
             }
             i++;

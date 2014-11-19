@@ -29,6 +29,8 @@ namespace Uni_AppKids.Core.EntityModels
 
         public DateTime CreationTime { get; set; }
 
+        public string WordDescription { get; set; }
+
         [ForeignKey("AssignedPhraseId")]
         public virtual Phrase AssignedToPhrase { get; set; }
 

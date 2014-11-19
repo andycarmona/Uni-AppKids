@@ -49,21 +49,9 @@
   <ItemGroup>
     <Compile Include="EntityFramework\DNNUniAppContext.cs" />
     <Compile Include="EntityFramework\UniAppKidsDbContext.cs" />
-    <Compile Include="Migrations\201409231500363_InitialCreate.cs" />
-    <Compile Include="Migrations\201409231500363_InitialCreate.Designer.cs">
-      <DependentUpon>201409231500363_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201409231518406_ReiniliazeDatacase.cs" />
-    <Compile Include="Migrations\201409231518406_ReiniliazeDatacase.Designer.cs">
-      <DependentUpon>201409231518406_ReiniliazeDatacase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201409251500191_Added_ArrayInts_with_WordId.cs" />
-    <Compile Include="Migrations\201409251500191_Added_ArrayInts_with_WordId.Designer.cs">
-      <DependentUpon>201409251500191_Added_ArrayInts_with_WordId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201409251512579_Add_UsernName_To_PhraseDictionary.cs" />
-    <Compile Include="Migrations\201409251512579_Add_UsernName_To_PhraseDictionary.Designer.cs">
-      <DependentUpon>201409251512579_Add_UsernName_To_PhraseDictionary.cs</DependentUpon>
+    <Compile Include="Migrations\201411191437332_AddeColumn2.cs" />
+    <Compile Include="Migrations\201411191437332_AddeColumn2.Designer.cs">
+      <DependentUpon>201411191437332_AddeColumn2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,17 +71,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201409231500363_InitialCreate.resx">
-      <DependentUpon>201409231500363_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201409231518406_ReiniliazeDatacase.resx">
-      <DependentUpon>201409231518406_ReiniliazeDatacase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201409251500191_Added_ArrayInts_with_WordId.resx">
-      <DependentUpon>201409251500191_Added_ArrayInts_with_WordId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201409251512579_Add_UsernName_To_PhraseDictionary.resx">
-      <DependentUpon>201409251512579_Add_UsernName_To_PhraseDictionary.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201411191437332_AddeColumn2.resx">
+      <DependentUpon>201411191437332_AddeColumn2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

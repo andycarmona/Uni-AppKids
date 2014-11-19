@@ -11,7 +11,7 @@ namespace Uni_AppKids.Database.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(UniAppKidsDbContext context)

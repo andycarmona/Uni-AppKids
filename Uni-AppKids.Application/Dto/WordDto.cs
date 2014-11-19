@@ -12,6 +12,8 @@
 
         public string SoundFile { get; set; }
 
+        public string WordDescription { get; set; }
+
         public DateTime CreationTime { get; set; }
     }
 }
