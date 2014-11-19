@@ -814,10 +814,10 @@ tr.pager td {
 	height: 13%;
 }
 .content {
-position: relative;
-height: 300px;
-padding-top: 50px;
-padding-bottom: 50px;
+/* position: relative; */
+/* height: 300px; */
+/* padding-top: 50px; */
+padding-bottom: 100px;
 -webkit-border-radius: 52px;
 -moz-border-radius: 52px;
 -ms-border-radius: 52px;
@@ -869,11 +869,12 @@ background-color: #EAF50A;
     position: relative;
 padding: 9px;
 background: #FFFFFF;
--webkit-border-radius: 26px;
--moz-border-radius: 26px;
-    -ms-border-radius: 26px;
-    border-radius: 26px;
+-webkit-border-radius: 13px;
+-moz-border-radius: 13px;
+    -ms-border-radius: 13px;
+    border-radius: 13px;
 border: #EB4242 solid 2px;
+    height: 100px;
   /*-webkit-box-shadow: #B3B3B3 19px 19px 19px;
     -moz-box-shadow: #B3B3B3 19px 19px 19px;
     -ms-box-shadow: #B3B3B3 19px 19px 19px;
@@ -912,11 +913,10 @@ left: 27%;
 .bubbleLeft 
 {
 position: relative;
-padding: 9px;
 background: #FFFFFF;
--webkit-border-radius: 26px;
--moz-border-radius: 26px;
-border-radius: 26px;
+-webkit-border-radius: 13px;
+-moz-border-radius: 13px;
+border-radius: 13px;
 border: #EB4242 solid 2px;
 }
 
@@ -968,7 +968,30 @@ top: 27%;
 	height: 100%;
 	float: left;
 }
+.middleleft {
+	position: relative;
+	width: 60%;
+	float: left;
+	height: 100%;
+}
+.middlecenter {
+	position: relative;
+	width: 33%;
+    float: left;
+	height: 100%;
+}
+.middleright {
+	width: 30%;
+	height: 100%;
+	float: left;
+}
 .separator {
     padding-bottom: 10px;
     padding-top: 10px;
+}
+.wordSeparation{
+    float: left;
+}
+.CenterTextAlign {
+    text-align: center;
 }

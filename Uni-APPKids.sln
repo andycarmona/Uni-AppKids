@@ -18,7 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{DB3299
 		.build\MSBuild.Community.Tasks.targets = .build\MSBuild.Community.Tasks.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniAppSpel", "Uni-AppSpel\UniAppSpel.csproj", "{0FCEAEB6-5FE7-4FEF-9424-D1E9747EF31A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniAppSpel", "UniAppSpel\UniAppSpel.csproj", "{0FCEAEB6-5FE7-4FEF-9424-D1E9747EF31A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

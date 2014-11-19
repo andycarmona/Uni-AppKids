@@ -1,5 +1,6 @@
 ﻿namespace UniAppKids.DNNControllers.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
@@ -18,8 +19,34 @@
     {
         private readonly DictionaryRepository aRepository = new DictionaryRepository();
         private readonly DictionaryService externalDictionaryService= new DictionaryService();
+        private readonly WordService aWordService = new WordService();
+        private readonly PhraseService aPhraseService = new PhraseService();
 
-        [DnnAuthorize()]
+        [DnnAuthorize]
+        [AcceptVerbs("GET")]
+        public List<WordDto> GetWordsList(int dictionaryId, int indexOfPhraseList)
+        {
+            string errorMessage;
+            try
+            {
+                var listOfPhrase = this.aPhraseService.GetListOfPhrase(dictionaryId);
+                var wordsId = listOfPhrase[indexOfPhraseList].WordsIds;
+                var listOfWords = this.aWordService.GetListOfWordsForAPhrase(wordsId);
+                return listOfWords;
+            }
+            catch (Exception e)
+            {
+                errorMessage = e.Message;
+            }
+
+            var listDefault = new List<WordDto>();
+            var aWord = new WordDto { WordName = errorMessage };
+            listDefault.Add(aWord);
+            return listDefault;
+
+        }
+
+        [DnnAuthorize]
         [AcceptVerbs("GET", "POST")]
         public List<PhraseDictionary> GetDictionary(string userName)
         {
