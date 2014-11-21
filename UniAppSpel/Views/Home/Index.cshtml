@@ -3,16 +3,18 @@
 }
 
 <div ng-app="UniAppSpelApp" ng-controller="LandingPageController">
-<h1>Word game - </h1> dictionary:{{dictionaries[0].DictionaryName}}
+    <h1>Word game </h1> <b>Dictionary:</b>{{dictionaries[0].DictionaryName}}
     <div class="separator"></div>
-    <h3 class="CenterTextAlign">Descriptions</h3>
+    <b class="CenterTextAlign">Descriptions</b>
     <div class="bubble">
         <div class="bottomleft"><img src="http://dummyimage.com/100"></div>
         <div class="bottomcenter"><span>{{description}}</span></div>
     <div class="bottomright">{{sound}}</div></div>
     <div class="separator"></div>
-    <div class="content"><h1 ng-click="getWordName(word.WordId)" id="word{{word.WordId}}" class="phraseconte wordSeparation" ng-repeat="word in wordsInPhrases">{{word.WordName}}<span ng-show=" ! $last ">&nbsp;</span></h1></div>
+    <div class="content">
+        <h1 ng-click="getWordName(word.WordId)" id="word{{word.WordId}}" class="phraseconte wordSeparation" ng-repeat="word in wordsInPhrases">{{word.WordName}}<span ng-show=" ! $last ">&nbsp;</span></h1>
+    </div>
     <div class="separator"></div>
-    <h3 class="CenterTextAlign">Informationw</h3>
+    <b class="CenterTextAlign">Information</b>
     <div class="bubbleLeft">{{error}} </div>
     </div>

@@ -30,16 +30,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.BulkInsert">
+      <HintPath>..\packages\EntityFramework.BulkInsert-ef6.6.0.2.8\lib\Net45\EntityFramework.BulkInsert.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.MappingAPI">
+      <HintPath>..\packages\EntityFramework.MappingAPI.6.0.0.7\lib\net45\EntityFramework.MappingAPI.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\..\LearnSchoolApp\LearnSchool.Web\bin\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,6 +60,14 @@
     <Compile Include="Migrations\201411191437332_AddeColumn2.cs" />
     <Compile Include="Migrations\201411191437332_AddeColumn2.Designer.cs">
       <DependentUpon>201411191437332_AddeColumn2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411211618507_UniqueWordName.cs" />
+    <Compile Include="Migrations\201411211618507_UniqueWordName.Designer.cs">
+      <DependentUpon>201411211618507_UniqueWordName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411211627086_UniqueIndeToWord.cs" />
+    <Compile Include="Migrations\201411211627086_UniqueIndeToWord.Designer.cs">
+      <DependentUpon>201411211627086_UniqueIndeToWord.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -73,6 +89,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201411191437332_AddeColumn2.resx">
       <DependentUpon>201411191437332_AddeColumn2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411211618507_UniqueWordName.resx">
+      <DependentUpon>201411211618507_UniqueWordName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411211627086_UniqueIndeToWord.resx">
+      <DependentUpon>201411211627086_UniqueIndeToWord.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

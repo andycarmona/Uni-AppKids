@@ -11,6 +11,13 @@ namespace Uni_AppKids.Application.Services
     {
         private readonly UnitOfWork unitOfWork = new UnitOfWork();
 
+        public void BulkInsertOfWords(List<WordDto> listOfWords)
+        {
+            GetMappedEntities();
+            var mappedListOfWords = Mapper.Map<List<WordDto>, List<Word>>(listOfWords);
+            unitOfWork.GetCustomWordRepository().BulkInsertOfWords(mappedListOfWords);
+        }
+
         public List<WordDto> GetListOfWordsForAPhrase(string wordsId)
         {
             GetMappedEntities();
@@ -27,6 +34,7 @@ namespace Uni_AppKids.Application.Services
                 .ForMember(c => c.Phrases, option => option.MapFrom(src => src.Phrases));
             Mapper.CreateMap<Phrase, PhraseDto>();
             Mapper.CreateMap<Word, WordDto>();
+            Mapper.CreateMap<WordDto, Word>();
         }
     }
 }

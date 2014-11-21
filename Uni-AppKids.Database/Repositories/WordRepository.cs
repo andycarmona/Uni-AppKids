@@ -10,7 +10,11 @@
 namespace Uni_AppKids.Database.Repositories
 {
     using System.Collections.Generic;
+    using System.Data.Linq;
     using System.Linq;
+    using System.Transactions;
+
+    using global::EntityFramework.BulkInsert.Extensions;
 
     using Uni_AppKids.Core.EntityModels;
     using Uni_AppKids.Core.Interface;
@@ -18,9 +22,30 @@ namespace Uni_AppKids.Database.Repositories
 
     public class WordRepository : GenericRepository<Word>, IWordsRepository
     {
-        public WordRepository(UniAppKidsDbContext context)
-            : base(context)
-        {  
+        private readonly UniAppKidsDbContext context;
+
+        public WordRepository(UniAppKidsDbContext uniAppKidsDbContext)
+            : base(uniAppKidsDbContext)
+        {
+            context = uniAppKidsDbContext;
+        }
+
+
+        public void BulkInsertOfWords(List<Word> listOfWords)
+        {
+            using (var transactionScope = new TransactionScope())
+            {
+                try
+                {
+                    context.BulkInsert(listOfWords);
+                context.SaveChanges();
+                }
+                 catch (DuplicateKeyException e)
+                {
+
+                }
+                transactionScope.Complete();
+            }
         }
 
         public override List<Word> GetListOfOrderedWordsForAPhrase(string wordsId)
@@ -28,11 +53,11 @@ namespace Uni_AppKids.Database.Repositories
             var numbersId = wordsId.Split(',').Select(int.Parse).ToList();
             var rawListWord = this.Get().AsEnumerable();
             var listOfOrderedWords = from np in rawListWord
-                            let index = numbersId.IndexOf(np.WordId) 
-                            where index >= 0
-                            orderby index ascending
-                            select np;
-     
+                                     let index = numbersId.IndexOf(np.WordId)
+                                     where index >= 0
+                                     orderby index ascending
+                                     select np;
+
             return listOfOrderedWords.ToList();
         }
     }

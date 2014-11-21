@@ -1,18 +1,19 @@
 ﻿var EditPageController = function ($scope, $http) {
-   
-    $scope.models = {
-        helloAngular: 'New one!'
-    };
- 
-    $scope.words = ['bob', 'sean', 'rocky', 'john'];
+
+
+    $scope.words = [
+        { "WordName": "Tes", "SoundFile": "Doe.wav" },
+        { "WordName": "Anna", "SoundFile": "Smith.wav" }
+    ];
+
     $scope.sentence = 'Hello there how are you today?';
 
     $scope.formData = {};
     $scope.processForm = function () {
-       
+
         $scope.formData.words = $scope.words;
         var json_text = JSON.stringify($scope.words, null, 2);
-        var urlPhrase = "http://dnndev.me/DesktopModules/DataExchange/API/Example/AddPhrase?listOfWords="+json_text;
+        var urlPhrase = "http://dnndev.me/DesktopModules/DataExchange/API/Example/AddPhrase?listOfWords=" + json_text;
         $http({
             url: urlPhrase,
             method: "POST",
@@ -21,18 +22,23 @@
                 'Content-Type': 'x-www-form-urlencoded'
             }
         }).success(function (data) {
-                console.log(data);
+            $scope.errors="Request done!!";
 
-                if (!data.success) {
-                    // if not successful, bind errors to error variables
-                    $scope.errorName = data.errors.name;
-                    $scope.errorSuperhero = data.errors.superheroAlias;
-                } else {
-                    // if successful, bind success message to message
-                    $scope.message = data.message;
-                }
-            });
+        }).error(function (response) {
+            // when there's an error, parse the error
+            // and set it to the scope (for binding)
+            $scope.errors = parseErrors(response);
+        });;
     };
+    function parseErrors(response) {
+        var errors = [];
+        for (var key in response.ModelState) {
+            for (var i = 0; i < response.ModelState[key].length; i++) {
+                errors.push(response.ModelState[key][i]);
+            }
+        }
+        return errors;
+    }
     // this is called when the textarea is changed
     // it splits up the textarea's text and updates $scope.words 
     $scope.parseSentence = function () {
@@ -52,8 +58,6 @@
 
     };
 
-    //$scope.parseSentenceDebounced = debounce($scope.parseSentence, 1000, false);
-
     $scope.buildSentance = function (w) {
 
         var words = [];
@@ -62,6 +66,7 @@
             var word = $scope.words[i].WordName;
             if (word.replace(/\s+/g, '') !== '') {
                 words.push(word);
+       
             }
         }
 

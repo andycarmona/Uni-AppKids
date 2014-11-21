@@ -193,6 +193,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-responsive.css" />
+    <Content Include="Content\bootstrap-responsive.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -251,6 +255,8 @@
     <Content Include="Global.asax" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-custom-0.8.0.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-custom-tpls-0.8.0.min.js" />
     <Content Include="Scripts\Controllers\AddPhraseController.js" />
     <Content Include="Scripts\Controllers\EditPageController.js" />
     <Content Include="Scripts\Controllers\LandingPageController.js" />

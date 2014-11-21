@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
@@ -19,7 +20,7 @@
     public class ExampleController : ControllerBase
     {
         private readonly DictionaryRepository aRepository = new DictionaryRepository();
-        private readonly DictionaryService externalDictionaryService= new DictionaryService();
+        private readonly DictionaryService externalDictionaryService = new DictionaryService();
         private readonly WordService aWordService = new WordService();
         private readonly PhraseService aPhraseService = new PhraseService();
 
@@ -27,18 +28,28 @@
         [AcceptVerbs("POST")]
         public HttpResponseMessage AddPhrase(string listOfWords)
         {
-            if (listOfWords.Length!=0)
+            if (listOfWords.Length != 0)
             {
-               var wordList = Json.Deserialize<List<WordDto>>(listOfWords);
-
-                return ControllerContext.Request.CreateResponse(HttpStatusCode.OK);
+                var wordList = Json.Deserialize<List<WordDto>>(listOfWords);
+                wordList.Select(c => { c.CreationTime = DateTime.Now; return c; }).ToList();
+               
+                try
+                {
+                    aWordService.BulkInsertOfWords(wordList);
+                    return ControllerContext.Request.CreateResponse(HttpStatusCode.OK);
+                }
+                catch (Exception e)
+                {
+                    return ControllerContext.Request.CreateResponse(
+              HttpStatusCode.BadRequest,e.Message);
+                }
             }
 
             return ControllerContext.Request.CreateResponse(
                 HttpStatusCode.BadRequest,
                 "Invalid parameters, Please check there is elemtns in array");
         }
-        
+
         [DnnAuthorize]
         [AcceptVerbs("GET")]
         public List<WordDto> GetWordsList(int dictionaryId, int indexOfPhraseList)

@@ -8,5 +8,7 @@
     public interface IWordsRepository
     {
         List<Word> GetListOfOrderedWordsForAPhrase(string wordsId);
+
+        void BulkInsertOfWords(List<Word> listOfWords);
     }
 }

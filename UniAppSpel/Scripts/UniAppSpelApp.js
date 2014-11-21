@@ -1,4 +1,4 @@
-﻿var UniAppSpelApp = angular.module('UniAppSpelApp', []);
+﻿var UniAppSpelApp = angular.module('UniAppSpelApp', ['ui.bootstrap']);
 
 UniAppSpelApp.controller('LandingPageController', LandingPageController);
 

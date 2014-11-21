@@ -1,32 +1,30 @@
 ﻿@{
-    ViewBag.Title = "AddPhrase";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "../Shared/_Layout.cshtml";
 }
 
-<h2>AddPhrase</h2>
-<div class="choosedictionary">
-    <label id="Label3">Diccionario</label><select name="Select1">
-        <option></option>
-    </select>
-</div>
-<div class="MainSide" ng-app="UniAppSpelApp" ng-controller="LandingPageController">
-    <form method="post">
-        <div class="leftSide deviceFit bubbleLeft">
-            <textarea name="TextArea1" rows="1" style="height: 193px; width: 95%;"></textarea></br>
-            <div class="submitbutton"><input name="Button1" type="button" value="Submit phrase to dictionary" /><input name="Submit1" type="submit" value="reset" /></div>
-          
-        </div>
-        <div class="rightSide deviceFit bubbleLeft">
-            <label>Click on the word you want to edit.</label>
-                <textarea name="TextArea2" style="width:95%; height: 112px"></textarea><br />
-            <label id="Label1">
-                Nombre
-            </label> <input name="Text1" type="text" /><br />
-            <label id="Label2">Image&nbsp;&nbsp;&nbsp; </label>
-            <input name="Text2" type="text" /><br />
-            <br />
-            <input name="Submit2" type="submit" value="Save word configuration" />
-        </div>
+<div ng-app="UniAppSpelApp" ng-controller="AddPhraseController">
+    <h1>Add phrase</h1>
+    <textarea class="form-horizontal" ng-model="sentence" ng-change="parseSentence()" style="width: 100%; height: 15em;"></textarea>
+    <form name="worddata">
+        <tabset justified="true">
+            <tab ng-repeat="w in words track by $index" heading="{{w.WordName}}">
+                <div class="leftSide">
+                    <label>Name</label>
+                    <input class="form-horizontal" type="text" ng-model="w.WordName" ng-change="buildSentance(w[$index])" />
+                    <label>Sound file</label>
+                    <input class="form-horizontal" type="text" ng-model="w.SoundFile" ng-change="buildSentance(w[$index])" />
+                </div>
+                <div class="rightSide">
+                    <label>Image Name</label>
+                    <input class="form-horizontal" type="text" ng-model="w.Image" ng-change="buildSentance(w[$index])" />
+                    <label>Description</label>
+                    <input class="form-horizontal" type="text" ng-model="w.WordDescription" ng-change="buildSentance(w[$index])" />
+                </div>
+            </tab>
+        </tabset>
+        <button id="Submit1" class="primaryButton" type="button" ng-click="processForm()">Submit</button>
     </form>
+
 </div>
+
 
