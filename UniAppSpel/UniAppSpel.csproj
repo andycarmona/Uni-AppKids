@@ -251,6 +251,7 @@
     <Content Include="Global.asax" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Scripts\Controllers\AddPhraseController.js" />
     <Content Include="Scripts\Controllers\EditPageController.js" />
     <Content Include="Scripts\Controllers\LandingPageController.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
@@ -288,12 +289,19 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Edit.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\AddPhrase.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Uni-AppKids.Application\UniAppKids.Application.csproj">
+      <Project>{30318A51-77E5-430D-BC63-3DADDCE80781}</Project>
+      <Name>UniAppKids.Application</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

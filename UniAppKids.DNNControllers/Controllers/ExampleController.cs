@@ -6,6 +6,7 @@
     using System.Net.Http;
     using System.Web.Http;
 
+    using DotNetNuke.Common.Utilities;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Web.Api;
 
@@ -22,6 +23,22 @@
         private readonly WordService aWordService = new WordService();
         private readonly PhraseService aPhraseService = new PhraseService();
 
+        [DnnAuthorize]
+        [AcceptVerbs("POST")]
+        public HttpResponseMessage AddPhrase(string listOfWords)
+        {
+            if (listOfWords.Length!=0)
+            {
+               var wordList = Json.Deserialize<List<WordDto>>(listOfWords);
+
+                return ControllerContext.Request.CreateResponse(HttpStatusCode.OK);
+            }
+
+            return ControllerContext.Request.CreateResponse(
+                HttpStatusCode.BadRequest,
+                "Invalid parameters, Please check there is elemtns in array");
+        }
+        
         [DnnAuthorize]
         [AcceptVerbs("GET")]
         public List<WordDto> GetWordsList(int dictionaryId, int indexOfPhraseList)
