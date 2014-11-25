@@ -3,8 +3,10 @@
 }
 
 <div ng-app="UniAppSpelApp" ng-controller="AddPhraseController">
-    <h1>Add phrase</h1>
-    <textarea class="form-horizontal" ng-model="sentence" ng-change="parseSentence()" style="width: 100%; height: 15em;"></textarea>
+    <label>Message</label>
+    <textarea class="form-horizontal" ng-model="errors"  style="width: 100%; height: 6em;"></textarea>
+    <label>Add words:</label>
+    <textarea class="form-horizontal" ng-model="sentence" ng-change="parseSentence()" style="width: 100%; height: 6em;"></textarea>
     <form name="worddata">
         <tabset justified="true">
             <tab ng-repeat="w in words track by $index" heading="{{w.WordName}}">

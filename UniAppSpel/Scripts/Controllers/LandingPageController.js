@@ -1,11 +1,13 @@
-﻿var LandingPageController = function ($scope, $http) {
-
+﻿var LandingPageController = function ($scope, $http, $window, userService) {
+    $scope.dictionaryName = "";
     $scope.lookupResult = {
         dictionaryName: "Not yet retrieved"
     };
     $scope.wordsInPhrases = [];
     $scope.description = "No description";
     $scope.sound = "No sound";
+ 
+    $scope.errorMessage = ['Undefined error. Could not contact server.']
 
     var urlDictionary = "http://dnndev.me/DesktopModules/DataExchange/API/Example/GetDictionary?userName=andy";
 
@@ -14,39 +16,43 @@
     GetDictionary(urlDictionary);
     GetPhrase(urlPhrase);
 
+
     function GetDictionary(url) {
-        $http.get(url).success(function (data) {
 
-            $scope.dictionaries = data;
-            $scope.loading = false;
+        userService.GetRequest(url).then(
+                           function (request) {
+                               if (request==true) {
+                                   $scope.error = $scope.errorMessage[0];
+                               }
+                               applyRemoteDataToDictionary(request);
 
-        }).error(function () {
-                $scope.error = "An Error has occured while loading dictionaries!";
-                $scope.loading = false;
-            });
+                           }
+                       );
+
+
     }
 
     function GetPhrase(url) {
-        $http.get(url).success(function (data) {
+        userService.GetRequest(url).then(
+                         function (request) {
+                             if (request==true) {
+                                 $scope.error = $scope.errorMessage[0];
+                             }
+                             applyRemoteDataToPhrase(request);
 
-            $scope.wordsInPhrases = data;
-            $scope.loading = false;
-
-        }).error(function () {
-        $scope.error = "An Error has occured while loading a phrase!";
-        $scope.loading = false;
-    });
+                         }
+                     );
     }
 
-    $http.get(urlDictionary).success(function (data) {
+    function applyRemoteDataToDictionary(request) {
 
-        $scope.posts = data;
-        $scope.loading = false;
+        $scope.dictionaries = request;
+        window.localStorage['dictionary_name'] = request[0].DictionaryName;
+    }
 
-    }).error(function () {
-         $scope.error = "An Error has occured while loading posts!";
-         $scope.loading = false;
-     });
+    function applyRemoteDataToPhrase(request) {
+        $scope.wordsInPhrases = request;
+    }
 
     $scope.getWordName = function (wordId) {
         var i = 0;
@@ -71,4 +77,4 @@
 }
 
 
-LandingPageController.$inject = ['$scope', '$http'];
+LandingPageController.$inject = ['$scope', '$http', '$window', 'userService'];

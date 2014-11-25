@@ -18,6 +18,14 @@ namespace Uni_AppKids.Application.Services
             unitOfWork.GetCustomWordRepository().BulkInsertOfWords(mappedListOfWords);
         }
 
+        public string[] GetIdOfWords(List<WordDto> listOfWords)
+        {
+            GetMappedEntities();
+            var mappedListOfWords = Mapper.Map<List<WordDto>, List<Word>>(listOfWords);
+            string[] listOfId = unitOfWork.GetCustomWordRepository().GetIdOfWordsInPhrase(mappedListOfWords);
+            return listOfId;
+        }
+
         public List<WordDto> GetListOfWordsForAPhrase(string wordsId)
         {
             GetMappedEntities();

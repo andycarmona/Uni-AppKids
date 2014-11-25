@@ -20,6 +20,11 @@ namespace Uni_AppKids.Application.Services
      
         }
 
+        public void InsertPhrase(string phrase)
+        {
+           //unitOfWork.GetGenericPhraseDictionaryRepository().Insert();
+        }
+
         private static void GetMappedEntities()
         {
             Mapper.CreateMap<CreatePhraseDictionaryInput, PhraseDictionary>()

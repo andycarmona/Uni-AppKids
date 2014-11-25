@@ -10,5 +10,7 @@
         List<Word> GetListOfOrderedWordsForAPhrase(string wordsId);
 
         void BulkInsertOfWords(List<Word> listOfWords);
+
+        string[] GetIdOfWordsInPhrase(List<Word> listOfWords);
     }
 }

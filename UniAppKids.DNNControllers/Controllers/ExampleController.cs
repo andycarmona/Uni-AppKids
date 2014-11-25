@@ -5,9 +5,12 @@
     using System.Linq;
     using System.Net;
     using System.Net.Http;
+    using System.Web;
     using System.Web.Http;
 
     using DotNetNuke.Common.Utilities;
+    using DotNetNuke.Entities.Users;
+    using DotNetNuke.Security.Roles;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Web.Api;
 
@@ -32,22 +35,36 @@
             {
                 var wordList = Json.Deserialize<List<WordDto>>(listOfWords);
                 wordList.Select(c => { c.CreationTime = DateTime.Now; return c; }).ToList();
-               
+
                 try
                 {
                     aWordService.BulkInsertOfWords(wordList);
+                    string[] listOfWordsId = aWordService.GetIdOfWords(wordList);
                     return ControllerContext.Request.CreateResponse(HttpStatusCode.OK);
                 }
                 catch (Exception e)
                 {
                     return ControllerContext.Request.CreateResponse(
-              HttpStatusCode.BadRequest,e.Message);
+              HttpStatusCode.BadRequest, e.Message);
                 }
             }
 
             return ControllerContext.Request.CreateResponse(
                 HttpStatusCode.BadRequest,
                 "Invalid parameters, Please check there is elemtns in array");
+        }
+        [AcceptVerbs("GET")]
+        public HttpResponseMessage checkUserAuthenticated()
+        {
+            var authenticated = HttpContext.Current.User.Identity.IsAuthenticated;
+            if (authenticated)
+            {
+                return ControllerContext.Request.CreateResponse(HttpStatusCode.OK, UserController.GetCurrentUserInfo().Username);
+            }
+
+            return ControllerContext.Request.CreateResponse(
+          HttpStatusCode.Unauthorized, "Not authorized");
+
         }
 
         [DnnAuthorize]

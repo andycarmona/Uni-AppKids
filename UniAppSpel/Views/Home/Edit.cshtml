@@ -4,6 +4,7 @@
 
 <div ng-app="UniAppSpelApp" ng-controller="EditPageController">
     <h1>Add phrase</h1>
+    <p>Dictionary:{{dictionaryName}}</p>
     <textarea class="form-horizontal" ng-model="sentence" ng-change="parseSentence()" style="width: 100%; height: 15em;"></textarea>
     <form name="worddata">
         <tabset justified="true">

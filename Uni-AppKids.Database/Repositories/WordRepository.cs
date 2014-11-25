@@ -37,15 +37,22 @@ namespace Uni_AppKids.Database.Repositories
             {
                 try
                 {
-                    context.BulkInsert(listOfWords);
+                context.BulkInsert(listOfWords);
                 context.SaveChanges();
                 }
-                 catch (DuplicateKeyException e)
+                catch (DuplicateKeyException e)
                 {
-
                 }
+
                 transactionScope.Complete();
             }
+        }
+
+        public string[] GetIdOfWordsInPhrase(List<Word> listOfWords)
+        {
+            List<string> listOfIds = new List<string>();
+
+            return null;
         }
 
         public override List<Word> GetListOfOrderedWordsForAPhrase(string wordsId)

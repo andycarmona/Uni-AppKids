@@ -1,5 +1,6 @@
-﻿var EditPageController = function ($scope, $http) {
+﻿var EditPageController = function ($scope, $http, $window, userService) {
 
+    $scope.dictionaryName = window.localStorage['dictionary_name'];
 
     $scope.words = [
         { "WordName": "Tes", "SoundFile": "Doe.wav" },
@@ -13,34 +14,21 @@
 
         $scope.formData.words = $scope.words;
         var json_text = JSON.stringify($scope.words, null, 2);
-        var urlPhrase = "http://dnndev.me/DesktopModules/DataExchange/API/Example/AddPhrase?listOfWords=" + json_text;
-        $http({
-            url: urlPhrase,
-            method: "POST",
-            dataType: "json",
-            headers: {
-                'Content-Type': 'x-www-form-urlencoded'
-            }
-        }).success(function (data) {
-            $scope.errors="Request done!!";
 
-        }).error(function (response) {
-            // when there's an error, parse the error
-            // and set it to the scope (for binding)
-            $scope.errors = parseErrors(response);
-        });;
+        var urlPhrase = "http://dnndev.me/DesktopModules/DataExchange/API/Example/AddPhrase?listOfWords=" + json_text;
+
+        userService.PostRequest(urlPhrase).then(
+                     function (request) {
+                         if (request == true) {
+
+                             $scope.errors = "Couldn't insert those words. Are there some duplicates words?";
+                         }
+                         return request;
+
+                     }
+                 );
     };
-    function parseErrors(response) {
-        var errors = [];
-        for (var key in response.ModelState) {
-            for (var i = 0; i < response.ModelState[key].length; i++) {
-                errors.push(response.ModelState[key][i]);
-            }
-        }
-        return errors;
-    }
-    // this is called when the textarea is changed
-    // it splits up the textarea's text and updates $scope.words 
+
     $scope.parseSentence = function () {
 
         var words = $scope.sentence.split(/\s+/g);
@@ -66,14 +54,11 @@
             var word = $scope.words[i].WordName;
             if (word.replace(/\s+/g, '') !== '') {
                 words.push(word);
-       
+
             }
         }
 
         $scope.sentence = words.join(' ');
-
-        // if the user puts a space in the input
-        // call parseSentence() to update $scope.words
         if (w.WordName.indexOf(' ') > -1) {
             $scope.parseSentenceDebounced();
         }
@@ -84,5 +69,4 @@
 
 }
 
-// The $inject property of every controller (and pretty much every other type of object in Angular) needs to be a string array equal to the controllers arguments, only as strings
-EditPageController.$inject = ['$scope', '$http'];
+EditPageController.$inject = ['$scope', '$http', '$window', 'userService'];
