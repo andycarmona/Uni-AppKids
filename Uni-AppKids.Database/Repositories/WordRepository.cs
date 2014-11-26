@@ -9,8 +9,10 @@
 
 namespace Uni_AppKids.Database.Repositories
 {
+    using System.CodeDom;
     using System.Collections.Generic;
     using System.Data.Linq;
+    using System.Globalization;
     using System.Linq;
     using System.Transactions;
 
@@ -42,20 +44,48 @@ namespace Uni_AppKids.Database.Repositories
                 }
                 catch (DuplicateKeyException e)
                 {
+                  
                 }
 
                 transactionScope.Complete();
             }
         }
 
-        public string[] GetIdOfWordsInPhrase(List<Word> listOfWords)
+        public List<string> GetIdOfWordsInPhrase(List<Word> listOfWords)
         {
-            List<string> listOfIds = new List<string>();
+           var wordIds = new List<string>();
+  
+            foreach (var word in listOfWords)
+            {
+                var aWord = context.Words.First(i => i.WordName == word.WordName);
+                wordIds.Add(aWord.WordId.ToString(CultureInfo.InvariantCulture));    
+            }
 
-            return null;
+            return wordIds;
         }
 
-        public override List<Word> GetListOfOrderedWordsForAPhrase(string wordsId)
+        public List<string> GetRepeatedWords(List<Word> listOfWords)
+        {
+            var repeatedWords = new List<string>();
+
+            foreach (var word in listOfWords)
+            {
+                var aWord = context.Words.FirstOrDefault(i => i.WordName == word.WordName);
+                if (aWord != null)
+                {
+                    repeatedWords.Add(aWord.WordName);
+                }
+            }
+
+            return repeatedWords;
+        }
+
+        public IEnumerable<Word> GetAllWords()
+        {
+            return this.GetAllData();
+        }
+
+        public List<Word> GetListOfOrderedWordsForAPhrase(string wordsId)
         {
             var numbersId = wordsId.Split(',').Select(int.Parse).ToList();
             var rawListWord = this.Get().AsEnumerable();

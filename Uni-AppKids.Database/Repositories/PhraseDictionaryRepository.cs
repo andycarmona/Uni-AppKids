@@ -28,7 +28,7 @@ namespace Uni_AppKids.Database.Repositories
         }
 
 
-        public override IEnumerable<PhraseDictionary> GetUserDictionaries(string aUserName)
+        public IEnumerable<PhraseDictionary> GetUserDictionaries(string aUserName)
         {
             IEnumerable<PhraseDictionary> listOfDictionaries = this.Get().Where(x => x.UserName == aUserName);
             

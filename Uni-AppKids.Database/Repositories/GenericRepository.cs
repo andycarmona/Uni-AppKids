@@ -68,6 +68,7 @@ namespace Uni_AppKids.Database.Repositories
         public virtual TEntity GetByID(object id)
         {
             return dbSet.Find(id);
+            
         }
 
         public virtual void Insert(TEntity entity)
@@ -96,19 +97,10 @@ namespace Uni_AppKids.Database.Repositories
             context.Entry(entityToUpdate).State = EntityState.Modified;
         }
 
-        public virtual IEnumerable<TEntity> GetUserDictionaries(string aUserName)
+        public virtual IEnumerable<TEntity> GetAllData()
         {
             IQueryable<TEntity> query = dbSet;
-            return query;
-
-        }
-
-        public virtual List<TEntity> GetListOfOrderedWordsForAPhrase(string wordsId)
-        {
-            var query = new List<TEntity>(this.dbSet);
-            return query;
-        }
-
-        
+            return query.ToList();
+        }   
     }
 }

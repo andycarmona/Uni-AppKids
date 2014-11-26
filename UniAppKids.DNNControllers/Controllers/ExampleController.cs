@@ -31,28 +31,31 @@
         [AcceptVerbs("POST")]
         public HttpResponseMessage AddPhrase(string listOfWords)
         {
-            if (listOfWords.Length != 0)
+            if (listOfWords.Length == 0)
             {
-                var wordList = Json.Deserialize<List<WordDto>>(listOfWords);
-                wordList.Select(c => { c.CreationTime = DateTime.Now; return c; }).ToList();
-
-                try
-                {
-                    aWordService.BulkInsertOfWords(wordList);
-                    string[] listOfWordsId = aWordService.GetIdOfWords(wordList);
-                    return ControllerContext.Request.CreateResponse(HttpStatusCode.OK);
-                }
-                catch (Exception e)
-                {
-                    return ControllerContext.Request.CreateResponse(
-              HttpStatusCode.BadRequest, e.Message);
-                }
+                return this.ControllerContext.Request.CreateResponse(
+                    HttpStatusCode.BadRequest,
+                    "Invalid parameters, Please check there is elements in array");
             }
 
-            return ControllerContext.Request.CreateResponse(
-                HttpStatusCode.BadRequest,
-                "Invalid parameters, Please check there is elemtns in array");
+            var wordList = Json.Deserialize<List<WordDto>>(listOfWords);
+            wordList.Select(c => { c.CreationTime = DateTime.Now; return c; }).ToList();
+
+            try
+            {
+                this.aWordService.BulkInsertOfWords(wordList);
+                var listOfWordsId = this.aWordService.GetIdOfWords(wordList);
+                return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception e)
+            {
+                var listRepeatedWords = this.aWordService.GetRepeatedWords(wordList);
+                var errorMessage = string.Format("Cannot insert duplicate words: {0}", string.Join(",", listRepeatedWords));
+                return this.ControllerContext.Request.CreateResponse(
+                    HttpStatusCode.BadRequest, errorMessage);
+            }
         }
+
         [AcceptVerbs("GET")]
         public HttpResponseMessage checkUserAuthenticated()
         {
@@ -67,6 +70,22 @@
 
         }
 
+        [DnnAuthorize]
+        [AcceptVerbs("GET")]
+        public HttpResponseMessage GetAllWordsInDictionary()
+        {
+            List<WordDto> wordList = this.aWordService.GetAllWords();
+        
+            if (!wordList.Any())
+            {
+                return this.ControllerContext.Request.CreateResponse(
+                    HttpStatusCode.BadRequest,
+                    "There is no words in dictionary");
+            }
+           
+                return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, wordList);
+        }
+        
         [DnnAuthorize]
         [AcceptVerbs("GET")]
         public List<WordDto> GetWordsList(int dictionaryId, int indexOfPhraseList)
@@ -117,7 +136,7 @@
                 string helloWorld = "Hello World!";
                 return Request.CreateResponse(HttpStatusCode.OK, helloWorld);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 //Log to DotNetNuke and reply with Error
                 Exceptions.LogException(ex);
@@ -138,7 +157,7 @@
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, helloWorld);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 //Log to DotNetNuke and reply with Error
                 Exceptions.LogException(ex);

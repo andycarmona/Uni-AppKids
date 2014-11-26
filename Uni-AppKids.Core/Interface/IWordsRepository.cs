@@ -1,6 +1,5 @@
 ﻿namespace Uni_AppKids.Core.Interface
 {
-    using System.Collections;
     using System.Collections.Generic;
 
     using Uni_AppKids.Core.EntityModels;
@@ -11,6 +10,10 @@
 
         void BulkInsertOfWords(List<Word> listOfWords);
 
-        string[] GetIdOfWordsInPhrase(List<Word> listOfWords);
+        List<string> GetIdOfWordsInPhrase(List<Word> listOfWords);
+
+        List<string> GetRepeatedWords(List<Word> listOfWords);
+
+        IEnumerable<Word> GetAllWords();
     }
 }

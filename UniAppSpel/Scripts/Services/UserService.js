@@ -8,10 +8,6 @@
         var request = $http({
             method: "get",
             url: aUrl
-            
-            //params: {
-            //    action: "get"
-            //}
         });
         return (request.then(handleSuccess, handleError));
 
@@ -22,11 +18,7 @@
         var request = $http({
             method: "post",
             url: aUrl,
-            datatyp:"json"
-
-            //params: {
-            //    action: "get"
-            //}
+            datatype:"json"
         });
         return (request.then(handleSuccess, handleError));
 
@@ -37,7 +29,7 @@
         if (!angular.isObject(response.data) || !response.data.message)
         {
             
-            return (true);
+            return (response.data);
 
         }
 

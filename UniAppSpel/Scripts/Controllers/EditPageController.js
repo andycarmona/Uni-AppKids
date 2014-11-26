@@ -1,5 +1,8 @@
 ﻿var EditPageController = function ($scope, $http, $window, userService) {
 
+    var urlPhrase = "http://dnndev.me/DesktopModules/DataExchange/API/Example/AddPhrase?listOfWords=";
+    var urlWordList = "http://dnndev.me/DesktopModules/DataExchange/API/Example/GetAllWordsInDictionary";
+
     $scope.dictionaryName = window.localStorage['dictionary_name'];
 
     $scope.words = [
@@ -9,20 +12,41 @@
 
     $scope.sentence = 'Hello there how are you today?';
 
-    $scope.formData = {};
+    GetWordList(urlWordList);
+
+    function GetWordList(url) {
+        userService.GetRequest(url).then(
+                         function (request) {
+                             if (request == true) {
+                                   $scope.errors = request;
+                             }
+                          
+                             applyRemoteDataToWordList(request);
+
+                         }
+                     );
+    }
+    function applyRemoteDataToWordList(request) {
+
+        $scope.words_in_dictionary = request;
+        
+    }
+
     $scope.processForm = function () {
 
         $scope.formData.words = $scope.words;
-        var json_text = JSON.stringify($scope.words, null, 2);
-
-        var urlPhrase = "http://dnndev.me/DesktopModules/DataExchange/API/Example/AddPhrase?listOfWords=" + json_text;
+        var wordsJsonFormat = JSON.stringify($scope.words, null, 2);
+        urlPhrase = urlPhrase + wordsJsonFormat;
+       
 
         userService.PostRequest(urlPhrase).then(
                      function (request) {
-                         if (request == true) {
+                      
+                         //if (request == true) {
 
-                             $scope.errors = "Couldn't insert those words. Are there some duplicates words?";
-                         }
+                         //    $scope.errors = "Couldn't insert those words. Are there some duplicates words?";
+                         //}
+                         $scope.errors = request;
                          return request;
 
                      }

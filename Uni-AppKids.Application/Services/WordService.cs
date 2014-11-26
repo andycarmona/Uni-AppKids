@@ -18,12 +18,20 @@ namespace Uni_AppKids.Application.Services
             unitOfWork.GetCustomWordRepository().BulkInsertOfWords(mappedListOfWords);
         }
 
-        public string[] GetIdOfWords(List<WordDto> listOfWords)
+        public List<string> GetIdOfWords(List<WordDto> listOfWords)
         {
             GetMappedEntities();
             var mappedListOfWords = Mapper.Map<List<WordDto>, List<Word>>(listOfWords);
-            string[] listOfId = unitOfWork.GetCustomWordRepository().GetIdOfWordsInPhrase(mappedListOfWords);
+            var listOfId = unitOfWork.GetCustomWordRepository().GetIdOfWordsInPhrase(mappedListOfWords);
             return listOfId;
+        }
+
+        public List<string> GetRepeatedWords(List<WordDto> listOfWords)
+        {
+            GetMappedEntities();
+            var mappedListOfWords = Mapper.Map<List<WordDto>, List<Word>>(listOfWords);
+            var listOfRepeatedWords = unitOfWork.GetCustomWordRepository().GetRepeatedWords(mappedListOfWords);
+            return listOfRepeatedWords;
         }
 
         public List<WordDto> GetListOfWordsForAPhrase(string wordsId)
@@ -31,6 +39,14 @@ namespace Uni_AppKids.Application.Services
             GetMappedEntities();
             var listOfWords = unitOfWork.GetCustomWordRepository().GetListOfOrderedWordsForAPhrase(wordsId);
             var mappedListOfWords = Mapper.Map<List<Word>, List<WordDto>>(listOfWords);
+            return mappedListOfWords;
+        }
+
+        public List<WordDto> GetAllWords()
+        {
+            GetMappedEntities();
+            var listOfWords = unitOfWork.GetCustomWordRepository().GetAllWords();
+            var mappedListOfWords = Mapper.Map<List<Word>, List<WordDto>>((List<Word>)listOfWords);
             return mappedListOfWords;
         }
 

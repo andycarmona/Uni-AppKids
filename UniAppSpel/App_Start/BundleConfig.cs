@@ -17,9 +17,10 @@ namespace UniAppSpel
 
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
 
-            bundles.Add(new StyleBundle("~/Content/bootstrap").Include(
-               "~/Content/bootstrap.css",
-                "~/Content/bootstrap-responsive.css"));
+            bundles.Add(new StyleBundle("~/Content/bootstrap")
+                .Include(
+               "~/Content/bootstrap.min.css",
+                "~/Content/bootstrap-responsive.min.css"));
 
             BundleTable.EnableOptimizations = true;
         }

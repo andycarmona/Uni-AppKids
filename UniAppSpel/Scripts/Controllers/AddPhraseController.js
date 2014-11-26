@@ -6,7 +6,6 @@
         { "WordName": "Tes", "SoundFile": "Doe.wav" },
         { "WordName": "Anna", "SoundFile": "Smith.wav" }
     ];
-    //$scope.words = ['bob', 'sean', 'rocky', 'john'];
     $scope.sentence = 'Hello there how are you today?';
 
     $scope.formData = {};
@@ -33,8 +32,7 @@
             }
         });
     };
-    // this is called when the textarea is changed
-    // it splits up the textarea's text and updates $scope.words 
+
     $scope.parseSentence = function () {
 
         var words = $scope.sentence.split(/\s+/g);
@@ -52,8 +50,6 @@
 
     };
 
-    //$scope.parseSentenceDebounced = debounce($scope.parseSentence, 1000, false);
-
     $scope.buildSentance = function (w) {
 
         var words = [];
@@ -67,9 +63,6 @@
         }
 
         $scope.sentence = words.join(' ');
-
-        // if the user puts a space in the input
-        // call parseSentence() to update $scope.words
         if (w.WordName.indexOf(' ') > -1) {
             $scope.parseSentenceDebounced();
         }
