@@ -94,6 +94,7 @@
     <Compile Include="Controllers\RouterMapper.cs" />
     <Compile Include="Database\IDataContext.cs" />
     <Compile Include="Database\IRepository.cs" />
+    <Compile Include="Helpers\DistinctItemComparer.cs" />
     <Compile Include="Models\PhraseDictionary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\DictionaryRepository.cs" />

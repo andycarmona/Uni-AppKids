@@ -7,9 +7,27 @@
     <p>Dictionary:{{dictionaryName}}</p>
     <textarea class="form-horizontal" ng-model="sentence" ng-change="parseSentence()" style="width: 100%; height: 15em;"></textarea>
     <form name="worddata">
+        <div style="float:right;" class="bottomcenter">
+            <accordion close-others="oneAtATime">
+
+                <accordion-group heading="(Show/Hide) words in dictionary">
+
+
+                    <table class="table table-striped">
+                        <thead><tr><th></th></tr></thead>
+                        <tbody>
+                            <tr ng-repeat="words in words_in_dictionary | orderBy:'WordName':false"><td ng-click="addWordFromDictionary(words.WordName)"><p>{{words.WordName}}</p></td></tr>
+                        </tbody>
+                    </table>
+
+                </accordion-group>
+
+            </accordion>
+
+        </div>
         <tabset justified="true">
             <tab ng-repeat="w in words track by $index" heading="{{w.WordName}}">
-                <div class="leftSide">
+                <div class="bottomleft">
                     <label>Name</label>
                     <input class="form-horizontal" type="text" ng-model="w.WordName" ng-change="buildSentance(w[$index])" />
                     <label>Sound file</label>
@@ -18,19 +36,17 @@
                     <input class="form-horizontal" type="text" ng-model="w.Image" ng-change="buildSentance(w[$index])" />
                     <label>Description</label>
                     <input class="form-horizontal" type="text" ng-model="w.WordDescription" ng-change="buildSentance(w[$index])" />
+                    <button id="Submit1" class="primaryButton" type="button" ng-click="processForm()">Submit</button>
                 </div>
-                <div class="rightSide">
-                 
-                        <table class="table table-striped">
-                            <thead><tr><th>Words in dictionary:</th></tr></thead>
-                            <tbody>
-                                <tr ng-repeat="words in words_in_dictionary | orderBy:'WordName':false"><td><p>{{words.WordName}}</p></td></tr>
-                            </tbody>
-                        </table>
+              
+                <div>
+                  
+                    <textarea class="form-horizontal" ng-model="errors" style="width: 100%; height: 15em;"></textarea>
                 </div>
+               
             </tab>
         </tabset>
-        <textarea class="form-horizontal" ng-model="errors" style="width: 100%; height: 15em;"></textarea>
-        <button id="Submit1" class="primaryButton" type="button" ng-click="processForm()">Submit</button>
+
+
     </form>
 </div>

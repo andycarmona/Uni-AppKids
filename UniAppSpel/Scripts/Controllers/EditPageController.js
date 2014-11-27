@@ -34,21 +34,15 @@
 
     $scope.processForm = function () {
 
-        $scope.formData.words = $scope.words;
+
         var wordsJsonFormat = JSON.stringify($scope.words, null, 2);
         urlPhrase = urlPhrase + wordsJsonFormat;
        
 
         userService.PostRequest(urlPhrase).then(
                      function (request) {
-                      
-                         //if (request == true) {
-
-                         //    $scope.errors = "Couldn't insert those words. Are there some duplicates words?";
-                         //}
                          $scope.errors = request;
                          return request;
-
                      }
                  );
     };
@@ -69,8 +63,14 @@
         }
 
     };
+    $scope.addWordFromDictionary = function (aWord) {
+        alert(aWord);
+        $scope.words.push({ WordName: aWord });
+        $scope.buildSentance();
+  
+    }
 
-    $scope.buildSentance = function (w) {
+    $scope.buildSentance = function () {
 
         var words = [];
 
@@ -83,9 +83,9 @@
         }
 
         $scope.sentence = words.join(' ');
-        if (w.WordName.indexOf(' ') > -1) {
-            $scope.parseSentenceDebounced();
-        }
+        //if (w.WordName.indexOf(' ') > -1) {
+        //    $scope.parseSentenceDebounced();
+        //}
 
     }
 

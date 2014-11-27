@@ -1,4 +1,4 @@
-﻿namespace UniAppKids.DNNControllers.Services
+﻿namespace UniAppKids.DNNControllers.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -10,12 +10,14 @@
 
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Users;
-    using DotNetNuke.Security.Roles;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Web.Api;
 
-    using UniAppKids.DNNControllers.Repository;
     using UniAppKids.DNNControllers.Models;
+    using UniAppKids.DNNControllers.Repository;
+    using UniAppKids.DNNControllers.Services;
+
+    using UniAppSpel.Helpers;
 
     using Uni_AppKids.Application.Dto;
     using Uni_AppKids.Application.Services;
@@ -39,7 +41,7 @@
             }
 
             var wordList = Json.Deserialize<List<WordDto>>(listOfWords);
-            wordList.Select(c => { c.CreationTime = DateTime.Now; return c; }).ToList();
+            wordList.Select(c => { c.CreationTime = DateTime.Now; return c; }).Distinct(new DistinctItemComparer()).ToList();
 
             try
             {
@@ -62,10 +64,10 @@
             var authenticated = HttpContext.Current.User.Identity.IsAuthenticated;
             if (authenticated)
             {
-                return ControllerContext.Request.CreateResponse(HttpStatusCode.OK, UserController.GetCurrentUserInfo().Username);
+                return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, UserController.GetCurrentUserInfo().Username);
             }
 
-            return ControllerContext.Request.CreateResponse(
+            return this.ControllerContext.Request.CreateResponse(
           HttpStatusCode.Unauthorized, "Not authorized");
 
         }
@@ -114,7 +116,7 @@
         [AcceptVerbs("GET", "POST")]
         public List<PhraseDictionary> GetDictionary(string userName)
         {
-            var dictionaries = aRepository.GetDictionaries();
+            var dictionaries = this.aRepository.GetDictionaries();
 
             return dictionaries;
         }
@@ -122,7 +124,7 @@
         [AcceptVerbs("GET", "POST")]
         public List<PhraseDictionaryDto> GetDictionaryFromEF(string userName)
         {
-            var dictionaries = externalDictionaryService.GetUserPhraseDictionaries(userName);
+            var dictionaries = this.externalDictionaryService.GetUserPhraseDictionaries(userName);
 
             return dictionaries;
         }
@@ -134,13 +136,13 @@
             try
             {
                 string helloWorld = "Hello World!";
-                return Request.CreateResponse(HttpStatusCode.OK, helloWorld);
+                return this.Request.CreateResponse(HttpStatusCode.OK, helloWorld);
             }
             catch (Exception ex)
             {
                 //Log to DotNetNuke and reply with Error
                 Exceptions.LogException(ex);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                return this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 
@@ -155,13 +157,13 @@
                 {
                     helloWorld = "Good-bye World!";
                 }
-                return Request.CreateResponse(HttpStatusCode.OK, helloWorld);
+                return this.Request.CreateResponse(HttpStatusCode.OK, helloWorld);
             }
             catch (Exception ex)
             {
                 //Log to DotNetNuke and reply with Error
                 Exceptions.LogException(ex);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                return this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
             }
         }
         #endregion
