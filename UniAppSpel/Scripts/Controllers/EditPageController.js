@@ -64,7 +64,7 @@
 
     };
     $scope.addWordFromDictionary = function (aWord) {
-        alert(aWord);
+      
         $scope.words.push({ WordName: aWord });
         $scope.buildSentance();
   

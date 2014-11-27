@@ -1,4 +1,4 @@
-﻿namespace UniAppKids.DNNControllers.Controllers
+﻿namespace UniAppKids.DNNControllers.Services
 {
     using System;
     using System.Collections.Generic;
@@ -10,12 +10,12 @@
 
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Users;
+    using DotNetNuke.Security.Roles;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Web.Api;
 
-    using UniAppKids.DNNControllers.Models;
     using UniAppKids.DNNControllers.Repository;
-    using UniAppKids.DNNControllers.Services;
+    using UniAppKids.DNNControllers.Models;
 
     using UniAppSpel.Helpers;
 
@@ -41,11 +41,12 @@
             }
 
             var wordList = Json.Deserialize<List<WordDto>>(listOfWords);
-            wordList.Select(c => { c.CreationTime = DateTime.Now; return c; }).Distinct(new DistinctItemComparer()).ToList();
+            wordList.Select(c => { c.CreationTime = DateTime.Now; return c; }).ToList();
 
             try
             {
-                this.aWordService.BulkInsertOfWords(wordList);
+                var listNoRepeatedElements = wordList.Distinct(new DistinctItemComparer()).ToList();
+                this.aWordService.BulkInsertOfWords(listNoRepeatedElements);
                 var listOfWordsId = this.aWordService.GetIdOfWords(wordList);
                 return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK);
             }
@@ -64,10 +65,10 @@
             var authenticated = HttpContext.Current.User.Identity.IsAuthenticated;
             if (authenticated)
             {
-                return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, UserController.GetCurrentUserInfo().Username);
+                return ControllerContext.Request.CreateResponse(HttpStatusCode.OK, UserController.GetCurrentUserInfo().Username);
             }
 
-            return this.ControllerContext.Request.CreateResponse(
+            return ControllerContext.Request.CreateResponse(
           HttpStatusCode.Unauthorized, "Not authorized");
 
         }
@@ -77,17 +78,17 @@
         public HttpResponseMessage GetAllWordsInDictionary()
         {
             List<WordDto> wordList = this.aWordService.GetAllWords();
-        
+
             if (!wordList.Any())
             {
                 return this.ControllerContext.Request.CreateResponse(
                     HttpStatusCode.BadRequest,
                     "There is no words in dictionary");
             }
-           
-                return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, wordList);
+
+            return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, wordList);
         }
-        
+
         [DnnAuthorize]
         [AcceptVerbs("GET")]
         public List<WordDto> GetWordsList(int dictionaryId, int indexOfPhraseList)
@@ -116,7 +117,7 @@
         [AcceptVerbs("GET", "POST")]
         public List<PhraseDictionary> GetDictionary(string userName)
         {
-            var dictionaries = this.aRepository.GetDictionaries();
+            var dictionaries = aRepository.GetDictionaries();
 
             return dictionaries;
         }
@@ -124,7 +125,7 @@
         [AcceptVerbs("GET", "POST")]
         public List<PhraseDictionaryDto> GetDictionaryFromEF(string userName)
         {
-            var dictionaries = this.externalDictionaryService.GetUserPhraseDictionaries(userName);
+            var dictionaries = externalDictionaryService.GetUserPhraseDictionaries(userName);
 
             return dictionaries;
         }
@@ -136,13 +137,13 @@
             try
             {
                 string helloWorld = "Hello World!";
-                return this.Request.CreateResponse(HttpStatusCode.OK, helloWorld);
+                return Request.CreateResponse(HttpStatusCode.OK, helloWorld);
             }
             catch (Exception ex)
             {
                 //Log to DotNetNuke and reply with Error
                 Exceptions.LogException(ex);
-                return this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 
@@ -157,13 +158,13 @@
                 {
                     helloWorld = "Good-bye World!";
                 }
-                return this.Request.CreateResponse(HttpStatusCode.OK, helloWorld);
+                return Request.CreateResponse(HttpStatusCode.OK, helloWorld);
             }
             catch (Exception ex)
             {
                 //Log to DotNetNuke and reply with Error
                 Exceptions.LogException(ex);
-                return this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
             }
         }
         #endregion
