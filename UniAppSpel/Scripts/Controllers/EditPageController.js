@@ -1,6 +1,6 @@
 ﻿var EditPageController = function ($scope, $http, $window, userService) {
 
-    var urlPhrase = "http://dnndev.me/DesktopModules/DataExchange/API/Example/AddPhrase?listOfWords=";
+    var urlPhrase = "http://dnndev.me/DesktopModules/DataExchange/API/Example/AddPhrase?dictionaryId=1&listOfWords=";
     var urlWordList = "http://dnndev.me/DesktopModules/DataExchange/API/Example/GetAllWordsInDictionary";
 
     $scope.dictionaryName = window.localStorage['dictionary_name'];
@@ -15,16 +15,13 @@
     GetWordList(urlWordList);
 
     function GetWordList(url) {
-        userService.GetRequest(url).then(
-                         function (request) {
-                             if (request == true) {
-                                   $scope.errors = request;
-                             }
-                          
-                             applyRemoteDataToWordList(request);
 
-                         }
-                     );
+        userService.GetRequest(url).success(function (request) {
+            applyRemoteDataToWordList(request);
+        }).error(function (request) {
+            $scope.error = "An internal error has ocurred. " + request;
+        });
+      
     }
     function applyRemoteDataToWordList(request) {
 
@@ -38,13 +35,11 @@
         var wordsJsonFormat = JSON.stringify($scope.words, null, 2);
         urlPhrase = urlPhrase + wordsJsonFormat;
        
-
-        userService.PostRequest(urlPhrase).then(
-                     function (request) {
-                         $scope.errors = request;
-                         return request;
-                     }
-                 );
+        userService.PostRequest(urlPhrase).success(function (request) {
+            return(request);
+        }).error(function (request) {
+            $scope.error = "An internal error has ocurred. " + request;
+        });
     };
 
     $scope.parseSentence = function () {

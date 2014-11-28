@@ -25,6 +25,8 @@ namespace Uni_AppKids.Application.Services
 
         private GenericRepository<Word> genericWordRepository;
 
+        private GenericRepository<Phrase> genericPhraseRepository;
+
         private PhraseDictionaryRepository customPhraseDictionaryRepository;
 
         private WordRepository customWordRepository;
@@ -45,7 +47,6 @@ namespace Uni_AppKids.Application.Services
             GC.SuppressFinalize(this);
         }
 
-       
 
         public PhraseDictionaryRepository GetCustomPhraseDictionaryRepository()
         {
@@ -63,7 +64,12 @@ namespace Uni_AppKids.Application.Services
             return this.phraseRepository ?? (this.phraseRepository = new PhraseRepository(this.context));
         }
 
-
+        public GenericRepository<Phrase> GetGenericPhraseRepository()
+        {
+            return this.genericPhraseRepository
+                   ?? (this.genericPhraseRepository = new GenericRepository<Phrase>(this.context));
+        }
+        
         public GenericRepository<PhraseDictionary> GetGenericPhraseDictionaryRepository()
         {
            

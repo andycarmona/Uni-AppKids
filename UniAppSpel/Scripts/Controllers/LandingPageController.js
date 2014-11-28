@@ -6,52 +6,50 @@
     $scope.wordsInPhrases = [];
     $scope.description = "No description";
     $scope.sound = "No sound";
- 
-    $scope.errorMessage = ['Undefined error. Could not contact server.']
 
-    var urlDictionary = "http://dnndev.me/DesktopModules/DataExchange/API/Example/GetDictionary?userName=andy";
+    $scope.errorMessage = ['Undefined error. Could not contact server.'];
+
+    var urlDictionary = "http://dnndev.me/DesktopModules/DataExchange/API/Example/GetDictionary?dictionaryId=1";
 
     var urlPhrase = "http://dnndev.me/DesktopModules/DataExchange/API/Example/GetWordsList?dictionaryId=1&indexOfPhraseList=0";
 
-    GetDictionary(urlDictionary);
-    GetPhrase(urlPhrase);
+    GetDictionary();
+    GetPhrase();
 
 
-    function GetDictionary(url) {
+    function GetDictionary() {
 
-        userService.GetRequest(url).then(
-                           function (request) {
-                               if (request==true) {
-                                   $scope.error = $scope.errorMessage[0];
-                               }
-                               applyRemoteDataToDictionary(request);
-
-                           }
-                       );
-
+    
+        userService.GetRequest(urlDictionary).success(function (request) {
+            applyRemoteDataToDictionary(request);
+        }).error(function (request) {
+            $scope.error = "An internal error has ocurred. "+request;
+        });
 
     }
 
-    function GetPhrase(url) {
-        userService.GetRequest(url).then(
-                         function (request) {
-                             if (request==true) {
-                                 $scope.error = $scope.errorMessage[0];
-                             }
-                             applyRemoteDataToPhrase(request);
+    function GetPhrase() {
+       
+        userService.GetRequest(urlPhrase).success(function(request) {
+            applyRemoteDataToPhrase(request);
+        }).error(function() {
+            $scope.error = "An internal error has ocurred. "+request;
+        });
 
-                         }
-                     );
     }
 
     function applyRemoteDataToDictionary(request) {
 
-        $scope.dictionaries = request;
-        window.localStorage['dictionary_name'] = request[0].DictionaryName;
+            $scope.dictionaries = request.DictionaryName;
+            window.localStorage['dictionary_name'] = request.DictionaryName;
+
     }
 
     function applyRemoteDataToPhrase(request) {
-        $scope.wordsInPhrases = request;
+        if (request !== Array) {
+            $scope.wordsInPhrases = request;
+        } else { $scope.error = request; }
+
     }
 
     $scope.getWordName = function (wordId) {

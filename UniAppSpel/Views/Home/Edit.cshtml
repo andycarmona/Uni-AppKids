@@ -5,26 +5,27 @@
 <div ng-app="UniAppSpelApp" ng-controller="EditPageController">
     <h1>Add phrase</h1>
     <p>Dictionary:{{dictionaryName}}</p>
+    <div style="float:right;" class="bottomcenter">
+        <accordion close-others="oneAtATime">
+
+            <accordion-group heading="(Show/Hide) words in dictionary">
+
+
+                <table class="table table-striped">
+                    <thead><tr><th></th></tr></thead>
+                    <tbody>
+                        <tr ng-repeat="words in words_in_dictionary | orderBy:'WordName':false"><td ng-click="addWordFromDictionary(words.WordName)"><p>{{words.WordName}}</p></td></tr>
+                    </tbody>
+                </table>
+
+            </accordion-group>
+
+        </accordion>
+
+    </div>
     <textarea class="form-horizontal" ng-model="sentence" ng-change="parseSentence()" style="width: 100%; height: 15em;"></textarea>
     <form name="worddata">
-        <div style="float:right;" class="bottomcenter">
-            <accordion close-others="oneAtATime">
-
-                <accordion-group heading="(Show/Hide) words in dictionary">
-
-
-                    <table class="table table-striped">
-                        <thead><tr><th></th></tr></thead>
-                        <tbody>
-                            <tr ng-repeat="words in words_in_dictionary | orderBy:'WordName':false"><td ng-click="addWordFromDictionary(words.WordName)"><p>{{words.WordName}}</p></td></tr>
-                        </tbody>
-                    </table>
-
-                </accordion-group>
-
-            </accordion>
-
-        </div>
+     
         <tabset justified="true">
             <tab ng-repeat="w in words track by $index" heading="{{w.WordName}}">
                 <div class="bottomleft">

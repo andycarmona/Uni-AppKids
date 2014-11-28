@@ -14,6 +14,8 @@ namespace Uni_AppKids.Application.Services
 
     using AutoMapper;
 
+    using Microsoft.Build.Utilities;
+
     using Uni_AppKids.Application.Dto;
     using Uni_AppKids.Core.EntityModels;
 
@@ -34,14 +36,14 @@ namespace Uni_AppKids.Application.Services
 
 
 
-        public List<PhraseDictionaryDto> GetUserPhraseDictionaries(string userName)
-        {
-            GetMappedEntities();
-            var phraseDictionaries = unitOfWork.GetCustomPhraseDictionaryRepository().GetUserDictionaries(userName);
+        //public List<PhraseDictionaryDto> GetUserPhraseDictionaries(string userName)
+        //{
+        //    GetMappedEntities();
+        //    var phraseDictionaries = unitOfWork.GetCustomPhraseDictionaryRepository().GetUserDictionaries();
          
-            var dictionaryList = Mapper.Map<List<PhraseDictionary>, List<PhraseDictionaryDto>>(phraseDictionaries.ToList());
-            return dictionaryList;
-        }
+        //    var dictionaryList = Mapper.Map<List<PhraseDictionary>, List<PhraseDictionaryDto>>(phraseDictionaries.ToList());
+        //    return dictionaryList;
+        //}
 
         public void UpdatePhraseDictionary(UpdatePhraseDictionaryInput input)
         {
@@ -55,7 +57,7 @@ namespace Uni_AppKids.Application.Services
 
         public void CreatePhraseDictionary(CreatePhraseDictionaryInput input)
         {
-            //Logger.Info("Creating a new dictionary: " + input);
+          
             GetMappedEntities();
 
             var dictionaryEntity = new PhraseDictionary();
@@ -66,10 +68,7 @@ namespace Uni_AppKids.Application.Services
 
         private static void GetMappedEntities()
         {
-            Mapper.CreateMap<CreatePhraseDictionaryInput, PhraseDictionary>()
-           .ForMember(c => c.Phrases, option => option.MapFrom(src => src.Phrases));
-            Mapper.CreateMap<PhraseDictionary, PhraseDictionaryDto>()
-                .ForMember(c => c.Phrases, option => option.MapFrom(src => src.Phrases));
+            Mapper.CreateMap<PhraseDictionary, PhraseDictionaryDto>(); 
             Mapper.CreateMap<Phrase, PhraseDto>();
             Mapper.CreateMap<Word, WordDto>();
         }

@@ -33,6 +33,8 @@ namespace Uni_AppKids.Core.EntityModels
 
         public string PhraseText { get; set; }
 
+        public string UserName { get; set; }
+
         public DateTime CreationTime { get; set; }
 
         public string WordsIds { get; set; }

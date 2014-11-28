@@ -74,6 +74,7 @@ namespace Uni_AppKids.Database.Repositories
         public virtual void Insert(TEntity entity)
         {
             dbSet.Add(entity);
+         
         }
 
         public virtual void Delete(object id)

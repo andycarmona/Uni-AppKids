@@ -16,7 +16,11 @@ namespace Uni_AppKids.Application.Dto
     {
         public int PhraseId { get; set; }
 
+        public int AssignedDictionaryId { get; set; }
+
         public string PhraseText { get; set; }
+
+        public string UserName { get; set; }
 
         public DateTime CreationTime { get; set; }
 

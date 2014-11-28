@@ -57,17 +57,13 @@
   <ItemGroup>
     <Compile Include="EntityFramework\DNNUniAppContext.cs" />
     <Compile Include="EntityFramework\UniAppKidsDbContext.cs" />
-    <Compile Include="Migrations\201411191437332_AddeColumn2.cs" />
-    <Compile Include="Migrations\201411191437332_AddeColumn2.Designer.cs">
-      <DependentUpon>201411191437332_AddeColumn2.cs</DependentUpon>
+    <Compile Include="Migrations\201411280728032_NewAttributesToWordModel.cs" />
+    <Compile Include="Migrations\201411280728032_NewAttributesToWordModel.Designer.cs">
+      <DependentUpon>201411280728032_NewAttributesToWordModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201411211618507_UniqueWordName.cs" />
-    <Compile Include="Migrations\201411211618507_UniqueWordName.Designer.cs">
-      <DependentUpon>201411211618507_UniqueWordName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411211627086_UniqueIndeToWord.cs" />
-    <Compile Include="Migrations\201411211627086_UniqueIndeToWord.Designer.cs">
-      <DependentUpon>201411211627086_UniqueIndeToWord.cs</DependentUpon>
+    <Compile Include="Migrations\201411280753179_UpdatUsernAmeInfo.cs" />
+    <Compile Include="Migrations\201411280753179_UpdatUsernAmeInfo.Designer.cs">
+      <DependentUpon>201411280753179_UpdatUsernAmeInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,14 +83,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201411191437332_AddeColumn2.resx">
-      <DependentUpon>201411191437332_AddeColumn2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201411280728032_NewAttributesToWordModel.resx">
+      <DependentUpon>201411280728032_NewAttributesToWordModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411211618507_UniqueWordName.resx">
-      <DependentUpon>201411211618507_UniqueWordName.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411211627086_UniqueIndeToWord.resx">
-      <DependentUpon>201411211627086_UniqueIndeToWord.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201411280753179_UpdatUsernAmeInfo.resx">
+      <DependentUpon>201411280753179_UpdatUsernAmeInfo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

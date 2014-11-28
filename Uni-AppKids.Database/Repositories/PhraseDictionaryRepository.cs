@@ -28,9 +28,9 @@ namespace Uni_AppKids.Database.Repositories
         }
 
 
-        public IEnumerable<PhraseDictionary> GetUserDictionaries(string aUserName)
+        public IEnumerable<PhraseDictionary> GetUserDictionaries()
         {
-            IEnumerable<PhraseDictionary> listOfDictionaries = this.Get().Where(x => x.UserName == aUserName);
+            IEnumerable<PhraseDictionary> listOfDictionaries = this.Get();
             
             return listOfDictionaries;
         }

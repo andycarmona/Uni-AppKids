@@ -11,29 +11,33 @@ namespace Uni_AppKids.Application.Services
     {
         private readonly UnitOfWork unitOfWork = new UnitOfWork();
 
-        public List<PhraseDto> GetListOfPhrase(int dictionaryId)
+        public PhraseService()
         {
             GetMappedEntities();
+        }
+
+        public List<PhraseDto> GetListOfPhrase(int dictionaryId)
+        {
+
             List<Phrase> listOfPhrases = unitOfWork.GetPhraseRepository().GetPhrasesInDictionary(dictionaryId);
             var mappedListOfWords = Mapper.Map<List<Phrase>, List<PhraseDto>>(listOfPhrases);
             return mappedListOfWords;
-     
+
         }
 
-        public void InsertPhrase(string phrase)
+        public void InsertPhrase(PhraseDto phrase)
         {
-           //unitOfWork.GetGenericPhraseDictionaryRepository().Insert();
+            var mappedPhrase = Mapper.Map<PhraseDto, Phrase>(phrase);
+            unitOfWork.GetGenericPhraseRepository().Insert(mappedPhrase);
+            unitOfWork.Save();
         }
 
         private static void GetMappedEntities()
         {
-            Mapper.CreateMap<CreatePhraseDictionaryInput, PhraseDictionary>()
-         .ForMember(c => c.Phrases, option => option.MapFrom(src => src.Phrases));
-            Mapper.CreateMap<PhraseDictionary, PhraseDictionaryDto>()
-                .ForMember(c => c.Phrases, option => option.MapFrom(src => src.Phrases));
+            Mapper.CreateMap<PhraseDto, Phrase>();
             Mapper.CreateMap<Phrase, PhraseDto>();
             Mapper.CreateMap<Word, WordDto>();
-          
+
         }
     }
 }

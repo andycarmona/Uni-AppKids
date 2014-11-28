@@ -9,7 +9,7 @@
             method: "get",
             url: aUrl
         });
-        return (request.then(handleSuccess, handleError));
+        return (request);
 
     }
 
@@ -20,28 +20,7 @@
             url: aUrl,
             datatype:"json"
         });
-        return (request.then(handleSuccess, handleError));
-
-    }
-
-    function handleError(response) {
-
-        if (!angular.isObject(response.data) || !response.data.message)
-        {
-            
-            return (response.data);
-
-        }
-
-   
-        return (response.data.message);
-
-    }
-
-
-    function handleSuccess(response) {
-
-        return (response.data);
+        return (request);
 
     }
 });

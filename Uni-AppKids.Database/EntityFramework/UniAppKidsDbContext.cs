@@ -16,7 +16,7 @@ namespace Uni_AppKids.Database.EntityFramework
     public class UniAppKidsDbContext : DbContext
     {
         public UniAppKidsDbContext()
-            : base("name=MainDb")
+            : base("name=DefaultConnection")
         {
         }
 

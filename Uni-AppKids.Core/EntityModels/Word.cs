@@ -30,6 +30,8 @@ namespace Uni_AppKids.Core.EntityModels
 
         public DateTime CreationTime { get; set; }
 
+        public string UserName { get; set; }
+
         public string WordDescription { get; set; }
 
         [ForeignKey("AssignedPhraseId")]

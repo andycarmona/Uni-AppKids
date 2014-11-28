@@ -15,6 +15,6 @@ namespace Uni_AppKids.Application.Dto
     {
         public string DictionaryName { get; set; }
 
-        public List<PhraseDto> Phrases { get; set; }
+
     }
 }

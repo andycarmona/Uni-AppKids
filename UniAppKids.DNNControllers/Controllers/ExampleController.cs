@@ -10,12 +10,8 @@
 
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Users;
-    using DotNetNuke.Security.Roles;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Web.Api;
-
-    using UniAppKids.DNNControllers.Repository;
-    using UniAppKids.DNNControllers.Models;
 
     using UniAppSpel.Helpers;
 
@@ -24,14 +20,14 @@
 
     public class ExampleController : ControllerBase
     {
-        private readonly DictionaryRepository aRepository = new DictionaryRepository();
-        private readonly DictionaryService externalDictionaryService = new DictionaryService();
+
+        private readonly DictionaryService aDictionaryService = new DictionaryService();
         private readonly WordService aWordService = new WordService();
         private readonly PhraseService aPhraseService = new PhraseService();
 
         [DnnAuthorize]
         [AcceptVerbs("POST")]
-        public HttpResponseMessage AddPhrase(string listOfWords)
+        public HttpResponseMessage AddPhrase(string listOfWords , int dictionaryId)
         {
             if (listOfWords.Length == 0)
             {
@@ -47,15 +43,32 @@
             {
                 var listNoRepeatedElements = wordList.Distinct(new DistinctItemComparer()).ToList();
                 this.aWordService.BulkInsertOfWords(listNoRepeatedElements);
+
+                if (wordList.Count == 1)
+                {
+                    return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK);
+                }
+                var delimiter = " ";
+         
+               var sentence = wordList.Select(i => i.WordName).Aggregate((i, j) => i + delimiter + j);
                 var listOfWordsId = this.aWordService.GetIdOfWords(wordList);
+                var aPhrase = new PhraseDto
+                                  {
+                                      PhraseText = sentence,
+                                      CreationTime = DateTime.Now,
+                                      WordsIds = string.Join(",", listOfWordsId),
+                                      AssignedDictionaryId = dictionaryId,
+                                      UserName = UserController.GetCurrentUserInfo().Username
+                                  };
+
+                this.aPhraseService.InsertPhrase(aPhrase);
                 return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception e)
             {
                 var listRepeatedWords = this.aWordService.GetRepeatedWords(wordList);
                 var errorMessage = string.Format("Cannot insert duplicate words: {0}", string.Join(",", listRepeatedWords));
-                return this.ControllerContext.Request.CreateResponse(
-                    HttpStatusCode.BadRequest, errorMessage);
+                return this.ControllerContext.Request.CreateResponse(HttpStatusCode.BadRequest, errorMessage);
             }
         }
 
@@ -77,7 +90,7 @@
         [AcceptVerbs("GET")]
         public HttpResponseMessage GetAllWordsInDictionary()
         {
-            List<WordDto> wordList = this.aWordService.GetAllWords();
+            var wordList = this.aWordService.GetAllWords();
 
             if (!wordList.Any())
             {
@@ -91,89 +104,47 @@
 
         [DnnAuthorize]
         [AcceptVerbs("GET")]
-        public List<WordDto> GetWordsList(int dictionaryId, int indexOfPhraseList)
+        public HttpResponseMessage GetWordsList(int dictionaryId, int indexOfPhraseList)
         {
-            string errorMessage;
+            var errorMessage = string.Empty;
             try
             {
                 var listOfPhrase = this.aPhraseService.GetListOfPhrase(dictionaryId);
                 var wordsId = listOfPhrase[indexOfPhraseList].WordsIds;
                 var listOfWords = this.aWordService.GetListOfWordsForAPhrase(wordsId);
-                return listOfWords;
+                if (listOfWords.Any())
+                {
+                    return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, listOfWords);
+                }
+
+                return this.ControllerContext.Request.CreateResponse(
+                    HttpStatusCode.BadRequest,
+                    "Couldn't find any dictionary.");
             }
             catch (Exception e)
             {
                 errorMessage = e.Message;
             }
 
-            var listDefault = new List<WordDto>();
-            var aWord = new WordDto { WordName = errorMessage };
-            listDefault.Add(aWord);
-            return listDefault;
+            return this.ControllerContext.Request.CreateResponse(
+                      HttpStatusCode.BadRequest,
+                      errorMessage);
 
         }
 
-        [DnnAuthorize]
-        [AcceptVerbs("GET", "POST")]
-        public List<PhraseDictionary> GetDictionary(string userName)
+        public HttpResponseMessage GetDictionary(int dictionaryId)
         {
-            var dictionaries = aRepository.GetDictionaries();
+            var actualDictionary = aDictionaryService.GetADictionary(dictionaryId);
 
-            return dictionaries;
-        }
-        [DnnAuthorize()]
-        [AcceptVerbs("GET", "POST")]
-        public List<PhraseDictionaryDto> GetDictionaryFromEF(string userName)
-        {
-            var dictionaries = externalDictionaryService.GetUserPhraseDictionaries(userName);
-
-            return dictionaries;
-        }
-        #region "Web Methods"
-        [DnnAuthorize()]
-        [HttpGet()]
-        public HttpResponseMessage HelloWorld()
-        {
-            try
+            if (actualDictionary != null)
             {
-                string helloWorld = "Hello World!";
-                return Request.CreateResponse(HttpStatusCode.OK, helloWorld);
+                return this.ControllerContext.Request.CreateResponse(
+              HttpStatusCode.OK, actualDictionary);
             }
-            catch (Exception ex)
-            {
-                //Log to DotNetNuke and reply with Error
-                Exceptions.LogException(ex);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
-            }
-        }
 
-        [DnnAuthorize()]
-        [AcceptVerbs("GET", "POST")]
-        public HttpResponseMessage GoodbyeWorld(bool data)
-        {
-            try
-            {
-                string helloWorld = "Hello World!";
-                if (data)
-                {
-                    helloWorld = "Good-bye World!";
-                }
-                return Request.CreateResponse(HttpStatusCode.OK, helloWorld);
-            }
-            catch (Exception ex)
-            {
-                //Log to DotNetNuke and reply with Error
-                Exceptions.LogException(ex);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
-            }
+            return this.ControllerContext.Request.CreateResponse(
+                HttpStatusCode.BadRequest,
+                "Couldn't find any dictionary.");
         }
-        #endregion
-
-        #region "DTO Classes"
-        public class DTOWorldDetails
-        {
-            public bool goodbye { get; set; }
-        }
-        #endregion
     }
 }

@@ -1,6 +1,4 @@
-﻿
-
-namespace Uni_AppKids.Application.Services
+﻿namespace Uni_AppKids.Application.Services
 {
     using System.Collections.Generic;
     using AutoMapper;
@@ -11,16 +9,29 @@ namespace Uni_AppKids.Application.Services
     {
         private readonly UnitOfWork unitOfWork = new UnitOfWork();
 
+        public WordService()
+        {
+            GetMappedEntities(); 
+        }
+     
+        public void InsertWord(WordDto aWord)
+        {
+            var mappedWord = Mapper.Map<WordDto, Word>(aWord);
+            unitOfWork.GetGenericWordRepository().Insert(mappedWord);
+            unitOfWork.Save();
+        }
+
+    
+
         public void BulkInsertOfWords(List<WordDto> listOfWords)
         {
-            GetMappedEntities();
+           
             var mappedListOfWords = Mapper.Map<List<WordDto>, List<Word>>(listOfWords);
             unitOfWork.GetCustomWordRepository().BulkInsertOfWords(mappedListOfWords);
         }
 
         public List<string> GetIdOfWords(List<WordDto> listOfWords)
         {
-            GetMappedEntities();
             var mappedListOfWords = Mapper.Map<List<WordDto>, List<Word>>(listOfWords);
             var listOfId = unitOfWork.GetCustomWordRepository().GetIdOfWordsInPhrase(mappedListOfWords);
             return listOfId;
@@ -28,7 +39,7 @@ namespace Uni_AppKids.Application.Services
 
         public List<string> GetRepeatedWords(List<WordDto> listOfWords)
         {
-            GetMappedEntities();
+           
             var mappedListOfWords = Mapper.Map<List<WordDto>, List<Word>>(listOfWords);
             var listOfRepeatedWords = unitOfWork.GetCustomWordRepository().GetRepeatedWords(mappedListOfWords);
             return listOfRepeatedWords;
@@ -36,7 +47,7 @@ namespace Uni_AppKids.Application.Services
 
         public List<WordDto> GetListOfWordsForAPhrase(string wordsId)
         {
-            GetMappedEntities();
+         
             var listOfWords = unitOfWork.GetCustomWordRepository().GetListOfOrderedWordsForAPhrase(wordsId);
             var mappedListOfWords = Mapper.Map<List<Word>, List<WordDto>>(listOfWords);
             return mappedListOfWords;
@@ -44,7 +55,7 @@ namespace Uni_AppKids.Application.Services
 
         public List<WordDto> GetAllWords()
         {
-            GetMappedEntities();
+           
             var listOfWords = unitOfWork.GetCustomWordRepository().GetAllWords();
             var mappedListOfWords = Mapper.Map<List<Word>, List<WordDto>>((List<Word>)listOfWords);
             return mappedListOfWords;
@@ -52,10 +63,7 @@ namespace Uni_AppKids.Application.Services
 
         private static void GetMappedEntities()
         {
-            Mapper.CreateMap<CreatePhraseDictionaryInput, PhraseDictionary>()
-         .ForMember(c => c.Phrases, option => option.MapFrom(src => src.Phrases));
-            Mapper.CreateMap<PhraseDictionary, PhraseDictionaryDto>()
-                .ForMember(c => c.Phrases, option => option.MapFrom(src => src.Phrases));
+     
             Mapper.CreateMap<Phrase, PhraseDto>();
             Mapper.CreateMap<Word, WordDto>();
             Mapper.CreateMap<WordDto, Word>();
