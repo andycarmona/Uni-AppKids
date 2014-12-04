@@ -275,6 +275,13 @@
     <Content Include="Images\words.jpg" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-custom-0.8.0.min.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-custom-tpls-0.8.0.min.js" />
+    <Content Include="Scripts\AudioRecorder\img\mic128.png" />
+    <Content Include="Scripts\AudioRecorder\img\save.svg" />
+    <Content Include="Scripts\AudioRecorder\index.html" />
+    <Content Include="Scripts\AudioRecorder\js\audiodisplay.js" />
+    <Content Include="Scripts\AudioRecorder\js\main.js" />
+    <Content Include="Scripts\AudioRecorder\js\recorderjs\recorder.js" />
+    <Content Include="Scripts\AudioRecorder\js\recorderjs\recorderWorker.js" />
     <Content Include="Scripts\Controllers\AddPhraseController.js" />
     <Content Include="Scripts\Controllers\EditPageController.js" />
     <Content Include="Scripts\Controllers\LandingPageController.js" />
@@ -301,27 +308,16 @@
     </Content>
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Images\accent.png" />
-    <Content Include="Images\bullet.png" />
-    <Content Include="Images\heroAccent.png" />
-    <Content Include="Images\orderedList0.png" />
-    <Content Include="Images\orderedList1.png" />
-    <Content Include="Images\orderedList2.png" />
-    <Content Include="Images\orderedList3.png" />
-    <Content Include="Images\orderedList4.png" />
-    <Content Include="Images\orderedList5.png" />
-    <Content Include="Images\orderedList6.png" />
-    <Content Include="Images\orderedList7.png" />
-    <Content Include="Images\orderedList8.png" />
-    <Content Include="Images\orderedList9.png" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Edit.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\AddPhrase.cshtml" />
+    <Content Include="Views\Home\SoundRecorder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

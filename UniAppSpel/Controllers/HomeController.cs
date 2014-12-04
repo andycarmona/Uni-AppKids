@@ -25,6 +25,10 @@ namespace UniAppSpel.Controllers
             return this.View();
         }
 
+        public ActionResult SoundRecorder()
+        {
+            return this.View();
+        }
         
     }
 }

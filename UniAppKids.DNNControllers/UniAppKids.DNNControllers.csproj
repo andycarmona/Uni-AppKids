@@ -99,6 +99,7 @@
     <Compile Include="Database\IDataContext.cs" />
     <Compile Include="Database\IRepository.cs" />
     <Compile Include="Helpers\DistinctItemComparer.cs" />
+    <Compile Include="Helpers\MyStreamProvider.cs" />
     <Compile Include="Models\PhraseDictionary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\DictionaryRepository.cs" />
