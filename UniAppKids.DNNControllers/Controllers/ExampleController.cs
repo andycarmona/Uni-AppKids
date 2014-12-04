@@ -9,8 +9,11 @@
     using System.Web.Http;
 
     using DotNetNuke.Common.Utilities;
+    using DotNetNuke.Entities.Portals;
     using DotNetNuke.Entities.Users;
-    using DotNetNuke.Services.Exceptions;
+    using DotNetNuke.Security.Membership;
+    using DotNetNuke.Security.Roles;
+    using DotNetNuke.Services.Localization;
     using DotNetNuke.Web.Api;
 
     using UniAppSpel.Helpers;
@@ -27,7 +30,7 @@
 
         [DnnAuthorize]
         [AcceptVerbs("POST")]
-        public HttpResponseMessage AddPhrase(string listOfWords , int dictionaryId)
+        public HttpResponseMessage AddPhrase(string listOfWords, int dictionaryId)
         {
             if (listOfWords.Length == 0)
             {
@@ -36,8 +39,10 @@
                     "Invalid parameters, Please check there is elements in array");
             }
 
+            var delimiter = " ";
             var wordList = Json.Deserialize<List<WordDto>>(listOfWords);
             wordList.Select(c => { c.CreationTime = DateTime.Now; return c; }).ToList();
+
 
             try
             {
@@ -48,9 +53,8 @@
                 {
                     return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK);
                 }
-                var delimiter = " ";
-         
-               var sentence = wordList.Select(i => i.WordName).Aggregate((i, j) => i + delimiter + j);
+
+                var sentence = wordList.Select(i => i.WordName).Aggregate((i, j) => i + delimiter + j);
                 var listOfWordsId = this.aWordService.GetIdOfWords(wordList);
                 var aPhrase = new PhraseDto
                                   {
@@ -72,6 +76,41 @@
             }
         }
 
+
+        public void createDnnUser(string UserName)
+        {
+            UserInfo newUser = new UserInfo();
+            newUser.Username = UserName;
+            newUser.PortalID = PortalSettings.PortalId;
+            newUser.DisplayName = "John Doe";
+            newUser.Email = "jdoe@email.com";
+            newUser.FirstName = "John";
+            newUser.LastName = "Doe";
+            newUser.Profile.SetProfileProperty("SSN", "123-456-7890");
+
+            UserCreateStatus rc = UserController.CreateUser(ref newUser);
+            if (rc == UserCreateStatus.Success)
+            {
+                // Manual add role to user
+                addRoleToUser(newUser, "Registered Users", DateTime.MaxValue);
+            }
+        }
+
+        public bool addRoleToUser(UserInfo user, string roleName, DateTime expiry)
+{
+	var rc = false;
+	var roleCtl = new RoleController();
+	RoleInfo newRole = roleCtl.GetRoleByName(user.PortalID, roleName);
+	if (newRole != null && user != null)
+	{
+		rc = user.IsInRole(roleName);
+		roleCtl.AddUserRole(user.PortalID, user.UserID, newRole.RoleID, DateTime.MinValue, expiry);
+		// Refresh user and check if role was added
+		user = UserController.GetUserById(user.PortalID, user.UserID);
+		rc = user.IsInRole(roleName);
+	}
+	return rc;
+}
         [AcceptVerbs("GET")]
         public HttpResponseMessage checkUserAuthenticated()
         {
@@ -91,7 +130,7 @@
         public HttpResponseMessage GetAllWordsInDictionary()
         {
             var wordList = this.aWordService.GetAllWords();
-
+           
             if (!wordList.Any())
             {
                 return this.ControllerContext.Request.CreateResponse(

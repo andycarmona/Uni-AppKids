@@ -48,6 +48,10 @@
     <Reference Include="DotNetNuke.Web">
       <HintPath>..\..\..\..\..\..\..\inetpub\wwwroot\DotNetNukeDev\bin\DotNetNuke.Web.dll</HintPath>
     </Reference>
+    <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Facebook.6.8.0\lib\net45\Facebook.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.ApplicationBlocks.Data, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\inetpub\wwwroot\DotNetNukeDev\bin\Microsoft.ApplicationBlocks.Data.dll</HintPath>
@@ -115,9 +119,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_LocalResources\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="web.config" />
   </ItemGroup>

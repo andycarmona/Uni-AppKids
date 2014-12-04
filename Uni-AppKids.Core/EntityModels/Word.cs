@@ -9,7 +9,6 @@ namespace Uni_AppKids.Core.EntityModels
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data;
 
     public class Word
     { 

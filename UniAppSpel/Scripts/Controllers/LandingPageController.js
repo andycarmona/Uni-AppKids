@@ -1,4 +1,7 @@
 ﻿var LandingPageController = function ($scope, $http, $window, userService) {
+
+   
+
     $scope.dictionaryName = "";
     $scope.lookupResult = {
         dictionaryName: "Not yet retrieved"
@@ -16,6 +19,7 @@
     GetDictionary();
     GetPhrase();
 
+  
 
     function GetDictionary() {
 
@@ -76,3 +80,34 @@
 
 
 LandingPageController.$inject = ['$scope', '$http', '$window', 'userService'];
+
+var init = function () {
+    function hasGetUserMedia() {
+        return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia || navigator.msGetUserMedia);
+    }
+    function errorCallback() {
+        //alert("Couildnt start microphone");
+    }
+
+    if (hasGetUserMedia()) {
+        //alert("Tiene sound");
+        window.AudioContext = window.AudioContext ||
+                      window.webkitAudioContext;
+
+        var context = new AudioContext();
+
+        navigator.getUserMedia({ audio: true }, function (stream) {
+            var microphone = context.createMediaStreamSource(stream);
+            var filter = context.createBiquadFilter();
+
+            // microphone -> filter -> destination.
+            microphone.connect(filter);
+            filter.connect(context.destination);
+        }, errorCallback);
+    } else {
+        //alert('getUserMedia() is not supported in your browser');
+    }
+};
+
+init();
