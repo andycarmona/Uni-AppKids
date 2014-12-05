@@ -1,18 +1,28 @@
-﻿var EditPageController = function ($scope, $http, $window, userService) {
+﻿var EditPageController = function ($scope, $http, $window,$filter, userService) {
 
     var urlPhrase = "http://dnndev.me/DesktopModules/DataExchange/API/Example/AddPhrase?dictionaryId=1&listOfWords=";
     var urlWordList = "http://dnndev.me/DesktopModules/DataExchange/API/Example/GetAllWordsInDictionary";
+    var urlDictionary = "http://dnndev.me/DesktopModules/DataExchange/API/Example/GetDictionary?dictionaryId=1";
 
     $scope.dictionaryName = window.localStorage['dictionary_name'];
 
-    $scope.words = [
-        { "WordName": "Tes", "SoundFile": "Doe.wav" },
-        { "WordName": "Anna", "SoundFile": "Smith.wav" }
-    ];
+    $scope.words = [];
 
     $scope.sentence = 'Hello there how are you today?';
 
     GetWordList(urlWordList);
+    GetDictionary();
+
+    function GetDictionary() {
+
+
+        userService.GetRequest(urlDictionary).success(function (request) {
+            applyRemoteDataToDictionary(request);
+        }).error(function (request) {
+            $scope.error = "An internal error has ocurred. " + request;
+        });
+
+    }
 
     function GetWordList(url) {
 
@@ -23,6 +33,13 @@
         });
       
     }
+
+    function applyRemoteDataToDictionary(request) {
+
+        $scope.dictionaries = request.DictionaryName;
+      
+
+    }
     function applyRemoteDataToWordList(request) {
 
         $scope.words_in_dictionary = request;
@@ -30,9 +47,11 @@
     }
 
     $scope.processForm = function () {
+        var wordsJsonFormat = "";
 
-
-        var wordsJsonFormat = JSON.stringify($scope.words, null, 2);
+        wordsJsonFormat = JSON.stringify($scope.words, null, 2);
+        
+      
         urlPhrase = urlPhrase + wordsJsonFormat;
        
         userService.PostRequest(urlPhrase).success(function (request) {
@@ -40,6 +59,7 @@
         }).error(function (request) {
             $scope.error = "An internal error has ocurred. " + request;
         });
+  
     };
 
     $scope.parseSentence = function () {
@@ -64,6 +84,7 @@
         $scope.buildSentance();
   
     }
+  
 
     $scope.buildSentance = function () {
 
@@ -88,4 +109,4 @@
 
 }
 
-EditPageController.$inject = ['$scope', '$http', '$window', 'userService'];
+EditPageController.$inject = ['$scope', '$http', '$window','$filter', 'userService'];

@@ -2,25 +2,22 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
+    using System.Data.Linq;
     using System.IO;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
+    using System.Text;
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Http;
 
     using DotNetNuke.Common.Utilities;
-    using DotNetNuke.Entities.Portals;
     using DotNetNuke.Entities.Users;
-    using DotNetNuke.Security.Membership;
-    using DotNetNuke.Security.Roles;
-    using DotNetNuke.Services.Localization;
     using DotNetNuke.Web.Api;
 
     using UniAppKids.DNNControllers.Helpers;
-
-    using UniAppSpel.Helpers;
 
     using Uni_AppKids.Application.Dto;
     using Uni_AppKids.Application.Services;
@@ -38,13 +35,13 @@
         {
             if (Request.Content.IsMimeMultipartContent())
             {
-                string uploadPath = HttpContext.Current.Server.MapPath("~/Uploads");
+                var uploadPath = HttpContext.Current.Server.MapPath("~/Uploads");
 
-                MyStreamProvider streamProvider = new MyStreamProvider(uploadPath);
+                var streamProvider = new MyStreamProvider(uploadPath);
 
                 await Request.Content.ReadAsMultipartAsync(streamProvider);
 
-                List<string> messages = new List<string>();
+                var messages = new List<string>();
                 foreach (var file in streamProvider.FileData)
                 {
                     FileInfo fi = new FileInfo(file.LocalFileName);
@@ -53,18 +50,20 @@
 
                 return messages;
             }
-            else
-            {
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.BadRequest, "Invalid Request!");
-                throw new HttpResponseException(response);
-            }
+
+            HttpResponseMessage response = this.Request.CreateResponse(HttpStatusCode.BadRequest, "Invalid Request!");
+            throw new HttpResponseException(response);
         }
-     
+
 
         [DnnAuthorize]
         [AcceptVerbs("POST")]
         public HttpResponseMessage AddPhrase(string listOfWords, int dictionaryId)
         {
+            var errorMessage = new StringBuilder(string.Empty);
+            var listNoRepeatedElements = new List<WordDto>();
+            var listOfNotAcceptedWords = new List<string>();
+
             if (listOfWords.Length == 0)
             {
                 return this.ControllerContext.Request.CreateResponse(
@@ -72,6 +71,8 @@
                     "Invalid parameters, Please check there is elements in array");
             }
 
+            var language = aDictionaryService.GetADictionary(dictionaryId).DictionaryName;
+            
             var delimiter = " ";
             var wordList = Json.Deserialize<List<WordDto>>(listOfWords);
             wordList.Select(c => { c.CreationTime = DateTime.Now; return c; }).ToList();
@@ -79,7 +80,9 @@
 
             try
             {
-                var listNoRepeatedElements = wordList.Distinct(new DistinctItemComparer()).ToList();
+                listNoRepeatedElements = WordFilterTool.ListNoRepeatedElements(wordList);
+                var pathToDictionary = HttpContext.Current.Server.MapPath(string.Format("{0}{1}.txt", ConfigurationManager.AppSettings["Dictionary"], language));
+                WordFilterTool.GetWordsNotAccepted(listNoRepeatedElements, language , pathToDictionary, out listOfNotAcceptedWords);
                 this.aWordService.BulkInsertOfWords(listNoRepeatedElements);
 
                 if (wordList.Count == 1)
@@ -101,61 +104,23 @@
                 this.aPhraseService.InsertPhrase(aPhrase);
                 return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK);
             }
-            catch (Exception e)
+            catch (DuplicateKeyException e)
             {
                 var listRepeatedWords = this.aWordService.GetRepeatedWords(wordList);
-                var errorMessage = string.Format("Cannot insert duplicate words: {0}", string.Join(",", listRepeatedWords));
-                return this.ControllerContext.Request.CreateResponse(HttpStatusCode.BadRequest, errorMessage);
+                errorMessage.Append(string.Format(
+                    "Cannot insert duplicate words: {0}",
+                    string.Join(",", listRepeatedWords)));
+
             }
-        }
-
-
-        public void createDnnUser(string UserName)
-        {
-            UserInfo newUser = new UserInfo();
-            newUser.Username = UserName;
-            newUser.PortalID = PortalSettings.PortalId;
-            newUser.DisplayName = "John Doe";
-            newUser.Email = "jdoe@email.com";
-            newUser.FirstName = "John";
-            newUser.LastName = "Doe";
-            newUser.Profile.SetProfileProperty("SSN", "123-456-7890");
-
-            UserCreateStatus rc = UserController.CreateUser(ref newUser);
-            if (rc == UserCreateStatus.Success)
+            catch (FormatException e)
             {
-                // Manual add role to user
-                addRoleToUser(newUser, "Registered Users", DateTime.MaxValue);
-            }
-        }
-
-        public bool addRoleToUser(UserInfo user, string roleName, DateTime expiry)
-{
-	var rc = false;
-	var roleCtl = new RoleController();
-	RoleInfo newRole = roleCtl.GetRoleByName(user.PortalID, roleName);
-	if (newRole != null && user != null)
-	{
-		rc = user.IsInRole(roleName);
-		roleCtl.AddUserRole(user.PortalID, user.UserID, newRole.RoleID, DateTime.MinValue, expiry);
-		// Refresh user and check if role was added
-		user = UserController.GetUserById(user.PortalID, user.UserID);
-		rc = user.IsInRole(roleName);
-	}
-	return rc;
-}
-        [AcceptVerbs("GET")]
-        public HttpResponseMessage checkUserAuthenticated()
-        {
-            var authenticated = HttpContext.Current.User.Identity.IsAuthenticated;
-            if (authenticated)
-            {
-                return ControllerContext.Request.CreateResponse(HttpStatusCode.OK, UserController.GetCurrentUserInfo().Username);
+                errorMessage.Append(string.Format(
+                    "These words doesn't exist in the {0} dictionary: {1}",
+                    language,
+                    string.Join(",", listOfNotAcceptedWords)));
             }
 
-            return ControllerContext.Request.CreateResponse(
-          HttpStatusCode.Unauthorized, "Not authorized");
-
+            return this.ControllerContext.Request.CreateResponse(HttpStatusCode.BadRequest, errorMessage.ToString());
         }
 
         [DnnAuthorize]
@@ -163,7 +128,7 @@
         public HttpResponseMessage GetAllWordsInDictionary()
         {
             var wordList = this.aWordService.GetAllWords();
-           
+
             if (!wordList.Any())
             {
                 return this.ControllerContext.Request.CreateResponse(

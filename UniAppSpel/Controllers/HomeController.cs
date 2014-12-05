@@ -1,10 +1,6 @@
-﻿using System.Web.Mvc;
-
-namespace UniAppSpel.Controllers
+﻿namespace UniAppSpel.Controllers
 {
-    using Telerik.Web.UI.Calendar.Persistence;
-
-    using Uni_AppKids.Application.Dto;
+    using System.Web.Mvc;
 
     public class HomeController : Controller
     {
@@ -15,7 +11,7 @@ namespace UniAppSpel.Controllers
         }
         public ActionResult Edit()
         {
-    
+          
             return View();
         }
 

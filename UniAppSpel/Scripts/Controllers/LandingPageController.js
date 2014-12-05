@@ -45,7 +45,7 @@
     function applyRemoteDataToDictionary(request) {
 
             $scope.dictionaries = request.DictionaryName;
-            window.localStorage['dictionary_name'] = request.DictionaryName;
+          
 
     }
 
