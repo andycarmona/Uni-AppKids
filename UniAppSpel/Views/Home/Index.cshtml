@@ -6,15 +6,18 @@
 
     <div class="navsection">
 
-        <accordion class="btn" style="float:left;" close-others="oneAtATime">
-            <img src="~/Images/words.jpg" /><label><b>LEARN WORDS IN: </b>{{dictionaries}}</label>
+        <accordion class="btn" close-others="oneAtATime">
+        
+            <div style="float:left;">
+                <img src="~/Images/words.jpg" /><label><b>LEARN WORDS IN: </b>{{dictionaries}}</label>
+            </div>
 
+                <div style="float:right;"><img src="http://dummyimage.com/100"></div>
 
-
-        </accordion>
+</accordion>
     </div>
     <div class="nav-header">
-        <div class="wordProperty"><img src="http://dummyimage.com/100"></div>
+      
 
         <div class="wordProperty">{{sound}}</div>
 
@@ -25,6 +28,12 @@
 
         </div>
         <div class="wordProperty"><span>{{description}}</span></div>
+        <nav>
+            <ul class="pager">
+                <li><a ng-show="navLeft" ng-click="moveIndex(-1)">Previous</a></li>
+                <li><a ng-show="navRight" ng-click="moveIndex(1)">Next</a></li>
+            </ul>
+        </nav>
     </div>
     <div class="navsection">
 

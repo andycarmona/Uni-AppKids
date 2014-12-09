@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 
 namespace UniAppKids.DNNControllers.Controllers
@@ -12,8 +10,6 @@ namespace UniAppKids.DNNControllers.Controllers
     using DotNetNuke.Entities.Users;
     using DotNetNuke.Security.Membership;
     using DotNetNuke.Security.Roles;
-
-    using UniAppKids.DNNControllers.Services;
 
     public class UserController : ControllerBase
     {

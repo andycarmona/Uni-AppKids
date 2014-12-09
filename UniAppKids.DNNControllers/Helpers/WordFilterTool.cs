@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Text;
@@ -17,9 +18,25 @@
         public static string RemoveSpecialCharacters(string rawWord)
         {
             rawWord = rawWord.ToLower();
-            var specialSymbolFilter = new Regex("(?:[^a-zöäåñ]|(?<=['\"])s)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+            var specialSymbolFilter = new Regex("(?:[^a-zöäåñáéíóú]|(?<=['\"])s)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
             var strippedWord = specialSymbolFilter.Replace(rawWord, string.Empty);
             return strippedWord;
+        }
+
+        public static string RemoveAccentOnVowels(string rawWord)
+        {
+            string normalized = rawWord.Normalize(NormalizationForm.FormD);
+            var builder = new StringBuilder();
+
+            foreach (char ch in normalized)
+            {
+                if (CharUnicodeInfo.GetUnicodeCategory(ch) != UnicodeCategory.NonSpacingMark)
+                {
+                    builder.Append(ch);
+                }
+            }
+
+            return builder.ToString().Normalize(NormalizationForm.FormC);
         }
 
         public static void GetWordsNotAccepted(List<WordDto> listNoRepeatedElements, string language, string pathToDictionary, out List<string> listOfNotAcceptedWords)
@@ -30,7 +47,8 @@
             foreach (var aWord in listNoRepeatedElements)
             {
                 var strippedWord = RemoveSpecialCharacters(aWord.WordName);
-                var result = CheckWordIsInDictionary(strippedWord, language, pathToDictionary);
+                var removedAccentWord = RemoveAccentOnVowels(strippedWord);
+                var result = CheckWordIsInDictionary(removedAccentWord, language, pathToDictionary);
 
                 if (!result)
                 {

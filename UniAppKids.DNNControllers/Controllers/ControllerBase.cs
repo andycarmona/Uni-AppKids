@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace UniAppKids.DNNControllers.Services
+﻿namespace UniAppKids.DNNControllers.Controllers
 {
+    using System;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
@@ -18,13 +17,13 @@ namespace UniAppKids.DNNControllers.Services
         {
             try
             {
-                return Request.CreateResponse(HttpStatusCode.OK, "True");
+                return this.Request.CreateResponse(HttpStatusCode.OK, "True");
             }
             catch (Exception ex)
             {
                 //Log to DotNetNuke and reply with Error
                 Exceptions.LogException(ex);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                return this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
             }
         }
         #endregion

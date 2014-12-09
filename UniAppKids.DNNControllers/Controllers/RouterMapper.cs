@@ -1,4 +1,4 @@
-﻿namespace UniAppKids.DNNControllers.Services
+﻿namespace UniAppKids.DNNControllers.Controllers
 {
     using DotNetNuke.Web.Api;
 
@@ -10,7 +10,7 @@
             "DataExchange",
             "default",
             "{controller}/{action}",
-            new string[] { "UniAppKids.DNNControllers.Services" });
+            new string[] { "UniAppKids.DNNControllers.Controllers" });
         }
     }
 }

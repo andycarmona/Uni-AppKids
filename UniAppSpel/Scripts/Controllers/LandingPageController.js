@@ -6,15 +6,18 @@
     $scope.lookupResult = {
         dictionaryName: "Not yet retrieved"
     };
+    $scope.Phrases = [];
     $scope.wordsInPhrases = [];
     $scope.description = "No description";
     $scope.sound = "No sound";
-
+    $scope.actualPhraseIndex = 0;
     $scope.errorMessage = ['Undefined error. Could not contact server.'];
+    $scope.navLeft = false;
+    $scope.navRight = false;
 
-    var urlDictionary = "http://dnndev.me/DesktopModules/DataExchange/API/Example/GetDictionary?dictionaryId=1";
+    var urlDictionary = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/GetDictionary?dictionaryId=1";
 
-    var urlPhrase = "http://dnndev.me/DesktopModules/DataExchange/API/Example/GetWordsList?dictionaryId=1&indexOfPhraseList=0";
+    var urlPhrase = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/GetWordsList?dictionaryId=1&indexOfPhraseList=0";
 
     GetDictionary();
     GetPhrase();
@@ -50,15 +53,44 @@
     }
 
     function applyRemoteDataToPhrase(request) {
-        if (request !== Array) {
-            $scope.wordsInPhrases = request;
-        } else { $scope.error = request; }
+  
+        $scope.Phrases = request;
 
+        $scope.wordsInPhrases = request[$scope.actualPhraseIndex].ListOfWords;
+        updateNavButtonVisibility();
+    }
+
+    function updateNavButtonVisibility() {
+        var phrasesSize=$scope.Phrases.length;
+        if (phrasesSize == 1) {
+            $scope.navLeft = false;
+            $scope.navRight = false;
+        }else if ($scope.actualPhraseIndex == phrasesSize - 1) {
+            $scope.navLeft = true;
+            $scope.navRight = false;
+        } else if ($scope.actualPhraseIndex == 0) {
+            $scope.navLeft = false;
+            $scope.navRight = true;
+        } else {
+            $scope.navLeft = true;
+            $scope.navRight = true;
+        }
+
+    }
+
+    $scope.moveIndex = function(position) {
+        var phrasesLimit = $scope.Phrases.length;
+        var nextIndex = $scope.actualPhraseIndex + position;
+        if ((nextIndex < phrasesLimit) && (nextIndex > -1)) {
+            $scope.actualPhraseIndex = nextIndex;
+            $scope.wordsInPhrases = $scope.Phrases[$scope.actualPhraseIndex].ListOfWords;
+        }
+        updateNavButtonVisibility();
     }
 
     $scope.getWordName = function (wordId) {
         var i = 0;
-
+       
         for (; i < $scope.wordsInPhrases.length;) {
             if ($scope.wordsInPhrases[i].WordId == wordId) {
                 $scope.description = [$scope.wordsInPhrases[i].WordName] + ": " + $scope.wordsInPhrases[i].WordDescription;
@@ -82,32 +114,7 @@
 LandingPageController.$inject = ['$scope', '$http', '$window', 'userService'];
 
 var init = function () {
-    function hasGetUserMedia() {
-        return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
-        navigator.mozGetUserMedia || navigator.msGetUserMedia);
-    }
-    function errorCallback() {
-        //alert("Couildnt start microphone");
-    }
-
-    if (hasGetUserMedia()) {
-        //alert("Tiene sound");
-        window.AudioContext = window.AudioContext ||
-                      window.webkitAudioContext;
-
-        var context = new AudioContext();
-
-        navigator.getUserMedia({ audio: true }, function (stream) {
-            var microphone = context.createMediaStreamSource(stream);
-            var filter = context.createBiquadFilter();
-
-            // microphone -> filter -> destination.
-            microphone.connect(filter);
-            filter.connect(context.destination);
-        }, errorCallback);
-    } else {
-        //alert('getUserMedia() is not supported in your browser');
-    }
+ 
 };
 
 init();

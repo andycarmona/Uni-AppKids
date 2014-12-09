@@ -10,7 +10,7 @@
 namespace Uni_AppKids.Application.Dto
 {
     using System;
-   
+    using System.Collections.Generic;
 
     public class PhraseDto
     {
@@ -25,5 +25,7 @@ namespace Uni_AppKids.Application.Dto
         public DateTime CreationTime { get; set; }
 
         public string WordsIds { get; set; }
+
+        public List<WordDto> ListOfWords { get; set; } 
     }
 }

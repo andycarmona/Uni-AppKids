@@ -42,6 +42,8 @@
                                 <label>Sound file</label>
                                 <input class="form-horizontal" type="text" ng-model="w.SoundFile" ng-change="buildSentance(w[$index])" />
                                 <label>Image Name</label>
+                                <img  ng-src="{{imagelist[0]}}" alt="" />
+                           
                                 <input class="form-horizontal" type="text" ng-model="w.Image" ng-change="buildSentance(w[$index])" />
                                 <label>Description</label>
                                 <input class="form-horizontal" type="text" ng-model="w.WordDescription" ng-change="buildSentance(w[$index])" />

@@ -13,7 +13,7 @@
 
         $scope.formData.words = $scope.words;
         var json_text = JSON.stringify($scope.words, null, 2);
-        var urlPhrase = "http://dnndev.me/DesktopModules/DataExchange/API/Example/AddPhrase?listOfWords=" + json_text;
+        var urlPhrase = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/AddPhrase?listOfWords=" + json_text;
         $http({
             url: urlPhrase,
             method: "POST",
