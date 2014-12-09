@@ -1,5 +1,6 @@
 ﻿namespace UniAppKids.DNNControllers.Helpers
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
 
@@ -13,13 +14,15 @@
 
     using Newtonsoft.Json.Linq;
 
+    using Uni_AppKids.Application.Dto;
+
     public static class RemoteService
     {
-        public static async Task<List<string>> GetJsonDataFromImageSearch(string keyWord)
+        public static async Task<List<WordDto>> GetJsonDataFromImageSearch(string keyWord)
         {
             string urlRequest = "http://ajax.googleapis.com/ajax/services/search/images?start=0&q=" + keyWord + "&v=1.0";
             string jsonResult;
-            var listUrl = new List<string>();
+            var listUrl = new List<WordDto>();
             using (var httpClient = new HttpClient())
             {
                 Task<string> jsonResponse = httpClient.GetStringAsync(urlRequest);
@@ -36,7 +39,13 @@
                 {
                     if (!string.IsNullOrEmpty(aProperty.SelectToken("tbUrl").ToString()))
                     {
-                        listUrl.Add(aProperty.SelectToken("tbUrl").ToString());
+                        var aWord = new WordDto
+                                        {
+                                            CreationTime = DateTime.Now,
+                                            WordName = keyWord,
+                                            Image = aProperty.SelectToken("tbUrl").ToString()
+                                        };
+                        listUrl.Add(aWord);
                     }
                 }
 

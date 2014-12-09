@@ -11,7 +11,7 @@
                 <span class="badge">Words in dictionary: {{words_in_dictionary.length}}</span>
                 <accordion-group class="btn" heading="(Show/Hide)">
                     <label>Click on a word to add it to your custom sentence.</label>
-                    <table class="table">
+                    <table class="tableDictionary">
                         <thead><tr><th>Name</th><th>Description</th><th>Image</th><th>Sound</th></tr></thead>
                         <tbody>
                             <tr ng-repeat="words in words_in_dictionary | orderBy:'WordName':false">
@@ -29,7 +29,7 @@
     <div class="navsection">
         <textarea class="form-horizontal" ng-model="sentence" ng-change="parseSentence()" style="width: 98%; height: 15em;"></textarea>
         <form name="worddata">
-         
+
             <button id="Submit1" class="primaryButton" type="button" ng-click="processForm()">Submit</button>
             <accordion class="btn" style="float:left;" close-others="oneAtATime">
                 <span class="badge">Edit words to be added to dictionary</span>
@@ -40,13 +40,23 @@
                                 <label>Name</label>
                                 <input class="form-horizontal" type="text" ng-model="w.WordName" ng-change="buildSentance(w[$index])" />
                                 <label>Sound file</label>
-                                <input class="form-horizontal" type="text" ng-model="w.SoundFile" ng-change="buildSentance(w[$index])" />
-                                <label>Image Name</label>
-                                <img  ng-src="{{imagelist[0]}}" alt="" />
-                           
-                                <input class="form-horizontal" type="text" ng-model="w.Image" ng-change="buildSentance(w[$index])" />
+                                <input class="form-horizontal" type="text" ng-model="w.SoundFile" />
+                                <div>
+                                    <table class="tableImages">
+                                        <thead><tr><th><button class="primaryButton" type="button" ng-click="GetImageList(w.WordName)">Get</button> images for this word:</th></tr></thead>
+                                        <tbody>
+                                            <tr ng-repeat="aImage in imagelist | filter:w.WordName">
+                                                <td ng-click="chooseImage(aImage.Image)"><img ng-src="{{aImage.Image}}" alt="{{w.WordName}}" /></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="imgField">
+                                        <label>Image Name</label>
+                                        <input class="form-horizontal" type="text" ng-model="imageurl" />
+                                    </div>
+                                </div>
                                 <label>Description</label>
-                                <input class="form-horizontal" type="text" ng-model="w.WordDescription" ng-change="buildSentance(w[$index])" />
+                                <input class="form-horizontal" type="text" ng-model="w.WordDescription" />
                             </div>
                         </tab>
                     </tabset>

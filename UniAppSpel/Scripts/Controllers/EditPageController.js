@@ -3,17 +3,16 @@
     var urlPhrase = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/AddPhrase?dictionaryId=1&listOfWords=";
     var urlWordList = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/GetAllWordsInDictionary";
     var urlDictionary = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/GetDictionary?dictionaryId=1";
-    var urlImageList = "http://dnndev.me/DesktopModules/DataExchange/API/RemoteService/GetListOfImageUrl?wordToSearch=";
+    
 
-    $scope.dictionaryName = window.localStorage['dictionary_name'];
+
     $scope.imagelist = [];
     $scope.words = [];
-
-    $scope.sentence = 'Hola, Cómo estás?';
+    $scope.sentence = "";
 
     GetWordList(urlWordList);
     GetDictionary();
-    GetImageList(urlImageList, "manzana");
+   
 
     function GetDictionary() {
         userService.GetRequest(urlDictionary).success(function (request) {
@@ -25,7 +24,6 @@
     }
 
     function GetWordList(url) {
-
         userService.GetRequest(url).success(function (request) {
             applyRemoteDataToWordList(request);
         }).error(function (request) {
@@ -34,7 +32,8 @@
       
     }
 
-    function GetImageList(url,keyWord) {
+   $scope.GetImageList=function (keyWord) {
+        var url = "http://dnndev.me/DesktopModules/DataExchange/API/RemoteService/GetListOfImageUrl?wordToSearch=";
         userService.GetRequest(url+keyWord).success(function (request) {
             applyRemoteDataToImageList(request);
         }).error(function (request) {
@@ -43,8 +42,11 @@
     }
 
     function applyRemoteDataToImageList(request) {
-   
-        $scope.imagelist.push(request[0]);
+        if (request !== null) {
+            for (var index = 0; index < request.length; index++) {
+                $scope.imagelist.push(request[index]);
+            }
+        }
     }
 
     function applyRemoteDataToDictionary(request) {
@@ -58,10 +60,13 @@
         $scope.words_in_dictionary = request;
         
     }
+    $scope.chooseImage= function(imageUrl) {
+        $scope.imageurl = imageUrl;
+    }
 
     $scope.processForm = function () {
         var wordsJsonFormat = JSON.stringify($scope.words, null, '');
-        //alert(wordsJsonFormat);
+  
         $scope.words = [];
         urlPhrase = urlPhrase + wordsJsonFormat;
      
@@ -81,20 +86,25 @@
 
         for (var i = 0; i < words.length; i++) {
             wordObjects.push({ WordName: words[i] });
+            
         }
 
         if ((words.length == 1) && (words[0] === '')) {
             $scope.words = [];
         } else {
             $scope.words = wordObjects;
+    
         }
 
     };
+
+
+
     $scope.addWordFromDictionary = function (aWord) {
-      
+        
         $scope.words.push({ WordName: aWord });
         $scope.buildSentance();
-  
+        $scope.GetImageList(aWord);
     }
   
 
@@ -106,7 +116,7 @@
             var word = $scope.words[i].WordName;
             if (word.replace(/\s+/g, '') !== '') {
                 words.push(word);
-
+                
             }
         }
 

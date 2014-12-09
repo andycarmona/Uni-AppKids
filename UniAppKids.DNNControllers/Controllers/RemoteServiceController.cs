@@ -12,6 +12,8 @@
 
     using UniAppKids.DNNControllers.Helpers;
 
+    using Uni_AppKids.Application.Dto;
+
     public class RemoteServiceController : ControllerBase
     {
         [DnnAuthorize]
@@ -20,10 +22,10 @@
         {
             try
             {
-                List<string> listOfUrl = await RemoteService.GetJsonDataFromImageSearch(wordToSearch);
+                List<WordDto> listOfUrl = await RemoteService.GetJsonDataFromImageSearch(wordToSearch);
               
   
-                return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK,listOfUrl);
+                return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK , listOfUrl);
             }
             catch (Exception ex)
             {

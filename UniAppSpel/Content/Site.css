@@ -1099,18 +1099,35 @@ tr {
 width: 100%;
 display: inline-table;
 }
-
-table{
- height:200px; 
+.tableImages{
+height: 183px;
+    float: left;
 }
-tbody tr:hover {
+.imgField {
+    float: left;
+}
+table{
+ height:200px;
+ width:100% 
+}
+table tr {
+    /*width: 100%;*/
+    display: table-row;
+}
+table tbody tr:hover {
           background-color: #ffff99;
     }
-tbody{
+table tbody{
 overflow-y: scroll;
 height: 200px;
-/* width: 100%; */
+width: 97%;
 position: absolute;
+}
+.tableImages tbody{
+overflow-y: scroll;
+height: 139px;
+position: absolute;
+width: 221px;
 }
 textarea {
     font-size: 22px;
