@@ -2,9 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
+    using System.Web;
     using System.Web.Http;
     using System.Web.UI.WebControls;
 
@@ -33,6 +35,33 @@
                     HttpStatusCode.BadRequest,
                     "Invalid parameters, Please check there is elements in array");
             }
+        }
+
+        [DnnAuthorize]
+        [AcceptVerbs("POST")]
+        public async Task<List<string>> PostSoundFileAsync()
+        {
+
+            if (this.Request.Content.IsMimeMultipartContent())
+            {
+                var uploadPath = HttpContext.Current.Server.MapPath("~/Uploads");
+
+                var streamProvider = new MyStreamProvider(uploadPath);
+
+                await this.Request.Content.ReadAsMultipartAsync(streamProvider);
+
+                var messages = new List<string>();
+                foreach (var file in streamProvider.FileData)
+                {
+                    FileInfo fi = new FileInfo(file.LocalFileName);
+                    messages.Add("File uploaded as " + fi.FullName + " (" + fi.Length + " bytes)");
+                }
+
+                return messages;
+            }
+
+            var response = this.Request.CreateResponse(HttpStatusCode.BadRequest, "Invalid Request!");
+            throw new HttpResponseException(response);
         }
     }
 }

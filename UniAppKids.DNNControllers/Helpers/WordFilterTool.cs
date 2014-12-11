@@ -23,6 +23,11 @@
             return strippedWord;
         }
 
+        public static List<WordDto> GetListWithValidWordName(List<WordDto> listToVerify)
+        {
+            return listToVerify.Where(aWord => aWord.WordName != null).ToList();
+        }
+
         public static string RemoveAccentOnVowels(string rawWord)
         {
             string normalized = rawWord.Normalize(NormalizationForm.FormD);

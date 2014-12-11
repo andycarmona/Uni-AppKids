@@ -1,7 +1,8 @@
-﻿var UniAppSpelApp = angular.module('UniAppSpelApp', ['ui.bootstrap']);
+﻿
+var UniAppSpelApp = angular.module('UniAppSpelApp', ['ui.bootstrap']);
 
 UniAppSpelApp.controller('LandingPageController', LandingPageController);
 
 UniAppSpelApp.controller('EditPageController', EditPageController);
 
-UniAppSpelApp.AddPhraseController('AddPhraseController', AddPhraseController);
+UniAppSpelApp.controller('SpicyController', SpicyController);

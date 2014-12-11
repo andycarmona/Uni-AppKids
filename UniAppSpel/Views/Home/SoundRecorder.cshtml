@@ -1,15 +1,10 @@
 ﻿
-<div id="viz">
-    <div class="analyserView">
-        <canvas id="analyser" width="300" height="200"></canvas>
-    </div>
-    <div class="waveView">
-        <canvas  id="wavedisplay" width="300" height="200"></canvas>
-    </div>
-</div>
+
+
 <div id="controls">
-    <img id="record" src="~/Scripts/AudioRecorder/img/mic128.png" onclick="toggleRecording(this);">
-    <a id="save" href="#">
-        <img src="~/Scripts/AudioRecorder/img/save.svg" />
-    </a>
+    <a id="record" class="soundRecorderButton" type="button" onclick="toggleRecording(this);">Record</a>
+    <canvas id="analyser" width="300" height="200"></canvas>
+    <canvas id="wavedisplay" width="300" height="200"></canvas>
+    <a id="save" class="soundRecorderButton" type="button">Upload</a>
+  
 </div>

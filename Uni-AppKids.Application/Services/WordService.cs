@@ -1,6 +1,8 @@
 ﻿namespace Uni_AppKids.Application.Services
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     using AutoMapper;
     using Uni_AppKids.Application.Dto;
     using Uni_AppKids.Core.EntityModels;
@@ -23,18 +25,16 @@
 
     
 
-        public void BulkInsertOfWords(List<WordDto> listOfWords)
+        public Task BulkInsertOfWords(List<WordDto> listOfWords)
         {
-           
             var mappedListOfWords = Mapper.Map<List<WordDto>, List<Word>>(listOfWords);
-            unitOfWork.GetCustomWordRepository().BulkInsertOfWords(mappedListOfWords);
+           return Task.Run(() => unitOfWork.GetCustomWordRepository().BulkInsertOfWords(mappedListOfWords));
         }
 
-        public List<string> GetIdOfWords(List<WordDto> listOfWords)
+        public Task<List<string>> GetIdOfWords(List<WordDto> listOfWords)
         {
             var mappedListOfWords = Mapper.Map<List<WordDto>, List<Word>>(listOfWords);
-            var listOfId = unitOfWork.GetCustomWordRepository().GetIdOfWordsInPhrase(mappedListOfWords);
-            return listOfId;
+            return Task.Run(() => unitOfWork.GetCustomWordRepository().GetIdOfWordsInPhrase(mappedListOfWords));
         }
 
         public List<string> GetRepeatedWords(List<WordDto> listOfWords)

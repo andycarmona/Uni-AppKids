@@ -1110,10 +1110,7 @@ table{
  height:200px;
  width:100% 
 }
-table tr {
-    /*width: 100%;*/
-    display: table-row;
-}
+
 table tbody tr:hover {
           background-color: #ffff99;
     }
@@ -1122,16 +1119,26 @@ overflow-y: scroll;
 height: 200px;
 width: 97%;
 position: absolute;
+
+}
+table tbody tr {
+    /*display:-webkit-box;*/
+    text-align: left;
 }
 .tableImages tbody{
 overflow-y: scroll;
 height: 139px;
 position: absolute;
-width: 221px;
+width: 378px;
+background-color: white;
 }
 textarea {
     font-size: 22px;
     width: 98%;
+}
+.dictionaryImg {
+width: 50%; 
+height: 50%;
 }
 .nav-header {
    
@@ -1170,7 +1177,14 @@ filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.2),0 1px 2px rgba(0,0,0,.05);
 box-shadow: inset 0 1px 0 rgba(255,255,255,.2),0 1px 2px rgba(0,0,0,.05);
 }
-
+.soundRecorderBox
+{ float: left;}
+.descriptionBox {
+    float: left;
+}
+.imageBox {
+    float: left;
+}
 .wordProperty {
     padding: 10px;
 }

@@ -44,35 +44,7 @@ namespace UniAppKids.DNNControllers.Controllers
 
         [DnnAuthorize]
         [AcceptVerbs("POST")]
-        public async Task<List<string>> PostAsync()
-        {
-            
-            if (this.Request.Content.IsMimeMultipartContent())
-            {
-                var uploadPath = HttpContext.Current.Server.MapPath("~/Uploads");
-
-                var streamProvider = new MyStreamProvider(uploadPath);
-
-                await this.Request.Content.ReadAsMultipartAsync(streamProvider);
-
-                var messages = new List<string>();
-                foreach (var file in streamProvider.FileData)
-                {
-                    FileInfo fi = new FileInfo(file.LocalFileName);
-                    messages.Add("File uploaded as " + fi.FullName + " (" + fi.Length + " bytes)");
-                }
-
-                return messages;
-            }
-
-            var response = this.Request.CreateResponse(HttpStatusCode.BadRequest, "Invalid Request!");
-            throw new HttpResponseException(response);
-        }
-
-      
-        [DnnAuthorize]
-        [AcceptVerbs("POST")]
-        public HttpResponseMessage AddPhrase(string listOfWords, int dictionaryId)
+        public async Task<HttpResponseMessage> AddPhrase(string listOfWords, int dictionaryId)
         {
             var errorMessage = new StringBuilder(string.Empty);
             var listOfNotAcceptedWords = new List<string>();
@@ -88,11 +60,12 @@ namespace UniAppKids.DNNControllers.Controllers
 
             const string Delimiter = " ";
             var wordList = Json.Deserialize<List<WordDto>>(listOfWords);
-            wordList.Select(c => { c.CreationTime = DateTime.Now; return c; }).ToList();
+            var verifiedWordList = WordFilterTool.GetListWithValidWordName(wordList);
+            verifiedWordList.Select(c => { c.CreationTime = DateTime.Now; return c; }).ToList();
 
             try
             {
-                var listNoRepeatedElements = WordFilterTool.ListNoRepeatedElements(wordList);
+                var listNoRepeatedElements = WordFilterTool.ListNoRepeatedElements(verifiedWordList);
                 var pathToDictionary = HttpContext.Current.Server.MapPath(string.Format("{0}{1}.txt", ConfigurationManager.AppSettings["Dictionary"], language));
                 WordFilterTool.GetWordsNotAccepted(
                     listNoRepeatedElements,
@@ -100,15 +73,16 @@ namespace UniAppKids.DNNControllers.Controllers
                     pathToDictionary,
                     out listOfNotAcceptedWords);
 
-                this.aWordService.BulkInsertOfWords(listNoRepeatedElements);
+                await this.aWordService.BulkInsertOfWords(listNoRepeatedElements);
 
-                if (wordList.Count == 1)
+                if (verifiedWordList.Count == 1)
                 {
                     return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK);
                 }
 
-                var sentence = wordList.Select(i => i.WordName).Aggregate((i, j) => i + Delimiter + j);
-                var listOfWordsId = this.aWordService.GetIdOfWords(wordList);
+                var sentence = verifiedWordList.Select(i => i.WordName).Aggregate((i, j) => i + Delimiter + j);
+                var listOfWordsId = await this.aWordService.GetIdOfWords(verifiedWordList);
+               
                 var aPhrase = new PhraseDto
                                   {
                                       PhraseText = sentence,
@@ -123,7 +97,7 @@ namespace UniAppKids.DNNControllers.Controllers
             }
             catch (DuplicateKeyException)
             {
-                var listRepeatedWords = this.aWordService.GetRepeatedWords(wordList);
+                var listRepeatedWords = this.aWordService.GetRepeatedWords(verifiedWordList);
                 errorMessage.Append(string.Format(
                     "Cannot insert duplicate words: {0}",
                     string.Join(",", listRepeatedWords)));

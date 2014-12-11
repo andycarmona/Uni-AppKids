@@ -1,4 +1,8 @@
-﻿var LandingPageController = function ($scope, $http, $window, userService) {
+﻿/// <reference path="~/Scripts/UniAppSpelApp.js" />
+/// <reference path="~/Scripts/angular/angular-mocks.js" />
+/// <reference path="~/Scripts/jasmine/jasmine.js" />
+/// <reference path="~/Scripts/angular/angular.js" />
+var LandingPageController = function ($scope, $http, $window, userService) {
 
    
 
@@ -10,6 +14,7 @@
     $scope.wordsInPhrases = [];
     $scope.description = "No description";
     $scope.sound = "No sound";
+    $scope.image = "http://dummyimage.com/100";
     $scope.actualPhraseIndex = 0;
     $scope.errorMessage = ['Undefined error. Could not contact server.'];
     $scope.navLeft = false;
@@ -95,6 +100,7 @@
             if ($scope.wordsInPhrases[i].WordId == wordId) {
                 $scope.description = [$scope.wordsInPhrases[i].WordName] + ": " + $scope.wordsInPhrases[i].WordDescription;
                 $scope.sound = $scope.wordsInPhrases[i].SoundFile;
+                $scope.image = $scope.wordsInPhrases[i].Image;
             }
             i++;
 
@@ -112,6 +118,8 @@
 
 
 LandingPageController.$inject = ['$scope', '$http', '$window', 'userService'];
+
+
 
 var init = function () {
  

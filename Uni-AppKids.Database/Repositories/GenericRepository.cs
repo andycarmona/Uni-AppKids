@@ -13,6 +13,7 @@ namespace Uni_AppKids.Database.Repositories
     using System.Collections.Generic;
     using System.Data;
     using System.Data.Entity;
+    using System.Data.Entity.Migrations;
     using System.Linq;
     using System.Linq.Expressions;
 
@@ -34,6 +35,44 @@ namespace Uni_AppKids.Database.Repositories
         public GenericRepository()
         {
             
+        }
+
+        public virtual bool Compare<TEntity>(TEntity object1, TEntity object2)
+        {
+            // Get the type of the object
+            Type type = typeof(TEntity);
+
+            // return false if any of the object is false
+            if (object1 == null || object2 == null)
+            {
+                return false;
+            }
+
+            // Loop through each properties inside class and get values for the property from both the objects and compare
+            var object1Value = string.Empty;
+            var object2Value = string.Empty;
+            foreach (System.Reflection.PropertyInfo property in type.GetProperties())
+            {
+                if (property.Name != "ExtensionData")
+                {
+                    if (type.GetProperty(property.Name).GetValue(object1, null) != null)
+                    {
+                        object1Value = type.GetProperty(property.Name).GetValue(object1, null).ToString();
+                    }
+
+                    if (type.GetProperty(property.Name).GetValue(object2, null) != null)
+                    {
+                        object2Value = type.GetProperty(property.Name).GetValue(object2, null).ToString();
+                    }
+
+                    if (object1Value.Trim() != object2Value.Trim())
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
 
         public virtual IEnumerable<TEntity> Get(
@@ -94,8 +133,8 @@ namespace Uni_AppKids.Database.Repositories
 
         public virtual void Update(TEntity entityToUpdate)
         {
-            dbSet.Attach(entityToUpdate);
-            context.Entry(entityToUpdate).State = EntityState.Modified;
+            dbSet.AddOrUpdate(entityToUpdate);
+            context.SaveChanges();
         }
 
         public virtual IEnumerable<TEntity> GetAllData()

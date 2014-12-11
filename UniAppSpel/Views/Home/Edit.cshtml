@@ -16,9 +16,9 @@
                         <tbody>
                             <tr ng-repeat="words in words_in_dictionary | orderBy:'WordName':false">
                                 <td ng-click="addWordFromDictionary(words.WordName)"><p>{{words.WordName}}</p></td>
-                                <td ng-click="addWordFromDictionary(words.WordName)"><p>{{words.WordDescription}}</p></td>
-                                <td ng-click="addWordFromDictionary(words.WordName)"><p>{{words.Image}}</p></td>
-                                <td ng-click="addWordFromDictionary(words.WordName)"><p>{{words.SoundFile}}</p></td>
+                                <td ng-click="addWordFromDictionary(words.WordName)"><p>{{words.WordDescription || "No description."}}</p></td>
+                                <td ng-click="addWordFromDictionary(words.WordName)"><div class="dictionaryImg"><p ng-show="!words.Image">No image.</p><img ng-show="words.Image" alt="{{words.WordName}}" ng-src="{{words.Image}}" /></div></td>
+                                <td ng-click="addWordFromDictionary(words.WordName)"><p>{{words.SoundFile || "No sound."}}</p></td>
                             </tr>
                         </tbody>
                     </table>
@@ -29,34 +29,62 @@
     <div class="navsection">
         <textarea class="form-horizontal" ng-model="sentence" ng-change="parseSentence()" style="width: 98%; height: 15em;"></textarea>
         <form name="worddata">
-
             <button id="Submit1" class="primaryButton" type="button" ng-click="processForm()">Submit</button>
             <accordion class="btn" style="float:left;" close-others="oneAtATime">
                 <span class="badge">Edit words to be added to dictionary</span>
                 <accordion-group class="btn" heading="(Show/Hide) ">
                     <tabset justified="true">
                         <tab ng-repeat="w in words track by $index" heading="{{w.WordName}}">
-                            <div class="bottomleft">
-                                <label>Name</label>
-                                <input class="form-horizontal" type="text" ng-model="w.WordName" ng-change="buildSentance(w[$index])" />
-                                <label>Sound file</label>
-                                <input class="form-horizontal" type="text" ng-model="w.SoundFile" />
-                                <div>
-                                    <table class="tableImages">
-                                        <thead><tr><th><button class="primaryButton" type="button" ng-click="GetImageList(w.WordName)">Get</button> images for this word:</th></tr></thead>
-                                        <tbody>
-                                            <tr ng-repeat="aImage in imagelist | filter:w.WordName">
-                                                <td ng-click="chooseImage(aImage.Image)"><img ng-src="{{aImage.Image}}" alt="{{w.WordName}}" /></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="imgField">
-                                        <label>Image Name</label>
-                                        <input class="form-horizontal" type="text" ng-model="imageurl" />
+                            <div class="span4 well">
+                                <div class="thumbnail">
+                                    <div class="caption">
+                                        <label>Name</label>
+                                        <input class="form-horizontal" type="text" ng-model="w.WordName" ng-change="buildSentance(w[$index])" />
+                                        <accordion class="btn" close-others="oneAtATime">
+                                            <accordion-group class="btn" heading="Add a description">
+                                                <label>Description</label>
+                                                <textarea class="form-horizontal" type="text" ng-model="w.WordDescription" style="height: 5em;"></textarea>
+                                            </accordion-group>
+                                        </accordion>
+
                                     </div>
                                 </div>
-                                <label>Description</label>
-                                <input class="form-horizontal" type="text" ng-model="w.WordDescription" />
+                            </div>
+                            <div class="span4 well">
+                                <label>Sound file</label>
+                                <input class="form-horizontal" type="text" ng-model="w.SoundFile" />
+                                <div class="thumbnail">
+                                    <div class="caption">
+                                        <accordion class="btn" close-others="oneAtATime">
+                                            <accordion-group class="btn" heading="Add a sound">
+                                                @Html.Partial("SoundRecorder")
+                                            </accordion-group>
+                                        </accordion>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="span4 well">
+                                <div class="caption">
+                                    <label>Image Name</label>
+                                    <input class="form-horizontal" id="{{w.WordName}}" type="text" ng-model="w.Image" />
+                                    <accordion class="btn" close-others="oneAtATime">
+
+                                        <accordion-group class="btn" heading="Add an image">
+                                            <table class="tableImages">
+                                                <thead><tr><th><button class="primaryButton" type="button" ng-click="GetImageList(w.WordName)">Get</button> images for this word:</th></tr></thead>
+                                                <tbody>
+                                                    <tr ng-repeat="aImage in imagelist | filter:w.WordName">
+                                                        <td ng-click="chooseImage(aImage.Image,w.WordName)"><img ng-src="{{aImage.Image}}" alt="{{w.WordName}}" /></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </accordion-group>
+                                    </accordion>
+
+
+
+
+                                </div>
                             </div>
                         </tab>
                     </tabset>
@@ -64,14 +92,13 @@
             </accordion>
         </form>
     </div>
-    <div class="navsection">
+
+    <div ng-show="getErrorMessagStatus()" class="navsection">
         <accordion class="btn" style="float:left;" close-others="oneAtATime">
-            <span class="badge">Systems information: {{error.length}}</span>
+
+            <span class="badge">Error message</span>
             <accordion-group class="btn" heading="(Show/Hide) ">
                 <textarea class="form-horizontal" ng-model="error" style="width: 100%; height: 15em;"></textarea>
-            </accordion-group>
-            <accordion-group class="btn" heading="(Show/Hide) ">
-                <div>@Html.Partial("SoundRecorder")</div>
             </accordion-group>
         </accordion>
     </div>

@@ -1,4 +1,6 @@
-﻿var EditPageController = function ($scope, $http, $window,$filter, userService) {
+﻿
+
+var EditPageController = function ($scope, $http, $window, userService) {
 
     var urlPhrase = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/AddPhrase?dictionaryId=1&listOfWords=";
     var urlWordList = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/GetAllWordsInDictionary";
@@ -9,7 +11,7 @@
     $scope.imagelist = [];
     $scope.words = [];
     $scope.sentence = "";
-
+    $scope.imageurl = "No image";
     GetWordList(urlWordList);
     GetDictionary();
    
@@ -30,6 +32,17 @@
             $scope.error = "An internal error has ocurred. " + request;
         });
       
+    }
+
+    $scope.getErrorMessagStatus=function()
+    {
+        var status = false;
+        if ($scope.error != null) {
+            if ($scope.error.length > 0) {
+                status = true;
+            }
+        }
+        return status;
     }
 
    $scope.GetImageList=function (keyWord) {
@@ -60,14 +73,24 @@
         $scope.words_in_dictionary = request;
         
     }
-    $scope.chooseImage= function(imageUrl) {
-        $scope.imageurl = imageUrl;
+    $scope.chooseImage = function (imageUrl, keyWord) {
+        angular.forEach($scope.words, function (word, index) {
+            if (word["WordName"] == keyWord) {
+                //$scope.words.push({ Image: imageUrl });
+                $scope.words[0].Image = imageUrl;
+            }
+        });
+         var input = $('#'+keyWord);
+    input.val(imageUrl);
+    input.trigger('input');
+     console.log("Image url: "+imageUrl+" Name " + $scope.words[0].WordName + " and description" + $scope.words["Image"]);
     }
 
     $scope.processForm = function () {
         var wordsJsonFormat = JSON.stringify($scope.words, null, '');
   
         $scope.words = [];
+       
         urlPhrase = urlPhrase + wordsJsonFormat;
      
         userService.PostRequest(urlPhrase).success(function (request) {
@@ -81,11 +104,13 @@
 
     $scope.parseSentence = function () {
 
-        var words = $scope.sentence.split(/\s+/g);
         var wordObjects = [];
+        var words = $scope.sentence.split(/\s+/g);
+        
 
         for (var i = 0; i < words.length; i++) {
             wordObjects.push({ WordName: words[i] });
+            
             
         }
 
@@ -131,4 +156,6 @@
 
 }
 
-EditPageController.$inject = ['$scope', '$http', '$window','$filter', 'userService'];
+EditPageController.$inject = ['$scope', '$http', '$window', 'userService'];
+
+

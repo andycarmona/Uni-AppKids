@@ -30,6 +30,11 @@
         {
             return this.View();
         }
+
+        public ActionResult TestPage()
+        {
+            return this.View();
+        }
         
     }
 }

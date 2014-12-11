@@ -58,7 +58,7 @@ function PostSound(soundBlob, fileName) {
     fd.append("blob", soundBlob, fileName);
     $.ajax({
         type: 'POST',
-        url: 'http://dnndev.me/DesktopModules/DataExchange/API/Example/PostAsync',
+        url: 'http://dnndev.me/DesktopModules/DataExchange/API/RemoteService/PostSoundFileAsync',
         data: fd,
         processData: false,
         contentType: false
@@ -66,7 +66,6 @@ function PostSound(soundBlob, fileName) {
         console.log(data);
     });
 }
-
 function toggleRecording( e ) {
     if (e.classList.contains("recording")) {
         // stop recording

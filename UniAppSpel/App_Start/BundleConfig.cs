@@ -14,13 +14,14 @@ namespace UniAppSpel
             bundles.Add(new ScriptBundle("~/bundles/UniAppSpelApp")
                    .IncludeDirectory("~/Scripts/Controllers", "*.js")
                    .Include("~/Scripts/UniAppSpelApp.js"));
-
+           
 
 
             bundles.Add(new ScriptBundle("~/bundles/Scripts")
           .IncludeDirectory("~/Scripts", "*.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
+      
 
             bundles.Add(new StyleBundle("~/Content/bootstrap")
                 .Include(
