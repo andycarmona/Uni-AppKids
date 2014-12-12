@@ -10,28 +10,20 @@
 namespace UniAppKids.DNNControllers.Controllers
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.Configuration;
     using System.Data.Linq;
-    using System.IO;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Text;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Http;
-    using System.Web.UI.WebControls;
-
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Web.Api;
-
-    using Google.API.Search;
-
     using UniAppKids.DNNControllers.Helpers;
-
     using Uni_AppKids.Application.Dto;
     using Uni_AppKids.Application.Services;
 
@@ -46,10 +38,12 @@ namespace UniAppKids.DNNControllers.Controllers
         [AcceptVerbs("POST")]
         public async Task<HttpResponseMessage> AddPhrase(string listOfWords, int dictionaryId)
         {
+            string[] wordArray = Regex.Split(listOfWords, @"\[(.*?)\]");
+            var wordChosen = wordArray.Length - 2;
             var errorMessage = new StringBuilder(string.Empty);
             var listOfNotAcceptedWords = new List<string>();
-
-            if (listOfWords.Length == 0)
+            const string Delimiter = " ";
+            if (wordArray[wordChosen].Length == 0)
             {
                 return this.ControllerContext.Request.CreateResponse(
                     HttpStatusCode.BadRequest,
@@ -57,9 +51,7 @@ namespace UniAppKids.DNNControllers.Controllers
             }
 
             var language = this.aDictionaryService.GetADictionary(dictionaryId).DictionaryName;
-
-            const string Delimiter = " ";
-            var wordList = Json.Deserialize<List<WordDto>>(listOfWords);
+            var wordList = Json.Deserialize<List<WordDto>>("[" + wordArray[wordChosen] + "]");
             var verifiedWordList = WordFilterTool.GetListWithValidWordName(wordList);
             verifiedWordList.Select(c => { c.CreationTime = DateTime.Now; return c; }).ToList();
 
@@ -82,7 +74,7 @@ namespace UniAppKids.DNNControllers.Controllers
 
                 var sentence = verifiedWordList.Select(i => i.WordName).Aggregate((i, j) => i + Delimiter + j);
                 var listOfWordsId = await this.aWordService.GetIdOfWords(verifiedWordList);
-               
+
                 var aPhrase = new PhraseDto
                                   {
                                       PhraseText = sentence,
@@ -93,7 +85,7 @@ namespace UniAppKids.DNNControllers.Controllers
                                   };
 
                 this.aPhraseService.InsertPhrase(aPhrase);
-                return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK);
+                return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, wordList);
             }
             catch (DuplicateKeyException)
             {
@@ -129,18 +121,52 @@ namespace UniAppKids.DNNControllers.Controllers
             return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, wordList);
         }
 
+        [DnnAuthorize]
+        [AcceptVerbs("GET")]
+        public HttpResponseMessage DeletePhrase(int phraseId)
+        {
+            try
+            {
+                aPhraseService.DeletePhrase(phraseId);
+
+                return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception e)
+            {
+                return this.ControllerContext.Request.CreateResponse(
+             HttpStatusCode.BadRequest,
+             "Couldn't delete phrase");
+            }
+        }
+
+        [DnnAuthorize]
+        [AcceptVerbs("GET")]
+        public HttpResponseMessage GetAllPhrasesInDictionary(int dictionaryId, int totalPages)
+        {
+            var phraseList = this.aPhraseService.GetListOfPhrase(dictionaryId, totalPages);
+
+            if (!phraseList.Any())
+            {
+                return this.ControllerContext.Request.CreateResponse(
+                    HttpStatusCode.BadRequest,
+                    "There is no words in dictionary");
+            }
+
+            return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, phraseList);
+        }
+
         [AllowAnonymous]
         [AcceptVerbs("GET")]
-        public HttpResponseMessage GetWordsList(int dictionaryId, int indexOfPhraseList)
+        public HttpResponseMessage GetWordsList(int dictionaryId, int indexOfPhraseList, int totalPages)
         {
             string errorMessage;
             try
             {
-                var listOfPhrase = this.aPhraseService.GetListOfPhrase(dictionaryId);
+                var listOfPhrase = this.aPhraseService.GetListOfPhrase(dictionaryId, totalPages);
                 foreach (var aPhrase in listOfPhrase)
                 {
-                   var wordsId = aPhrase.WordsIds;  
-                     var listOfWords = this.aWordService.GetListOfWordsForAPhrase(wordsId);
+                    var wordsId = aPhrase.WordsIds;
+                    var listOfWords = this.aWordService.GetListOfWordsForAPhrase(wordsId);
                     aPhrase.ListOfWords = listOfWords;
                 }
 

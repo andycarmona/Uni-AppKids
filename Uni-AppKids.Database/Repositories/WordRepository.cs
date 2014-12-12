@@ -28,7 +28,7 @@ namespace Uni_AppKids.Database.Repositories
     {
         private readonly UniAppKidsDbContext context;
 
-        private readonly GenericRepository<Word> aGenericRepository; 
+        private readonly GenericRepository<Word> aGenericRepository;
 
         public WordRepository(UniAppKidsDbContext uniAppKidsDbContext)
             : base(uniAppKidsDbContext)
@@ -65,26 +65,40 @@ namespace Uni_AppKids.Database.Repositories
             }
         }
 
-        public void UpdatePropertiesOfRepeatedWords(List<Word> wordListToUpdate )
+        public void UpdatePropertiesOfRepeatedWords(List<Word> wordListToUpdate)
         {
             foreach (var wordToUpdate in wordListToUpdate)
             {
                 var aWord = this.context.Words.FirstOrDefault(rawWord => rawWord.WordName == wordToUpdate.WordName);
-                if (aWord != null)
+                if (aWord == null)
+                {
+                    continue;
+                }
+
+                if (!string.IsNullOrEmpty(wordToUpdate.Image))
                 {
                     aWord.Image = wordToUpdate.Image;
-                    aWord.WordDescription = wordToUpdate.WordDescription;
-                    aWord.SoundFile = wordToUpdate.SoundFile;
-                    aGenericRepository.Update(aWord);
-                    context.SaveChanges();
                 }
-                
+
+                if (!string.IsNullOrEmpty(wordToUpdate.Image))
+                {
+                    aWord.WordDescription = wordToUpdate.WordDescription;
+                }
+
+                if (!string.IsNullOrEmpty(wordToUpdate.Image))
+                {
+                    aWord.SoundFile = wordToUpdate.SoundFile;
+                }
+
+                this.aGenericRepository.Update(aWord);
+                this.context.SaveChanges();
             }
         }
 
+
         public List<Word> GetListOfNotExistingWords(List<Word> rawWordList, out List<Word> wordsToupdate)
         {
-           
+
             wordsToupdate = new List<Word>();
             var notExistingWords = new List<Word>();
             foreach (var aWord in rawWordList)
@@ -104,7 +118,7 @@ namespace Uni_AppKids.Database.Repositories
                     }
                 }
             }
-     
+
             return notExistingWords;
         }
 

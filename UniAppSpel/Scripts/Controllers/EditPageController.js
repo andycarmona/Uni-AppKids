@@ -3,9 +3,11 @@
 var EditPageController = function ($scope, $http, $window, userService) {
 
     var urlPhrase = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/AddPhrase?dictionaryId=1&listOfWords=";
+    var urlPhraseList = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/GetAllPhrasesInDictionary?";
     var urlWordList = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/GetAllWordsInDictionary";
     var urlDictionary = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/GetDictionary?dictionaryId=1";
-    
+    var urlDeletePhrase = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/DeletePhrase?";
+    var debugMode = true;
 
 
     $scope.imagelist = [];
@@ -13,8 +15,9 @@ var EditPageController = function ($scope, $http, $window, userService) {
     $scope.sentence = "";
     $scope.imageurl = "No image";
     GetWordList(urlWordList);
+    GetPhraseList(urlPhraseList,10);
     GetDictionary();
-   
+
 
     function GetDictionary() {
         userService.GetRequest(urlDictionary).success(function (request) {
@@ -31,11 +34,21 @@ var EditPageController = function ($scope, $http, $window, userService) {
         }).error(function (request) {
             $scope.error = "An internal error has ocurred. " + request;
         });
-      
+
+    }
+    function GetPhraseList(url) {
+        var dictionaryId = 1;
+        var totalPages = 10;
+        url = url + "dictionaryId="+dictionaryId + "&totalPages=" + totalPages;
+        userService.GetRequest(url).success(function (request) {
+            applyRemoteDataToPhraseList(request);
+        }).error(function (request) {
+            $scope.error = "An internal error has ocurred. " + request;
+        });
+
     }
 
-    $scope.getErrorMessagStatus=function()
-    {
+    $scope.getErrorMessagStatus = function () {
         var status = false;
         if ($scope.error != null) {
             if ($scope.error.length > 0) {
@@ -45,9 +58,9 @@ var EditPageController = function ($scope, $http, $window, userService) {
         return status;
     }
 
-   $scope.GetImageList=function (keyWord) {
+    $scope.GetImageList = function (keyWord) {
         var url = "http://dnndev.me/DesktopModules/DataExchange/API/RemoteService/GetListOfImageUrl?wordToSearch=";
-        userService.GetRequest(url+keyWord).success(function (request) {
+        userService.GetRequest(url + keyWord).success(function (request) {
             applyRemoteDataToImageList(request);
         }).error(function (request) {
             $scope.error = "An internal error has ocurred. " + request;
@@ -65,60 +78,97 @@ var EditPageController = function ($scope, $http, $window, userService) {
     function applyRemoteDataToDictionary(request) {
 
         $scope.dictionaries = request.DictionaryName;
-      
+
 
     }
     function applyRemoteDataToWordList(request) {
 
         $scope.words_in_dictionary = request;
-        
+
+    }
+    function applyRemoteDataToPhraseList(request) {
+
+        $scope.phrases_in_dictionary = request;
+
     }
     $scope.chooseImage = function (imageUrl, keyWord) {
-        angular.forEach($scope.words, function (word, index) {
-            if (word["WordName"] == keyWord) {
-                //$scope.words.push({ Image: imageUrl });
-                $scope.words[0].Image = imageUrl;
-            }
-        });
-         var input = $('#'+keyWord);
-    input.val(imageUrl);
-    input.trigger('input');
-     console.log("Image url: "+imageUrl+" Name " + $scope.words[0].WordName + " and description" + $scope.words["Image"]);
-    }
 
-    $scope.processForm = function () {
-        var wordsJsonFormat = JSON.stringify($scope.words, null, '');
-  
-        $scope.words = [];
+        var iterator = 0;
+        angular.forEach($scope.words, function (word, index) {
+            if (word["WordName"] === keyWord) {
+                $scope.words[iterator].Image = imageUrl;
+            }
+          iterator++;
+        });
+
+        var input = $('#' + keyWord);
+        input.val(imageUrl);
+        input.trigger('input');
+    }
+    $scope.ShowDebugInfo = function() {
+    
+        for (var i = 0; i < $scope.words.length; i++) {
+            console.log("Actual Image url: " + $scope.words[i].Image + " Name in word array " + $scope.words[i].WordName + " and description" + $scope.words[i].WordDescription);
+        }
+    }
+    $scope.deletePhrase = function (phraseId) {
        
-        urlPhrase = urlPhrase + wordsJsonFormat;
-     
-        userService.PostRequest(urlPhrase).success(function (request) {
-            wordsJsonFormat = "";
-            return(request);
+        var aPhrase = { Id: phraseId };
+        console.log("Before:phrasid to delete " + aPhrase.Id);
+        urlDeletePhrase = urlDeletePhrase + "phraseId=" + aPhrase.Id;
+        delete aPhrase.Id;
+        console.log("After:phrasid to delete " + aPhrase.Id);
+        userService.GetRequest(urlDeletePhrase).success(function () {
+            GetPhraseList(urlPhraseList,10);
         }).error(function (request) {
             $scope.error = "An internal error has ocurred. " + request;
         });
-  
+
+    }
+
+    $scope.choosePhrase = function(sentence)
+    {
+        $scope.sentence = sentence;
+        $scope.parseSentence();
+        $scope.ShowDebugInfo();
+    }
+
+    $scope.processForm = function () {
+       
+       var wordsJsonFormat = JSON.stringify($scope.words, null, '');
+    
+     
+        urlPhrase = urlPhrase + wordsJsonFormat;
+        userService.PostRequest(urlPhrase).success(function (request) {
+
+            $scope.iconSuccess = true;
+            location.reload(true);
+          
+        }).error(function (request) {
+            $scope.error = "An internal error has ocurred. " + request;
+        });
+
+        $scope.iconSuccess = false;
+    
     };
 
     $scope.parseSentence = function () {
 
         var wordObjects = [];
         var words = $scope.sentence.split(/\s+/g);
-        
+
 
         for (var i = 0; i < words.length; i++) {
             wordObjects.push({ WordName: words[i] });
-            
-            
+
+
         }
 
         if ((words.length == 1) && (words[0] === '')) {
             $scope.words = [];
         } else {
             $scope.words = wordObjects;
-    
+        
         }
 
     };
@@ -126,12 +176,12 @@ var EditPageController = function ($scope, $http, $window, userService) {
 
 
     $scope.addWordFromDictionary = function (aWord) {
-        
+
         $scope.words.push({ WordName: aWord });
         $scope.buildSentance();
         $scope.GetImageList(aWord);
     }
-  
+
 
     $scope.buildSentance = function () {
 
@@ -141,11 +191,12 @@ var EditPageController = function ($scope, $http, $window, userService) {
             var word = $scope.words[i].WordName;
             if (word.replace(/\s+/g, '') !== '') {
                 words.push(word);
-                
+
             }
         }
 
         $scope.sentence = words.join(' ');
+
         //if (w.WordName.indexOf(' ') > -1) {
         //    $scope.parseSentenceDebounced();
         //}

@@ -134,7 +134,7 @@ namespace Uni_AppKids.Database.Repositories
         public virtual void Update(TEntity entityToUpdate)
         {
             dbSet.AddOrUpdate(entityToUpdate);
-            context.SaveChanges();
+      
         }
 
         public virtual IEnumerable<TEntity> GetAllData()

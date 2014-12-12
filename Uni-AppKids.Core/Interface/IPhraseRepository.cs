@@ -15,7 +15,7 @@ namespace Uni_AppKids.Core.Interface
 
     public interface IPhraseRepository
     {
-        List<Phrase> GetPhrasesInDictionary(int dictionaryId);
+        List<Phrase> GetPhrasesInDictionary(int dictionaryId,int totalPages);
 
         
     }

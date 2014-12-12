@@ -16,13 +16,19 @@ namespace Uni_AppKids.Application.Services
             GetMappedEntities();
         }
 
-        public List<PhraseDto> GetListOfPhrase(int dictionaryId)
+        public List<PhraseDto> GetListOfPhrase(int dictionaryId,int totalPages)
         {
 
-            List<Phrase> listOfPhrases = unitOfWork.GetPhraseRepository().GetPhrasesInDictionary(dictionaryId);
+            List<Phrase> listOfPhrases = unitOfWork.GetPhraseRepository().GetPhrasesInDictionary(dictionaryId,totalPages);
             var mappedListOfWords = Mapper.Map<List<Phrase>, List<PhraseDto>>(listOfPhrases);
             return mappedListOfWords;
 
+        }
+
+        public void DeletePhrase(int phraseId)
+        {
+            unitOfWork.GetGenericPhraseRepository().Delete(phraseId);
+            unitOfWork.Save();
         }
 
         public void InsertPhrase(PhraseDto phrase)

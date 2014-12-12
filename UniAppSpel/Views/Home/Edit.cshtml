@@ -23,13 +23,24 @@
                         </tbody>
                     </table>
                 </accordion-group>
+                <span class="badge">Phrases in dictionary: {{words_in_dictionary.length}}</span>
+                <accordion-group class="btn" heading="(Show/Hide)">
+                    <table class="tableDictionary">
+                        <thead><tr><th>Description</th></tr></thead>
+                        <tbody>
+                            <tr ng-repeat="phrase in phrases_in_dictionary">
+                               <td><button class="primaryButton" type="button" ng-click="deletePhrase(phrase.PhraseId)">Delete</button></td> <td ng-click="choosePhrase(phrase.PhraseText)"><p>{{phrase.PhraseText}}</p></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </accordion-group>
             </accordion>
         </div>
     </div>
     <div class="navsection">
-        <textarea class="form-horizontal" ng-model="sentence" ng-change="parseSentence()" style="width: 98%; height: 15em;"></textarea>
+        <textarea class="form-horizontal" id="mainArea" ng-model="sentence" ng-change="parseSentence()" style="width: 98%; height: 15em;"></textarea>
         <form name="worddata">
-            <button id="Submit1" class="primaryButton" type="button" ng-click="processForm()">Submit</button>
+            <button id="Submit1" class="primaryButton" type="button" ng-click="processForm()">Submit</button><span ng-show="iconSuccess" class="badge">Ok</span>
             <accordion class="btn" style="float:left;" close-others="oneAtATime">
                 <span class="badge">Edit words to be added to dictionary</span>
                 <accordion-group class="btn" heading="(Show/Hide) ">

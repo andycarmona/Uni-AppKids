@@ -23,6 +23,11 @@
             unitOfWork.Save();
         }
 
+        public async Task<List<string>> InsertWordProcess(List<WordDto> listOfWords)
+        {
+            await this.BulkInsertOfWords(listOfWords);
+            return await this.GetIdOfWords(listOfWords);
+        }
     
 
         public Task BulkInsertOfWords(List<WordDto> listOfWords)

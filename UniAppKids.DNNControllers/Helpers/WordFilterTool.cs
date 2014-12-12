@@ -15,6 +15,13 @@
 
     public static class WordFilterTool
     {
+        public static List<WordDto> processListofWords(List<WordDto> rawWordList)
+        {
+            var processedWordList = new List<WordDto>();
+
+            return processedWordList;
+        }
+
         public static string RemoveSpecialCharacters(string rawWord)
         {
             rawWord = rawWord.ToLower();

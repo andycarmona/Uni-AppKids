@@ -25,13 +25,11 @@ namespace Uni_AppKids.Database.Repositories
             context = uniAppKidsDbContext;
         }
 
-        public List<Phrase> GetPhrasesInDictionary(int dictionaryId)
+        public List<Phrase> GetPhrasesInDictionary(int dictionaryId,int totalPages)
         {
-            var listOfPhrases = context.Phrases.Where(x => x.AssignedDictionaryId == dictionaryId).ToList();
+            var listOfPhrases = context.Phrases.Where(x => x.AssignedDictionaryId == dictionaryId).Take(totalPages).ToList();
 
             return listOfPhrases;
         }
-
-     
     }
 }
