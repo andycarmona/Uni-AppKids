@@ -1156,3 +1156,50 @@ h1:hover {
     padding: 5px;
     border-radius: 5px;
 }
+/*Animation*/
+.animate-me {
+  border: 1px solid;
+  border-radius:5px;
+  width: 80px;
+  padding: 4px;
+  background-color: gray;
+  box-shadow: 8px 8px 5px #888888;
+}
+
+.animate-me.ng-hide-add {
+  opacity: 1.0;
+  display: block !important;
+  transition: opacity 3s;
+}
+
+.animate-me.ng-hide-add-active { 
+  opacity: 0;
+}
+.animate-show, .animate-hide {
+  -webkit-transition:all linear 1s;
+  -moz-transition:all linear 1s;
+  -ms-transition:all linear 1s;
+  -o-transition:all linear 1s;
+  transition:all linear 1s;
+
+}
+
+.animate-show {
+    -ms-opacity:0;
+    opacity:0;
+}
+
+.animate-show.animate-show-active {
+    -ms-opacity:1;
+    opacity:1;
+}
+
+.animate-hide {
+    -ms-opacity:1;
+    opacity:1;
+}
+
+.animate-hide.animate-hide-active {
+    -ms-opacity:0;
+    opacity:0;
+}

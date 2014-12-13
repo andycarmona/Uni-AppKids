@@ -1,5 +1,5 @@
 ﻿
-var UniAppSpelApp = angular.module('UniAppSpelApp', ['ui.bootstrap']);
+var UniAppSpelApp = angular.module('UniAppSpelApp', ['ui.bootstrap','ngAnimate']);
 
 UniAppSpelApp.controller('LandingPageController', LandingPageController);
 

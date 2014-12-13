@@ -38,12 +38,10 @@ namespace UniAppKids.DNNControllers.Controllers
         [AcceptVerbs("POST")]
         public async Task<HttpResponseMessage> AddPhrase(string listOfWords, int dictionaryId)
         {
-            string[] wordArray = Regex.Split(listOfWords, @"\[(.*?)\]");
-            var wordChosen = wordArray.Length - 2;
             var errorMessage = new StringBuilder(string.Empty);
             var listOfNotAcceptedWords = new List<string>();
             const string Delimiter = " ";
-            if (wordArray[wordChosen].Length == 0)
+            if (listOfWords.Length == 0)
             {
                 return this.ControllerContext.Request.CreateResponse(
                     HttpStatusCode.BadRequest,
@@ -51,7 +49,7 @@ namespace UniAppKids.DNNControllers.Controllers
             }
 
             var language = this.aDictionaryService.GetADictionary(dictionaryId).DictionaryName;
-            var wordList = Json.Deserialize<List<WordDto>>("[" + wordArray[wordChosen] + "]");
+            var wordList = Json.Deserialize<List<WordDto>>(listOfWords);
             var verifiedWordList = WordFilterTool.GetListWithValidWordName(wordList);
             verifiedWordList.Select(c => { c.CreationTime = DateTime.Now; return c; }).ToList();
 
