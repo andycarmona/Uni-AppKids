@@ -1,7 +1,4 @@
-﻿/// <reference path="~/Scripts/UniAppSpelApp.js" />
-/// <reference path="~/Scripts/angular/angular-mocks.js" />
-/// <reference path="~/Scripts/jasmine/jasmine.js" />
-/// <reference path="~/Scripts/angular/angular.js" />
+﻿"use strict";
 var LandingPageController = function ($scope, $http, $window, userService) {
 
    

@@ -1,4 +1,4 @@
-﻿
+﻿"use strict";
 
 var EditPageController = function ($scope, $http, $window, userService) {
 
@@ -9,7 +9,7 @@ var EditPageController = function ($scope, $http, $window, userService) {
     var urlDeletePhrase = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/DeletePhrase?";
     var debugMode = true;
 
-
+    $scope.phraseIdToDelete = 0;
     $scope.imagelist = [];
     $scope.words = [];
     $scope.sentence = "";
@@ -111,19 +111,18 @@ var EditPageController = function ($scope, $http, $window, userService) {
             console.log("Actual Image url: " + $scope.words[i].Image + " Name in word array " + $scope.words[i].WordName + " and description" + $scope.words[i].WordDescription);
         }
     }
+
+    $scope.makeUrl = function (phraseId) {
+        return urlDeletePhrase + "phraseId=" + phraseId;
+    }
+
     $scope.deletePhrase = function (phraseId) {
-       
-        var aPhrase = { Id: phraseId };
-        console.log("Before:phrasid to delete " + aPhrase.Id);
-        urlDeletePhrase = urlDeletePhrase + "phraseId=" + aPhrase.Id;
-        delete aPhrase.Id;
-        console.log("After:phrasid to delete " + aPhrase.Id);
-        userService.GetRequest(urlDeletePhrase).success(function () {
+        userService.GetRequest(urlDeletePhrase + "phraseId=" + phraseId).success(function () {
             GetPhraseList(urlPhraseList,10);
         }).error(function (request) {
             $scope.error = "An internal error has ocurred. " + request;
         });
-
+   
     }
 
     $scope.choosePhrase = function(sentence)
@@ -140,9 +139,9 @@ var EditPageController = function ($scope, $http, $window, userService) {
      
         urlPhrase = urlPhrase + wordsJsonFormat;
         userService.PostRequest(urlPhrase).success(function (request) {
-
+            GetPhraseList(urlPhraseList, 10);
             $scope.iconSuccess = true;
-            location.reload(true);
+            //location.reload(true);
           
         }).error(function (request) {
             $scope.error = "An internal error has ocurred. " + request;

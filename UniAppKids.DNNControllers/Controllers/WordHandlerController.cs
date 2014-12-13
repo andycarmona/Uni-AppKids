@@ -149,7 +149,7 @@ namespace UniAppKids.DNNControllers.Controllers
             {
                 return this.ControllerContext.Request.CreateResponse(
                     HttpStatusCode.BadRequest,
-                    "There is no words in dictionary");
+                    "There is no phrases in dictionary");
             }
 
             return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, phraseList);

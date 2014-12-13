@@ -11,7 +11,7 @@
                 <span class="badge">Words in dictionary: {{words_in_dictionary.length}}</span>
                 <accordion-group class="btn" heading="(Show/Hide)">
                     <label>Click on a word to add it to your custom sentence.</label>
-                    <table class="tableDictionary">
+                    <table class="table">
                         <thead><tr><th>Name</th><th>Description</th><th>Image</th><th>Sound</th></tr></thead>
                         <tbody>
                             <tr ng-repeat="words in words_in_dictionary | orderBy:'WordName':false">
@@ -23,13 +23,13 @@
                         </tbody>
                     </table>
                 </accordion-group>
-                <span class="badge">Phrases in dictionary: {{words_in_dictionary.length}}</span>
+                <span class="badge">Phrases in dictionary: {{phrases_in_dictionary.length}}</span>
                 <accordion-group class="btn" heading="(Show/Hide)">
-                    <table class="tableDictionary">
+                    <table class="table">
                         <thead><tr><th>Description</th></tr></thead>
                         <tbody>
                             <tr ng-repeat="phrase in phrases_in_dictionary">
-                               <td><button class="primaryButton" type="button" ng-click="deletePhrase(phrase.PhraseId)">Delete</button></td> <td ng-click="choosePhrase(phrase.PhraseText)"><p>{{phrase.PhraseText}}</p></td>
+                               <td><a class="primaryButton" ng-click="deletePhrase(phrase.PhraseId)">Delete</a></td> <td ng-click="choosePhrase(phrase.PhraseText)"><p>{{phrase.PhraseText}}</p></td>
                             </tr>
                         </tbody>
                     </table>
@@ -38,7 +38,7 @@
         </div>
     </div>
     <div class="navsection">
-        <textarea class="form-horizontal" id="mainArea" ng-model="sentence" ng-change="parseSentence()" style="width: 98%; height: 15em;"></textarea>
+        <textarea class="form-horizontal" id="mainArea" ng-model="sentence" ng-change="parseSentence()" style="width: 100%; height: 15em;"></textarea>
         <form name="worddata">
             <button id="Submit1" class="primaryButton" type="button" ng-click="processForm()">Submit</button><span ng-show="iconSuccess" class="badge">Ok</span>
             <accordion class="btn" style="float:left;" close-others="oneAtATime">
