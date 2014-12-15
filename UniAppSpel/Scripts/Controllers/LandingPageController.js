@@ -9,9 +9,6 @@ var LandingPageController = function ($scope, $http, $window, userService) {
     };
     $scope.Phrases = [];
     $scope.wordsInPhrases = [];
-    $scope.description = "No description";
-    $scope.sound = "No sound";
-    $scope.image = "http://dummyimage.com/100";
     $scope.actualPhraseIndex = 0;
     $scope.errorMessage = ['Undefined error. Could not contact server.'];
     $scope.navLeft = false;
@@ -24,6 +21,15 @@ var LandingPageController = function ($scope, $http, $window, userService) {
     GetDictionary();
     GetPhrase();
 
+    $scope.getErrorMessagStatus = function () {
+        var status = false;
+        if ($scope.error != null) {
+            if ($scope.error.length > 0) {
+                status = true;
+            }
+        }
+        return status;
+    }
   
 
     function GetDictionary() {

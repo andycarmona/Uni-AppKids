@@ -24,6 +24,7 @@ var rafID = null;
 var analyserContext = null;
 var canvasWidth, canvasHeight;
 var recIndex = 0;
+var actualControlId = null;
 
 /* TODO:
 
@@ -48,9 +49,10 @@ function gotBuffers( buffers ) {
 }
 
 function doneEncoding( blob ) {
-    //Recorder.setupDownload( blob, "myRecording" + ((recIndex<10)?"0":"") + recIndex + ".wav" );
-    PostSound(blob, "myRecording1.wav");
-    recIndex++;
+    if (actualControlId != null) {
+        PostSound(blob, actualControlId + "sound.wav");
+    }
+
 }
 
 function PostSound(soundBlob, fileName) {
@@ -63,15 +65,17 @@ function PostSound(soundBlob, fileName) {
         processData: false,
         contentType: false
     }).done(function (data) {
+   
         console.log(data);
     });
 }
-function toggleRecording( e ) {
+function toggleRecording(e) {
+ 
     if (e.classList.contains("recording")) {
         // stop recording
         audioRecorder.stop();
         e.classList.remove("recording");
-        audioRecorder.getBuffers( gotBuffers );
+        audioRecorder.getBuffers(gotBuffers);
     } else {
         // start recording
         if (!audioRecorder)
@@ -79,6 +83,9 @@ function toggleRecording( e ) {
         e.classList.add("recording");
         audioRecorder.clear();
         audioRecorder.record();
+       
+        actualControlId = e.id;
+      
     }
 }
 

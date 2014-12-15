@@ -64,12 +64,12 @@
                             </div>
                             <div class="span4 well">
                                 <label>Sound file</label>
-                                <input class="form-horizontal" type="text" ng-model="w.SoundFile" />
+                                <input class="form-horizontal"  id="Sound{{w.WordName}}" type="text" ng-model="w.SoundFile" />
                                 <div class="thumbnail">
                                     <div class="caption">
                                         <accordion class="btn" close-others="oneAtATime">
                                             <accordion-group class="btn" heading="Add a sound">
-                                                @Html.Partial("SoundRecorder")
+                                                @Html.Partial("SoundRecorder", new ViewDataDictionary { { "wordName", "{{w.WordName}}" } })
                                             </accordion-group>
                                         </accordion>
                                     </div>
