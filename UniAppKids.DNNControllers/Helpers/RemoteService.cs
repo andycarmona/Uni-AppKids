@@ -3,7 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
-
+    using System.Linq;
+    using System.Net;
     using System.Net.Http;
     using System.Net.Mime;
     using System.Threading.Tasks;
@@ -45,10 +46,13 @@
                                             WordName = keyWord,
                                             Image = aProperty.SelectToken("tbUrl").ToString()
                                         };
+
+                  
+
                         listUrl.Add(aWord);
                     }
                 }
-
+               
                 return listUrl;
             }
 

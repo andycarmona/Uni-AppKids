@@ -39,9 +39,9 @@ function saveAudio() {
 }
 
 function gotBuffers( buffers ) {
-    var canvas = document.getElementById( "wavedisplay" );
+    //var canvas = document.getElementById( "wavedisplay" );
 
-    drawBuffer( canvas.width, canvas.height, canvas.getContext('2d'), buffers[0] );
+    //drawBuffer( canvas.width, canvas.height, canvas.getContext('2d'), buffers[0] );
 
     // the ONLY time gotBuffers is called is right after a new recording is completed - 
     // so here's where we should set up the download.
@@ -50,12 +50,14 @@ function gotBuffers( buffers ) {
 
 function doneEncoding( blob ) {
     if (actualControlId != null) {
-        PostSound(blob, actualControlId + "sound.wav");
+        PostSound(blob, actualControlId + "Sound.wav");
     }
 
 }
 
 function PostSound(soundBlob, fileName) {
+    var uploadIcon = document.getElementById("uploadIcon");
+    var soundField = document.getElementById("Soundbonita");
     var fd = new FormData();
     fd.append("blob", soundBlob, fileName);
     $.ajax({
@@ -65,26 +67,28 @@ function PostSound(soundBlob, fileName) {
         processData: false,
         contentType: false
     }).done(function (data) {
-   
         console.log(data);
     });
 }
 function toggleRecording(e) {
- 
+    var uploadIcon = document.getElementById("uploadIcon");
     if (e.classList.contains("recording")) {
         // stop recording
         audioRecorder.stop();
         e.classList.remove("recording");
+        e.innerHTML = "Record";
         audioRecorder.getBuffers(gotBuffers);
     } else {
         // start recording
         if (!audioRecorder)
             return;
         e.classList.add("recording");
+        e.innerHTML = "Recording...";
         audioRecorder.clear();
         audioRecorder.record();
-       
+
         actualControlId = e.id;
+       
       
     }
 }
@@ -140,7 +144,7 @@ function updateAnalysers(time) {
         }
     }
     
-    rafID = window.requestAnimationFrame( updateAnalysers );
+    //rafID = window.requestAnimationFrame( updateAnalysers );
 }
 
 function toggleMono() {
@@ -176,7 +180,7 @@ function gotStream(stream) {
     zeroGain.gain.value = 0.0;
     inputPoint.connect( zeroGain );
     zeroGain.connect( audioContext.destination );
-    updateAnalysers();
+    //updateAnalysers();
 }
 
 function initAudio() {

@@ -11,25 +11,25 @@
                 <span class="badge">Words in dictionary: {{words_in_dictionary.length}}</span>
                 <accordion-group class="btn" heading="(Show/Hide)">
                     <label>Click on a word to add it to your custom sentence.</label>
-                    <table class="table">
+                    <table class="tableDict">
                         <thead><tr><th>Name</th><th>Description</th><th>Image</th><th>Sound</th></tr></thead>
                         <tbody>
                             <tr ng-repeat="words in words_in_dictionary | orderBy:'WordName':false">
-                                <td ng-click="addWordFromDictionary(words.WordName)"><p>{{words.WordName}}</p></td>
-                                <td ng-click="addWordFromDictionary(words.WordName)"><p>{{words.WordDescription || "No description."}}</p></td>
-                                <td ng-click="addWordFromDictionary(words.WordName)"><div class="dictionaryImg"><p ng-show="!words.Image">No image.</p><img ng-show="words.Image" alt="{{words.WordName}}" ng-src="{{words.Image}}" /></div></td>
-                                <td ng-click="addWordFromDictionary(words.WordName)"><p>{{words.SoundFile || "No sound."}}</p></td>
+                                <td class="dictTblName" ng-click="addWordFromDictionary(words.WordName)"><p>{{words.WordName}}</p></td>
+                                <td class="dictTblDescription" ng-click="addWordFromDictionary(words.WordName)"><p>{{words.WordDescription || "No description."}}</p></td>
+                                <td class="dictTbLImg" ng-click="addWordFromDictionary(words.WordName)"><div class="dictionaryImg"><p ng-show="!words.Image">No image.</p><img ng-show="words.Image" alt="{{words.WordName}}" ng-src="{{words.Image}}" /></div></td>
+                                <td class="dictTblSound" ng-click="addWordFromDictionary(words.WordName)"><p>{{words.SoundFile || "No sound."}}</p></td>
                             </tr>
                         </tbody>
                     </table>
                 </accordion-group>
                 <span class="badge">Phrases in dictionary: {{phrases_in_dictionary.length}}</span>
                 <accordion-group class="btn" heading="(Show/Hide)">
-                    <table class="table">
+                    <table class="tableDict">
                         <thead><tr><th>Description</th></tr></thead>
                         <tbody>
                             <tr ng-repeat="phrase in phrases_in_dictionary">
-                               <td><a class="primaryButton" ng-click="deletePhrase(phrase.PhraseId)">Delete</a></td> <td ng-click="choosePhrase(phrase.PhraseText)"><p>{{phrase.PhraseText}}</p></td>
+                                <td><a class="primaryButton" ng-click="deletePhrase(phrase.PhraseId)">Delete</a></td> <td  ng-click="choosePhrase(phrase.PhraseText)"><p>{{phrase.PhraseText}}</p></td>
                             </tr>
                         </tbody>
                     </table>
@@ -42,7 +42,7 @@
         <form name="worddata">
             <button id="Submit1" class="primaryButton" type="button" ng-click="processForm()">Submit</button>
             <span ng-show="iconSuccess" class="badge">Ok</span>
-            <accordion class="btn" style="float:left;" close-others="oneAtATime">
+            <accordion ng-show="getWordsStatus()" class="btn" style="float:left;" close-others="oneAtATime">
                 <span class="badge">Edit words to be added to dictionary</span>
                 <accordion-group class="btn" heading="(Show/Hide) ">
                     <tabset justified="true">
@@ -64,12 +64,16 @@
                             </div>
                             <div class="span4 well">
                                 <label>Sound file</label>
-                                <input class="form-horizontal"  id="Sound{{w.WordName}}" type="text" ng-model="w.SoundFile" />
+                                <input class="form-horizontal" id="Sound{{w.WordName}}" type="text" ng-model="w.SoundFile" />
                                 <div class="thumbnail">
                                     <div class="caption">
                                         <accordion class="btn" close-others="oneAtATime">
                                             <accordion-group class="btn" heading="Add a sound">
-                                                @Html.Partial("SoundRecorder", new ViewDataDictionary { { "wordName", "{{w.WordName}}" } })
+                                                <div id="{{w.WordName}}Controls" class="controls">
+                                                    <a id="{{w.WordName}}Record" class="record soundRecorderButton" ng-click="SetSoundFile(w.WordName)" onclick="toggleRecording(this);">Record</a>
+                                                    <span>Recording sound for: <b>{{w.WordName}} </b></span>
+                                                    
+                                                </div>
                                             </accordion-group>
                                         </accordion>
                                     </div>

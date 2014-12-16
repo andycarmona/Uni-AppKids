@@ -20,7 +20,8 @@ namespace UniAppKids.DNNControllers.Controllers
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using System.Web;
-    using System.Web.Http;
+    using System.Web.Mvc;
+
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Web.Api;
     using UniAppKids.DNNControllers.Helpers;
@@ -35,7 +36,7 @@ namespace UniAppKids.DNNControllers.Controllers
         private readonly PhraseService aPhraseService = new PhraseService();
 
         [DnnAuthorize]
-        [AcceptVerbs("POST")]
+        [System.Web.Http.AcceptVerbs("POST")]
         public async Task<HttpResponseMessage> AddPhrase(string listOfWords, int dictionaryId)
         {
             var errorMessage = new StringBuilder(string.Empty);
@@ -62,6 +63,11 @@ namespace UniAppKids.DNNControllers.Controllers
                     language,
                     pathToDictionary,
                     out listOfNotAcceptedWords);
+
+                foreach (var aWord in listNoRepeatedElements)
+                {
+                    aWord.Image = CheckUrlIsAValidImage(aWord);
+                }
 
                 await this.aWordService.BulkInsertOfWords(listNoRepeatedElements);
 
@@ -104,7 +110,7 @@ namespace UniAppKids.DNNControllers.Controllers
         }
 
         [DnnAuthorize]
-        [AcceptVerbs("GET")]
+        [System.Web.Http.AcceptVerbs("GET")]
         public HttpResponseMessage GetAllWordsInDictionary()
         {
             var wordList = this.aWordService.GetAllWords();
@@ -116,11 +122,33 @@ namespace UniAppKids.DNNControllers.Controllers
                     "There is no words in dictionary");
             }
 
+            foreach (var aWord in wordList)
+            {
+                aWord.Image = CheckUrlIsAValidImage(aWord);
+            }
+
             return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, wordList);
         }
 
+        private static string CheckUrlIsAValidImage(WordDto aWord)
+        {
+            using (var wc = new WebClient())
+            {
+                try
+                {
+                    var byteArr = wc.DownloadData(aWord.Image);
+                }
+                catch (Exception e)
+                {
+                    aWord.Image =
+                        "http://t1.gstatic.com/images?q=tbn:ANd9GcRI4C4XDT85bAGvjFK2x6BF5J12CxqFFWVz0JuLiJKSFySzdxD9kBGBl1pL";
+                }
+            }
+            return aWord.Image;
+        }
+
         [DnnAuthorize]
-        [AcceptVerbs("GET")]
+        [System.Web.Http.AcceptVerbs("GET")]
         public HttpResponseMessage DeletePhrase(int phraseId)
         {
             try
@@ -138,7 +166,7 @@ namespace UniAppKids.DNNControllers.Controllers
         }
 
         [DnnAuthorize]
-        [AcceptVerbs("GET")]
+        [System.Web.Http.AcceptVerbs("GET")]
         public HttpResponseMessage GetAllPhrasesInDictionary(int dictionaryId, int totalPages)
         {
             var phraseList = this.aPhraseService.GetListOfPhrase(dictionaryId, totalPages);
@@ -153,8 +181,8 @@ namespace UniAppKids.DNNControllers.Controllers
             return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, phraseList);
         }
 
-        [AllowAnonymous]
-        [AcceptVerbs("GET")]
+        [System.Web.Http.AllowAnonymous]
+        [System.Web.Http.AcceptVerbs("GET")]
         public HttpResponseMessage GetWordsList(int dictionaryId, int indexOfPhraseList, int totalPages)
         {
             string errorMessage;
@@ -187,8 +215,8 @@ namespace UniAppKids.DNNControllers.Controllers
                       errorMessage);
         }
 
-        [AllowAnonymous]
-        [AcceptVerbs("GET")]
+        [System.Web.Http.AllowAnonymous]
+        [System.Web.Http.AcceptVerbs("GET")]
         public HttpResponseMessage GetDictionary(int dictionaryId)
         {
             var actualDictionary = this.aDictionaryService.GetADictionary(dictionaryId);

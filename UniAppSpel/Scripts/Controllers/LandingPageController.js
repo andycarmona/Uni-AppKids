@@ -1,7 +1,7 @@
 ﻿"use strict";
 var LandingPageController = function ($scope, $http, $window, userService) {
 
-   
+
 
     $scope.dictionaryName = "";
     $scope.lookupResult = {
@@ -13,6 +13,7 @@ var LandingPageController = function ($scope, $http, $window, userService) {
     $scope.errorMessage = ['Undefined error. Could not contact server.'];
     $scope.navLeft = false;
     $scope.navRight = false;
+    $scope.soundObject = null;
 
     var urlDictionary = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/GetDictionary?dictionaryId=1";
 
@@ -30,38 +31,38 @@ var LandingPageController = function ($scope, $http, $window, userService) {
         }
         return status;
     }
-  
+
 
     function GetDictionary() {
 
-    
+
         userService.GetRequest(urlDictionary).success(function (request) {
             applyRemoteDataToDictionary(request);
         }).error(function (request) {
-            $scope.error = "An internal error has ocurred. "+request;
+            $scope.error = "An internal error has ocurred. " + request;
         });
 
     }
 
     function GetPhrase() {
-       
-        userService.GetRequest(urlPhrase).success(function(request) {
+
+        userService.GetRequest(urlPhrase).success(function (request) {
             applyRemoteDataToPhrase(request);
-        }).error(function() {
-            $scope.error = "An internal error has ocurred. "+request;
+        }).error(function () {
+            $scope.error = "An internal error has ocurred. " + request;
         });
 
     }
 
     function applyRemoteDataToDictionary(request) {
 
-            $scope.dictionaries = request.DictionaryName;
-          
+        $scope.dictionaries = request.DictionaryName;
+
 
     }
 
     function applyRemoteDataToPhrase(request) {
-  
+
         $scope.Phrases = request;
 
         $scope.wordsInPhrases = request[$scope.actualPhraseIndex].ListOfWords;
@@ -69,11 +70,11 @@ var LandingPageController = function ($scope, $http, $window, userService) {
     }
 
     function updateNavButtonVisibility() {
-        var phrasesSize=$scope.Phrases.length;
+        var phrasesSize = $scope.Phrases.length;
         if (phrasesSize == 1) {
             $scope.navLeft = false;
             $scope.navRight = false;
-        }else if ($scope.actualPhraseIndex == phrasesSize - 1) {
+        } else if ($scope.actualPhraseIndex == phrasesSize - 1) {
             $scope.navLeft = true;
             $scope.navRight = false;
         } else if ($scope.actualPhraseIndex == 0) {
@@ -86,7 +87,20 @@ var LandingPageController = function ($scope, $http, $window, userService) {
 
     }
 
-    $scope.moveIndex = function(position) {
+    $scope.PlaySound = function() {
+        if ($scope.soundObject != null) {
+            document.body.removeChild($scope.soundObject);
+            $scope.soundObject.removed = true;
+            $scope.soundObject = null;
+        }
+        $scope.soundObject = document.createElement("embed");
+        $scope.soundObject.setAttribute("src", "../Uploads/casaRecordSound.wav");
+        $scope.soundObject.setAttribute("hidden", true);
+        $scope.soundObject.setAttribute("autostart", true);
+        document.body.appendChild($scope.soundObject);
+    }
+
+    $scope.moveIndex = function (position) {
         var phrasesLimit = $scope.Phrases.length;
         var nextIndex = $scope.actualPhraseIndex + position;
         if ((nextIndex < phrasesLimit) && (nextIndex > -1)) {
@@ -98,7 +112,7 @@ var LandingPageController = function ($scope, $http, $window, userService) {
 
     $scope.getWordName = function (wordId) {
         var i = 0;
-       
+
         for (; i < $scope.wordsInPhrases.length;) {
             if ($scope.wordsInPhrases[i].WordId == wordId) {
                 $scope.description = [$scope.wordsInPhrases[i].WordName] + ": " + $scope.wordsInPhrases[i].WordDescription;
@@ -111,7 +125,7 @@ var LandingPageController = function ($scope, $http, $window, userService) {
         return null;
     };
 
-    $scope.setWordContent = function (idPassedFromClickedWord) {
+        $scope.setWordContent = function (idPassedFromClickedWord) {
         $scope.titleDescription = $scope.getWordName(idPassedFromClickedWord);
         console.log(idPassedFromClickedWord);
 
@@ -125,7 +139,7 @@ LandingPageController.$inject = ['$scope', '$http', '$window', 'userService'];
 
 
 var init = function () {
- 
+
 };
 
 init();

@@ -105,7 +105,6 @@ h5, h6 {
 }
 
 .main-content {
-
     padding-left: 10px;
     padding-top: 30px;
 }
@@ -484,7 +483,7 @@ a.primaryButton {
     text-shadow: 0 0 0 rgba(000,000,000,0), 0 0 0 rgba(255,255,255,0);
 }
 
-button.primaryButton:hover,
+    button.primaryButton:hover,
     button.secondaryButton:hover,
     a.primaryButton:hover,
     a.secondaryButton:hover {
@@ -948,7 +947,6 @@ top: 27%;
 .editnavcenter {
     position: relative;
     width: 100%;
-
 }
 
 .navsection .btn {
@@ -1053,26 +1051,48 @@ tr {
     float: left;
 }
 
-table {
+.tableDict {
     height: 200px;
     width: 100%;
 }
 
-    table tbody tr:hover {
+    .tableDict tbody tr:hover {
         background-color: #ffff99;
     }
 
-    table tbody {
+    .tableDict tbody {
         overflow-y: scroll;
         height: 200px;
         width: 97%;
         position: absolute;
     }
 
-        table tbody tr {
+        .tableDict tbody tr {
             /*display:-webkit-box;*/
             text-align: left;
         }
+
+    .tableDict td {
+        overflow: hidden;
+        display: inline-block;
+        white-space: nowrap;
+    }
+
+    .tableDict .dictTblDescription {
+        width: 40%;
+    }
+
+    .tableDict .dictTblName {
+        width: 15%;
+    }
+
+    .tableDict .dictTbLImg {
+        width: 15%;
+    }
+
+    .tableDict .dictTblSound {
+        width: 15%;
+    }
 
 .tableImages tbody {
     overflow-y: scroll;
@@ -1087,7 +1107,7 @@ textarea {
     width: 98%;
 }
 
-.dictionaryImg img{
+.dictionaryImg img {
     width: 50px;
     height: 50px;
 }
@@ -1100,6 +1120,7 @@ textarea {
     line-height: 20px;
     color: #333;
     text-align: center;
+    -ms-text-shadow: 0 1px 1px #ffffff;
     -ms-text-shadow: 0 1px 1px rgba(255,255,255,.75);
     text-shadow: 0 1px 1px rgba(255,255,255,.75);
     vertical-align: middle;
@@ -1158,48 +1179,57 @@ h1:hover {
 }
 /*Animation*/
 .animate-me {
-  border: 1px solid;
-  border-radius:5px;
-  width: 80px;
-  padding: 4px;
-  background-color: gray;
-  box-shadow: 8px 8px 5px #888888;
+    border: 1px solid;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    width: 80px;
+    padding: 4px;
+    background-color: gray;
+    -webkit-box-shadow: 8px 8px 5px #888888;
+    -ms-box-shadow: 8px 8px 5px #888888;
+    box-shadow: 8px 8px 5px #888888;
 }
 
 .animate-me.ng-hide-add {
-  opacity: 1.0;
-  display: block !important;
-  transition: opacity 3s;
-}
+        -ms-opacity: 1.0;
+        opacity: 1.0;
+        display: block !important;
+        -webkit-transition: opacity 3s;
+        -moz-transition: opacity 3s;
+        -ms-transition: opacity 3s;
+        -o-transition: opacity 3s;
+        transition: opacity 3s;
+    }
 
-.animate-me.ng-hide-add-active { 
-  opacity: 0;
-}
+    .animate-me.ng-hide-add-active {
+        -ms-opacity: 0;
+        opacity: 0;
+    }
+
 .animate-show, .animate-hide {
-  -webkit-transition:all linear 1s;
-  -moz-transition:all linear 1s;
-  -ms-transition:all linear 1s;
-  -o-transition:all linear 1s;
-  transition:all linear 1s;
-
+    -webkit-transition: all linear 1s;
+    -moz-transition: all linear 1s;
+    -ms-transition: all linear 1s;
+    -o-transition: all linear 1s;
+    transition: all linear 1s;
 }
 
 .animate-show {
-    -ms-opacity:0;
-    opacity:0;
+    -ms-opacity: 0;
+    opacity: 0;
 }
 
-.animate-show.animate-show-active {
-    -ms-opacity:1;
-    opacity:1;
-}
+    .animate-show.animate-show-active {
+        -ms-opacity: 1;
+        opacity: 1;
+    }
 
 .animate-hide {
-    -ms-opacity:1;
-    opacity:1;
+    -ms-opacity: 1;
+    opacity: 1;
 }
 
-.animate-hide.animate-hide-active {
-    -ms-opacity:0;
-    opacity:0;
-}
+    .animate-hide.animate-hide-active {
+        -ms-opacity: 0;
+        opacity: 0;
+    }

@@ -5,7 +5,11 @@
 <div id="@(wordName)Controls" class="controls">
     <a id="@(wordName)Record" class="record soundRecorderButton" onclick="toggleRecording(this);">Record</a>
     <span>Recording sound for: <b>@wordName </b></span>
-    <canvas id="analyser" width="300" height="200"></canvas>
+ 
     <canvas id="wavedisplay" width="300" height="200"></canvas>
-    <a id="save" class="soundRecorderButton" type="button">Upload</a>
+    
+    <div id="uploadIcon" class="uploadIconVisibility">
+        <img src="~/Scripts/AudioRecorder/img/upload.png" />
+       Uploaded
+    </div>
 </div>

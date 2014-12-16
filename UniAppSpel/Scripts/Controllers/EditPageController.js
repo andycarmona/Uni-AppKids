@@ -57,6 +57,15 @@ var EditPageController = function ($scope, $http, $window, userService) {
         }
         return status;
     }
+    $scope.getWordsStatus = function () {
+        var status = false;
+        if ($scope.words != null) {
+            if ($scope.words.length > 0) {
+                status = true;
+            }
+        }
+        return status;
+    }
 
     $scope.GetImageList = function (keyWord) {
         var url = "http://dnndev.me/DesktopModules/DataExchange/API/RemoteService/GetListOfImageUrl?wordToSearch=";
@@ -84,12 +93,25 @@ var EditPageController = function ($scope, $http, $window, userService) {
     function applyRemoteDataToWordList(request) {
 
         $scope.words_in_dictionary = request;
-
     }
+
     function applyRemoteDataToPhraseList(request) {
 
         $scope.phrases_in_dictionary = request;
 
+    }
+    $scope.SetSoundFile = function (keyWord) {
+       
+        var iterator = 0;
+        angular.forEach($scope.words, function (word, index) {
+            if (word["WordName"] === keyWord) {
+                $scope.words[iterator].SoundFile = keyWord + "RecordSound.wav";
+            }
+            iterator++;
+        });
+        var input = $('#Sound' + keyWord);
+        input.val(keyWord + "RecordSound.wav");
+        input.trigger('input');
     }
     $scope.chooseImage = function (imageUrl, keyWord) {
 
@@ -122,14 +144,13 @@ var EditPageController = function ($scope, $http, $window, userService) {
         }).error(function (request) {
             $scope.error = "An internal error has ocurred. " + request;
         });
-   
     }
 
     $scope.choosePhrase = function(sentence)
     {
         $scope.sentence = sentence;
         $scope.parseSentence();
-        $scope.ShowDebugInfo();
+     
     }
 
     $scope.processForm = function () {
@@ -137,7 +158,7 @@ var EditPageController = function ($scope, $http, $window, userService) {
        var wordsJsonFormat = JSON.stringify($scope.words, null, '');
    
         userService.PostRequest(urlPhrase + wordsJsonFormat).success(function (request) {
-                GetPhraseList(urlPhraseList, 10);
+                //GetPhraseList(urlPhraseList, 10);
         }).error(function (request) {
             $scope.error = "An internal error has ocurred. " + request;
         });
@@ -150,12 +171,8 @@ var EditPageController = function ($scope, $http, $window, userService) {
 
         var wordObjects = [];
         var words = $scope.sentence.split(/\s+/g);
-
-
         for (var i = 0; i < words.length; i++) {
             wordObjects.push({ WordName: words[i] });
-
-
         }
 
         if ((words.length == 1) && (words[0] === '')) {

@@ -12,7 +12,8 @@
         </accordion>
     </div>
     <div class="nav-header">
-        <div class="wordProperty">{{sound}}</div>
+        <div class="wordProperty">{{sound}}<button class="primaryButton" type="button" ng-click="PlaySound()">Play Sound</button>
+       </div>
         <div class="content">
             <h1 ng-click="getWordName(word.WordId)" id="word{{word.WordId}}" class="phraseconte wordSeparation" ng-repeat="word in wordsInPhrases">{{word.WordName}}<span ng-show=" ! $last ">&nbsp;</span></h1>
         </div>
