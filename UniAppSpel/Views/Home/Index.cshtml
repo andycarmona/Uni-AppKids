@@ -12,12 +12,16 @@
         </accordion>
     </div>
     <div class="nav-header">
-        <div class="wordProperty">{{sound}}<button class="primaryButton" type="button" ng-click="PlaySound()">Play Sound</button>
+       
        </div>
-        <div class="content">
-            <h1 ng-click="getWordName(word.WordId)" id="word{{word.WordId}}" class="phraseconte wordSeparation" ng-repeat="word in wordsInPhrases">{{word.WordName}}<span ng-show=" ! $last ">&nbsp;</span></h1>
+    <div class="content">
+        <div ng-repeat="word in wordsInPhrases">
+            <h1 ng-click="getWordName(word.WordId)" id="word{{word.WordId}}" class="phraseconte wordSeparation">{{word.WordName}}<span ng-show=" ! $last ">&nbsp;</span></h1>
         </div>
-        <div class="wordProperty"><span>{{description}}</span></div>
+    </div>
+    <div class="wordProperty"><span>{{description}}</span></div>
+    <div class="wordProperty">
+        <button ng-hide="sound==null" class="primaryButton" type="button" ng-click="PlaySound(actualWord)">Play Sound ({{sound}})</button>
         <nav>
             <ul class="pager">
                 <li><a ng-show="navLeft" ng-click="moveIndex(-1)">Previous</a></li>

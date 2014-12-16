@@ -26,10 +26,10 @@
                 <span class="badge">Phrases in dictionary: {{phrases_in_dictionary.length}}</span>
                 <accordion-group class="btn" heading="(Show/Hide)">
                     <table class="tableDict">
-                        <thead><tr><th>Description</th></tr></thead>
+                        <thead><tr><th></th><th>Description</th></tr></thead>
                         <tbody>
-                            <tr ng-repeat="phrase in phrases_in_dictionary">
-                                <td><a class="primaryButton" ng-click="deletePhrase(phrase.PhraseId)">Delete</a></td> <td  ng-click="choosePhrase(phrase.PhraseText)"><p>{{phrase.PhraseText}}</p></td>
+                            <tr ng-hide="phrases_in_dictionary ==null" ng-repeat="phrase in phrases_in_dictionary">
+                                <td><a class="primaryButton" ng-click="deletePhrase(phrase.PhraseId)">Delete</a></td> <td class="dictTblPhraseDescription" ng-click="choosePhrase(phrase.PhraseText)"><p>{{phrase.PhraseText}}</p></td>
                             </tr>
                         </tbody>
                     </table>
@@ -38,9 +38,8 @@
         </div>
     </div>
     <div class="navsection">
-        <textarea class="form-horizontal" id="mainArea" ng-model="sentence" ng-change="parseSentence()" style="width: 100%; height: 15em;"></textarea>
         <form name="worddata">
-            <button id="Submit1" class="primaryButton" type="button" ng-click="processForm()">Submit</button>
+          
             <span ng-show="iconSuccess" class="badge">Ok</span>
             <accordion ng-show="getWordsStatus()" class="btn" style="float:left;" close-others="oneAtATime">
                 <span class="badge">Edit words to be added to dictionary</span>
@@ -106,6 +105,8 @@
                     </tabset>
                 </accordion-group>
             </accordion>
+            <textarea class="form-horizontal" id="mainArea" ng-model="sentence" ng-change="parseSentence()" style="width: 100%; height: 15em;"></textarea>
+            <button id="Submit1" class="primaryButton" type="button" ng-click="processForm()">Submit</button>
         </form>
     </div>
 

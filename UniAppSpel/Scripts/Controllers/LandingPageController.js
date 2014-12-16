@@ -7,6 +7,7 @@ var LandingPageController = function ($scope, $http, $window, userService) {
     $scope.lookupResult = {
         dictionaryName: "Not yet retrieved"
     };
+    $scope.actualWord="";
     $scope.Phrases = [];
     $scope.wordsInPhrases = [];
     $scope.actualPhraseIndex = 0;
@@ -18,6 +19,8 @@ var LandingPageController = function ($scope, $http, $window, userService) {
     var urlDictionary = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/GetDictionary?dictionaryId=1";
 
     var urlPhrase = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/GetWordsList?dictionaryId=1&indexOfPhraseList=0&totalPages=10";
+
+    var urlCheckFileExist = "http://dnndev.me/DesktopModules/DataExchange/API/RemoteService/CheckIfFileExists?path=";
 
     GetDictionary();
     GetPhrase();
@@ -87,14 +90,31 @@ var LandingPageController = function ($scope, $http, $window, userService) {
 
     }
 
-    $scope.PlaySound = function() {
+    $scope.CheckFileExist = function (keyWord) {
+        alert(keyWord);
+        userService.GetRequest(urlCheckFileExist+"/Uploads/"+keyWord+"RecordSound.wav")
+            .success(function (request) {
+            return request;
+            })
+            .error(function (request) {
+            return request;
+        });
+           
+  
+    }
+
+    $scope.PlaySound = function (keyword) {
+
+        console.log(keyword);
+   
+   
         if ($scope.soundObject != null) {
             document.body.removeChild($scope.soundObject);
             $scope.soundObject.removed = true;
             $scope.soundObject = null;
         }
         $scope.soundObject = document.createElement("embed");
-        $scope.soundObject.setAttribute("src", "../Uploads/casaRecordSound.wav");
+        $scope.soundObject.setAttribute("src", "/Uploads/"+keyword+"RecordSound.wav");
         $scope.soundObject.setAttribute("hidden", true);
         $scope.soundObject.setAttribute("autostart", true);
         document.body.appendChild($scope.soundObject);
@@ -109,6 +129,16 @@ var LandingPageController = function ($scope, $http, $window, userService) {
         }
         updateNavButtonVisibility();
     }
+    $scope.getWordsStatus = function () {
+        var status = false;
+        if ($scope.actualWord != null) {
+            if ($scope.actualWord !=="") {
+                status = true;
+            }
+        }
+        console.log($scope.actualWord);
+        return status;
+    }
 
     $scope.getWordName = function (wordId) {
         var i = 0;
@@ -118,6 +148,7 @@ var LandingPageController = function ($scope, $http, $window, userService) {
                 $scope.description = [$scope.wordsInPhrases[i].WordName] + ": " + $scope.wordsInPhrases[i].WordDescription;
                 $scope.sound = $scope.wordsInPhrases[i].SoundFile;
                 $scope.image = $scope.wordsInPhrases[i].Image;
+                $scope.actualWord = $scope.wordsInPhrases[i].WordName;
             }
             i++;
 

@@ -158,7 +158,7 @@ var EditPageController = function ($scope, $http, $window, userService) {
        var wordsJsonFormat = JSON.stringify($scope.words, null, '');
    
         userService.PostRequest(urlPhrase + wordsJsonFormat).success(function (request) {
-                //GetPhraseList(urlPhraseList, 10);
+                GetPhraseList(urlPhraseList, 10);
         }).error(function (request) {
             $scope.error = "An internal error has ocurred. " + request;
         });

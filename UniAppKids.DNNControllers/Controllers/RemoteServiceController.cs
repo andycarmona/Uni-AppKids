@@ -18,6 +18,25 @@
 
     public class RemoteServiceController : ControllerBase
     {
+
+        [DnnAuthorize]
+        [AcceptVerbs("GET")]
+        public HttpResponseMessage CheckIfFileExists(string path)
+        {
+            try
+            {
+                var relativePath = HttpContext.Current.Server.MapPath("~/" + path);
+                File.Open(relativePath, FileMode.Open);
+                return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, true);
+            }
+            catch (FileNotFoundException ex)
+            {
+                return this.ControllerContext.Request.CreateResponse(
+                    HttpStatusCode.BadRequest,
+                    "Invalid parameters, Please check there is elements in array");
+            }
+        }
+
         [DnnAuthorize]
         [AcceptVerbs("GET")]
           public async Task<HttpResponseMessage> GetListOfImageUrl(string wordToSearch)

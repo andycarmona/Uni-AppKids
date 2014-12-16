@@ -52,7 +52,12 @@ namespace UniAppKids.DNNControllers.Controllers
             var language = this.aDictionaryService.GetADictionary(dictionaryId).DictionaryName;
             var wordList = Json.Deserialize<List<WordDto>>(listOfWords);
             var verifiedWordList = WordFilterTool.GetListWithValidWordName(wordList);
-            verifiedWordList.Select(c => { c.CreationTime = DateTime.Now; return c; }).ToList();
+            verifiedWordList.Select(c =>
+                {
+                    c.CreationTime = DateTime.Now;
+                    c.WordDescription = string.IsNullOrEmpty(c.WordDescription) ? "No description" : c.WordDescription;
+                    return c;
+                }).ToList();
 
             try
             {
