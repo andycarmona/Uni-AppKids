@@ -61,10 +61,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dto\Allcategory.cs" />
     <Compile Include="Dto\CreatePhraseDictionaryInput.cs" />
     <Compile Include="Dto\GetPhraseDictionaryOutput.cs" />
+    <Compile Include="Dto\MediaWiki.cs" />
     <Compile Include="Dto\PhraseDictionaryDto.cs" />
     <Compile Include="Dto\PhraseDto.cs" />
+    <Compile Include="Dto\Query.cs" />
     <Compile Include="Dto\UpdatePhraseDictionaryInput.cs" />
     <Compile Include="Dto\WordDto.cs" />
     <Compile Include="Interface\IPhraseDictionaryService.cs" />

@@ -15,12 +15,15 @@ var LandingPageController = function ($scope, $http, $window, userService) {
     $scope.navLeft = false;
     $scope.navRight = false;
     $scope.soundObject = null;
+    $scope.WikiContent = "";
 
     var urlDictionary = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/GetDictionary?dictionaryId=1";
 
     var urlPhrase = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/GetWordsList?dictionaryId=1&indexOfPhraseList=0&totalPages=10";
 
     var urlCheckFileExist = "http://dnndev.me/DesktopModules/DataExchange/API/RemoteService/CheckIfFileExists?path=";
+
+    var urlWikiContent = "http://dnndev.me/DesktopModules/DataExchange/API/RemoteService/GetWordDescriptionFromWiki?keyWord=";
 
     GetDictionary();
     GetPhrase();
@@ -64,6 +67,19 @@ var LandingPageController = function ($scope, $http, $window, userService) {
 
     }
 
+    $scope.RenderWikiContent = function () {
+        userService.GetRequest(urlWikiContent).success(function (request) {
+            applyRemoteWikiContent(request);
+        }).error(function () {
+            $scope.error = "An internal error has ocurred. " + request;
+        });
+    }
+
+    function applyRemoteWikiContent(request) {
+        $scope.WikiContent = request;
+    }
+
+
     function applyRemoteDataToPhrase(request) {
 
         $scope.Phrases = request;
@@ -103,6 +119,8 @@ var LandingPageController = function ($scope, $http, $window, userService) {
   
     }
 
+
+
     $scope.PlaySound = function (keyword) {
 
         console.log(keyword);
@@ -129,6 +147,7 @@ var LandingPageController = function ($scope, $http, $window, userService) {
         }
         updateNavButtonVisibility();
     }
+
     $scope.getWordsStatus = function () {
         var status = false;
         if ($scope.actualWord != null) {

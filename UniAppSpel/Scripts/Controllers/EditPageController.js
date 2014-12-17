@@ -9,7 +9,7 @@ var EditPageController = function ($scope, $http, $window, userService) {
     var urlDeletePhrase = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/DeletePhrase?";
     var debugMode = true;
 
-    $scope.phraseIdToDelete = 0;
+  
     $scope.imagelist = [];
     $scope.words = [];
     $scope.sentence = "";
@@ -41,8 +41,10 @@ var EditPageController = function ($scope, $http, $window, userService) {
         var totalPages = 10;
         url = url + "dictionaryId="+dictionaryId + "&totalPages=" + totalPages;
         userService.GetRequest(url).success(function (request) {
+            $scope.phraseToDelete = true;
             applyRemoteDataToPhraseList(request);
         }).error(function (request) {
+            $scope.phraseToDelete = false;
             $scope.error = "An internal error has ocurred. " + request;
         });
 
@@ -138,6 +140,11 @@ var EditPageController = function ($scope, $http, $window, userService) {
         return urlDeletePhrase + "phraseId=" + phraseId;
     }
 
+    $scope.clearContent = function() {
+        $scope.sentence = "";
+        $scope.words = [];
+    }
+
     $scope.deletePhrase = function (phraseId) {
         userService.GetRequest(urlDeletePhrase + "phraseId=" + phraseId).success(function () {
             GetPhraseList(urlPhraseList,10);
@@ -158,7 +165,8 @@ var EditPageController = function ($scope, $http, $window, userService) {
        var wordsJsonFormat = JSON.stringify($scope.words, null, '');
    
         userService.PostRequest(urlPhrase + wordsJsonFormat).success(function (request) {
-                GetPhraseList(urlPhraseList, 10);
+            GetPhraseList(urlPhraseList, 10);
+            $scope.iconSuccess = true;
         }).error(function (request) {
             $scope.error = "An internal error has ocurred. " + request;
         });

@@ -37,16 +37,33 @@
             }
         }
 
+        [AllowAnonymous]
+        [AcceptVerbs("GET")]
+        public HttpResponseMessage GetWordDescriptionFromWiki(string keyWord)
+        {
+            var urlToSearch = string.Format(
+                    "http://http://es.wikipedia.org/w/index.php?action=render&title={0}&prop=revisions&rvprop=content",
+                    keyWord);
+            var jsonResult = "";
+            using (var webClient = new WebClient())
+            {
+                jsonResult = webClient.DownloadString(urlToSearch);
+
+
+            }
+            return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, jsonResult);
+        }
+
         [DnnAuthorize]
         [AcceptVerbs("GET")]
-          public async Task<HttpResponseMessage> GetListOfImageUrl(string wordToSearch)
+        public async Task<HttpResponseMessage> GetListOfImageUrl(string wordToSearch)
         {
             try
             {
                 List<WordDto> listOfUrl = await RemoteService.GetJsonDataFromImageSearch(wordToSearch);
-              
-  
-                return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK , listOfUrl);
+
+
+                return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, listOfUrl);
             }
             catch (Exception ex)
             {

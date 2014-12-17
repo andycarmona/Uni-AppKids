@@ -80,12 +80,12 @@ namespace Uni_AppKids.Database.Repositories
                     aWord.Image = wordToUpdate.Image;
                 }
 
-                if (!string.IsNullOrEmpty(wordToUpdate.Image))
+                if (!string.IsNullOrEmpty(wordToUpdate.WordDescription))
                 {
                     aWord.WordDescription = wordToUpdate.WordDescription;
                 }
 
-                if (!string.IsNullOrEmpty(wordToUpdate.Image))
+                if (!string.IsNullOrEmpty(wordToUpdate.SoundFile))
                 {
                     aWord.SoundFile = wordToUpdate.SoundFile;
                 }

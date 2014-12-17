@@ -17,10 +17,9 @@ namespace UniAppKids.DNNControllers.Controllers
     using System.Net;
     using System.Net.Http;
     using System.Text;
-    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using System.Web;
-    using System.Web.Mvc;
+    using System.Web.Http;
 
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Web.Api;
@@ -53,11 +52,11 @@ namespace UniAppKids.DNNControllers.Controllers
             var wordList = Json.Deserialize<List<WordDto>>(listOfWords);
             var verifiedWordList = WordFilterTool.GetListWithValidWordName(wordList);
             verifiedWordList.Select(c =>
-                {
-                    c.CreationTime = DateTime.Now;
-                    c.WordDescription = string.IsNullOrEmpty(c.WordDescription) ? "No description" : c.WordDescription;
-                    return c;
-                }).ToList();
+            {
+                c.CreationTime = DateTime.Now;
+                c.WordDescription = string.IsNullOrEmpty(c.WordDescription) ? "No description" : c.WordDescription;
+                return c;
+            }).ToList();
 
             try
             {
@@ -85,13 +84,13 @@ namespace UniAppKids.DNNControllers.Controllers
                 var listOfWordsId = await this.aWordService.GetIdOfWords(verifiedWordList);
 
                 var aPhrase = new PhraseDto
-                                  {
-                                      PhraseText = sentence,
-                                      CreationTime = DateTime.Now,
-                                      WordsIds = string.Join(",", listOfWordsId),
-                                      AssignedDictionaryId = dictionaryId,
-                                      UserName = DotNetNuke.Entities.Users.UserController.GetCurrentUserInfo().Username
-                                  };
+                {
+                    PhraseText = sentence,
+                    CreationTime = DateTime.Now,
+                    WordsIds = string.Join(",", listOfWordsId),
+                    AssignedDictionaryId = dictionaryId,
+                    UserName = DotNetNuke.Entities.Users.UserController.GetCurrentUserInfo().Username
+                };
 
                 this.aPhraseService.InsertPhrase(aPhrase);
                 return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, wordList);
@@ -135,23 +134,6 @@ namespace UniAppKids.DNNControllers.Controllers
             return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, wordList);
         }
 
-        private static string CheckUrlIsAValidImage(WordDto aWord)
-        {
-            using (var wc = new WebClient())
-            {
-                try
-                {
-                    var byteArr = wc.DownloadData(aWord.Image);
-                }
-                catch (Exception e)
-                {
-                    aWord.Image =
-                        "http://t1.gstatic.com/images?q=tbn:ANd9GcRI4C4XDT85bAGvjFK2x6BF5J12CxqFFWVz0JuLiJKSFySzdxD9kBGBl1pL";
-                }
-            }
-            return aWord.Image;
-        }
-
         [DnnAuthorize]
         [System.Web.Http.AcceptVerbs("GET")]
         public HttpResponseMessage DeletePhrase(int phraseId)
@@ -162,7 +144,7 @@ namespace UniAppKids.DNNControllers.Controllers
 
                 return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return this.ControllerContext.Request.CreateResponse(
              HttpStatusCode.BadRequest,
@@ -171,7 +153,7 @@ namespace UniAppKids.DNNControllers.Controllers
         }
 
         [DnnAuthorize]
-        [System.Web.Http.AcceptVerbs("GET")]
+        [AcceptVerbs("GET")]
         public HttpResponseMessage GetAllPhrasesInDictionary(int dictionaryId, int totalPages)
         {
             var phraseList = this.aPhraseService.GetListOfPhrase(dictionaryId, totalPages);
@@ -186,8 +168,8 @@ namespace UniAppKids.DNNControllers.Controllers
             return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, phraseList);
         }
 
-        [System.Web.Http.AllowAnonymous]
-        [System.Web.Http.AcceptVerbs("GET")]
+        [AllowAnonymous]
+        [AcceptVerbs("GET")]
         public HttpResponseMessage GetWordsList(int dictionaryId, int indexOfPhraseList, int totalPages)
         {
             string errorMessage;
@@ -220,8 +202,8 @@ namespace UniAppKids.DNNControllers.Controllers
                       errorMessage);
         }
 
-        [System.Web.Http.AllowAnonymous]
-        [System.Web.Http.AcceptVerbs("GET")]
+        [AllowAnonymous]
+        [AcceptVerbs("GET")]
         public HttpResponseMessage GetDictionary(int dictionaryId)
         {
             var actualDictionary = this.aDictionaryService.GetADictionary(dictionaryId);
@@ -235,6 +217,24 @@ namespace UniAppKids.DNNControllers.Controllers
             return this.ControllerContext.Request.CreateResponse(
                 HttpStatusCode.BadRequest,
                 "Couldn't find any dictionary.");
+        }
+
+        private static string CheckUrlIsAValidImage(WordDto aWord)
+        {
+            using (var wc = new WebClient())
+            {
+                try
+                {
+                    wc.DownloadData(aWord.Image);
+                }
+                catch (Exception)
+                {
+                    aWord.Image =
+                        "http://t1.gstatic.com/images?q=tbn:ANd9GcRI4C4XDT85bAGvjFK2x6BF5J12CxqFFWVz0JuLiJKSFySzdxD9kBGBl1pL";
+                }
+            }
+
+            return aWord.Image;
         }
     }
 }

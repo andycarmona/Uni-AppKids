@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = "../Shared/_Layout.cshtml";
+    Layout = "../Shared/_LayoutEdit.cshtml";
 }
 
 <div ng-app="UniAppSpelApp" ng-controller="EditPageController">
@@ -12,7 +12,7 @@
                 <accordion-group class="btn" heading="(Show/Hide)">
                     <label>Click on a word to add it to your custom sentence.</label>
                     <table class="tableDict">
-                        <thead><tr><th>Name</th><th>Description</th><th>Image</th><th>Sound</th></tr></thead>
+                        <thead><tr><th class="dictTblName">Name</th><th class="dictTblDescription">Description</th><th class="dictTbLImg">Image</th><th class="dictTblSound">Sound</th></tr></thead>
                         <tbody>
                             <tr ng-repeat="words in words_in_dictionary | orderBy:'WordName':false">
                                 <td class="dictTblName" ng-click="addWordFromDictionary(words.WordName)"><p>{{words.WordName}}</p></td>
@@ -23,13 +23,14 @@
                         </tbody>
                     </table>
                 </accordion-group>
-                <span class="badge">Phrases in dictionary: {{phrases_in_dictionary.length}}</span>
-                <accordion-group class="btn" heading="(Show/Hide)">
+                <span ng-show="phraseToDelete" class="badge">Phrases in dictionary: {{phrases_in_dictionary.length}}</span>
+                <accordion-group ng-show="phraseToDelete" class="btn" heading="(Show/Hide)">
                     <table class="tableDict">
-                        <thead><tr><th></th><th>Description</th></tr></thead>
+                        <thead><tr><th class="dictTblName"></th><th class="dictTblDescription">Description</th></tr></thead>
                         <tbody>
-                            <tr ng-hide="phrases_in_dictionary ==null" ng-repeat="phrase in phrases_in_dictionary">
-                                <td><a class="primaryButton" ng-click="deletePhrase(phrase.PhraseId)">Delete</a></td> <td class="dictTblPhraseDescription" ng-click="choosePhrase(phrase.PhraseText)"><p>{{phrase.PhraseText}}</p></td>
+                            <tr ng-repeat="phrase in phrases_in_dictionary">
+                                <td><a class="dictTblName primaryButton" ng-click="deletePhrase(phrase.PhraseId)">Delete</a></td>
+                                <td class="dictTblPhraseDescription" ng-click="choosePhrase(phrase.PhraseText)"><p>{{phrase.PhraseText}}</p></td>
                             </tr>
                         </tbody>
                     </table>
@@ -107,6 +108,7 @@
             </accordion>
             <textarea class="form-horizontal" id="mainArea" ng-model="sentence" ng-change="parseSentence()" style="width: 100%; height: 15em;"></textarea>
             <button id="Submit1" class="primaryButton" type="button" ng-click="processForm()">Submit</button>
+            <button id="Clear1" class="primaryButton" type="button" ng-click="clearContent()">Clear content</button>
         </form>
     </div>
 

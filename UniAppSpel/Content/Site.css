@@ -1077,21 +1077,26 @@ tr {
         display: inline-block;
         white-space: nowrap;
         font-size: 13px;
+        color: gray;
     }
 
-    .tableDict .dictTblDescription {
+    .tableDict th {
+        font-size:1em;
+    }
+
+  .dictTblDescription {
         width: 40%;
     }
 
-    .tableDict .dictTblName {
+   .dictTblName {
         width: 18%;
     }
 
-    .tableDict .dictTbLImg {
+     .dictTbLImg {
         width: 9%;
     }
 
-    .tableDict .dictTblSound {
+   .dictTblSound {
         width: 18%;
     }
 
