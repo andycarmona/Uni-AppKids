@@ -273,6 +273,7 @@
     <Content Include="Global.asax" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <Content Include="Images\sound.png" />
+    <Content Include="Images\words.jpg" />
     <Content Include="Scripts\angular\angular-animate.js" />
     <Content Include="Scripts\angular\angular-animate.min.js" />
     <Content Include="Scripts\angular\angular-aria.js" />

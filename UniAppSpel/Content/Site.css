@@ -790,8 +790,8 @@ tr.pager td {
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     border-radius: 10px;
-    border: 1px solid #d8c503;
-    background-color: #0068a8;
+    border: 2px solid #d8c503;
+    background-image: -webkit-linear-gradient(#00304B, #54C1FF 60%, #17618C);
     height: 51px;
     width: 100%;
     margin: auto;
@@ -847,7 +847,7 @@ tr.pager td {
     -ms-border-radius: 13px;
     border-radius: 13px;
     border: #F29D03 solid 2px;
-    height: 132px;
+    height: 122px;
     width: 100px;
     -webkit-box-shadow: #0F0E0E 10px 10px 10px;
     -moz-box-shadow: #0F0E0E 10px 10px 10px;
@@ -855,8 +855,13 @@ tr.pager td {
    box-shadow: #0F0E0E 10px 10px 10px;
 }
 
-.verticalMove {
-    
+.bubble .preview {
+    height: 75px;
+    width: 100px;
+}
+
+.bubble .soundIcon {
+    padding: 27px;
 }
 
     .bubble:after {
@@ -901,7 +906,7 @@ tr.pager td {
  
 }
 
-.bubbleLeft:after 
+/*.bubbleLeft:after 
 {
 content: '';
 position: absolute;
@@ -931,7 +936,7 @@ margin-top: -18px;
 left: -22px;
 top: 27%;
 
-}
+}*/
 
 
 .bottomleft {
@@ -1228,9 +1233,9 @@ textarea {
 h1:hover {
     background: radial-gradient(ellipse at center,#cad2bf 0%,#55643D 0%,#161817 100%);
     -ms-border-radius: 5px;
-    padding: 5px;
     border-radius: 5px;
 }
+
 /*Animation*/
 .animate-me {
     border: 1px solid;

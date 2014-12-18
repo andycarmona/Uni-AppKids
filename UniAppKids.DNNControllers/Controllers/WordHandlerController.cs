@@ -188,9 +188,7 @@ namespace UniAppKids.DNNControllers.Controllers
                     return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, listOfPhrase);
                 }
 
-                return this.ControllerContext.Request.CreateResponse(
-                    HttpStatusCode.BadRequest,
-                    "Couldn't find any dictionary.");
+                throw new Exception("No words in dictionary");
             }
             catch (Exception e)
             {

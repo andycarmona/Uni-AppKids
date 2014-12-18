@@ -7,7 +7,7 @@ var EditPageController = function ($scope, $http, $window, userService) {
     var urlWordList = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/GetAllWordsInDictionary";
     var urlDictionary = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/GetDictionary?dictionaryId=1";
     var urlDeletePhrase = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/DeletePhrase?";
-    var debugMode = true;
+
 
   
     $scope.imagelist = [];

@@ -8,8 +8,16 @@
             <div style="float:right;">
                 <img src="~/Images/words.jpg" alt="" /><label><b>LEARN WORDS IN: </b>{{dictionaries}}</label>
             </div>
-            <div class="bubble" style="float:left;" ng-style="{'left':bubblePosition+'px'}"><img src="{{image}}"><a ng-hide="sound==null" ng-click="PlaySound(actualWord)">
-                                                                                                                     <img src="~/Images/sound.png" /> </a></div>
+            <div ng-hide="actualWord==''" class="bubble" style="float:left;" ng-style="{'left':bubblePosition+'px'}">
+                <div class="preview">
+                    <img src="{{image}}">
+                </div>
+                <div class="soundIcon">
+                    <a ng-hide="sound==null" ng-click="PlaySound(actualWord)">
+                        <img src="~/Images/sound.png" />
+                    </a>
+                </div>
+            </div>
         </accordion>
     </div>
     <div class="content">
@@ -18,23 +26,32 @@
         </div>
     </div>
     <div class="wordProperty">
-       
+
         <nav>
             <ul class="pager">
                 <li><a ng-show="navLeft" ng-click="moveIndex(-1)">Previous</a></li>
                 <li><a ng-show="navRight" ng-click="moveIndex(1)">Next</a></li>
             </ul>
         </nav>
-        <table ng-hide="actualWord==''">
-            <thead><tr><th class="dictTblDescription">Description for {{actualWord}} </th></tr></thead>
-            <tbody>
-                <tr>
-                    <td class="dictTblPhraseDescription" ng-click="choosePhrase(phrase.PhraseText)">
-                        <div ng-bind-html="WikiContent"></div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+     
+    </div>
+    <div ng-hide="actualWord==''" class="CenterTextAlign">
+        <accordion class="btn" close-others="oneAtATime">
+            <accordion-group class="btn" heading="Show description for {{actualWord}}">
+                <div class="bubbleLeft">
+                    <table ng-hide="actualWord==''">
+                        <thead><tr><th class="dictTblDescription">Description for {{actualWord}} </th></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td class="dictTblPhraseDescription" ng-click="choosePhrase(phrase.PhraseText)">
+                                    <div ng-bind-html="WikiContent"></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </accordion-group>
+        </accordion>
     </div>
     <div ng-show="getErrorMessagStatus()" class="navsection">
         <accordion class="btn" style="float:left;" close-others="oneAtATime">

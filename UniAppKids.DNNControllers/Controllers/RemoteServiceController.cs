@@ -46,7 +46,7 @@
                     "http://es.wikipedia.org/w/index.php?action=render&title={0}&prop=revisions&rvprop=content",
                     keyWord);
 
-            var encodedJsonResult = "";
+            string encodedJsonResult;
             using (var webClient = new WebClient())
             {
                 var jsonResult = webClient.DownloadString(urlToSearch);
@@ -79,7 +79,6 @@
         [AcceptVerbs("POST")]
         public async Task<List<string>> PostSoundFileAsync()
         {
-
             if (this.Request.Content.IsMimeMultipartContent())
             {
                 var uploadPath = HttpContext.Current.Server.MapPath("~/Uploads");
@@ -91,7 +90,7 @@
                 var messages = new List<string>();
                 foreach (var file in streamProvider.FileData)
                 {
-                    FileInfo fi = new FileInfo(file.LocalFileName);
+                    var fi = new FileInfo(file.LocalFileName);
                     messages.Add("File uploaded as " + fi.FullName + " (" + fi.Length + " bytes)");
                 }
 

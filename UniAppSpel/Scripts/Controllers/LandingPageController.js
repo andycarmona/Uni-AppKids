@@ -4,9 +4,6 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
 
 
     $scope.dictionaryName = "";
-    $scope.lookupResult = {
-        dictionaryName: "Not yet retrieved"
-    };
     $scope.actualWord="";
     $scope.Phrases = [];
     $scope.wordsInPhrases = [];
@@ -16,6 +13,7 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
     $scope.navRight = false;
     $scope.soundObject = null;
     $scope.WikiContent = "";
+    $scope.image = "";
 
     var urlDictionary = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/GetDictionary?dictionaryId=1";
 
@@ -40,31 +38,24 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
 
 
     function GetDictionary() {
-
-
         userService.GetRequest(urlDictionary).success(function (request) {
             applyRemoteDataToDictionary(request);
+        }).error(function (request) {
+            $scope.error = "An internal error has ocurred. " + request;
+        });
+    }
+
+    function GetPhrase() {
+        userService.GetRequest(urlPhrase).success(function (request) {
+            applyRemoteDataToPhrase(request);
         }).error(function (request) {
             $scope.error = "An internal error has ocurred. " + request;
         });
 
     }
 
-    function GetPhrase() {
-
-        userService.GetRequest(urlPhrase).success(function (request) {
-            applyRemoteDataToPhrase(request);
-        }).error(function () {
-            $scope.error = "An internal error has ocurred. " + request;
-        });
-
-    }
-
     function applyRemoteDataToDictionary(request) {
-
         $scope.dictionaries = request.DictionaryName;
-
-
     }
 
     $scope.RenderWikiContent = function () {
@@ -82,9 +73,8 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
 
 
     function applyRemoteDataToPhrase(request) {
-
+        console.log("request "+request);
         $scope.Phrases = request;
-
         $scope.wordsInPhrases = request[$scope.actualPhraseIndex].ListOfWords;
         updateNavButtonVisibility();
     }
@@ -108,7 +98,7 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
     }
 
     $scope.CheckFileExist = function (keyWord) {
-        alert(keyWord);
+        //alert(keyWord);
         userService.GetRequest(urlCheckFileExist+"/Uploads/"+keyWord+"RecordSound.wav")
             .success(function (request) {
             return request;
@@ -120,13 +110,8 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
   
     }
 
-
-
     $scope.PlaySound = function (keyword) {
 
-        console.log(keyword);
-   
-   
         if ($scope.soundObject != null) {
             document.body.removeChild($scope.soundObject);
             $scope.soundObject.removed = true;
@@ -145,6 +130,7 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
         if ((nextIndex < phrasesLimit) && (nextIndex > -1)) {
             $scope.actualPhraseIndex = nextIndex;
             $scope.wordsInPhrases = $scope.Phrases[$scope.actualPhraseIndex].ListOfWords;
+            $scope.actualWord = "";
         }
         updateNavButtonVisibility();
     }
@@ -156,35 +142,32 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
                 status = true;
             }
         }
-        console.log($scope.actualWord);
         return status;
     }
 
-    $scope.getWordName = function (wordId,event) {
+    $scope.getWordName = function (wordId, event) {
+        
         var i = 0;
-
-
-        //console.log(event.x);
-
-        $scope.bubblePosition = event.x-40;
+        if (event != null) {
+            $scope.bubblePosition = event.x - 40;
+        }
         for (; i < $scope.wordsInPhrases.length;) {
             if ($scope.wordsInPhrases[i].WordId == wordId) {
                 $scope.sound = $scope.wordsInPhrases[i].SoundFile;
                 $scope.image = $scope.wordsInPhrases[i].Image;
+                console.log($scope.image);
                 $scope.actualWord = $scope.wordsInPhrases[i].WordName;
 
                 $scope.RenderWikiContent();
             }
             i++;
 
-        }
+        }console.log(wordId);
         return null;
     };
 
         $scope.setWordContent = function (idPassedFromClickedWord) {
         $scope.titleDescription = $scope.getWordName(idPassedFromClickedWord);
-        console.log(idPassedFromClickedWord);
-
     };
 
 }
