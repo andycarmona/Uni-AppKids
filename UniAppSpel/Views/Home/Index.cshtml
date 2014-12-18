@@ -5,32 +5,38 @@
 <div ng-app="UniAppSpelApp" ng-controller="LandingPageController">
     <div class="navsection">
         <accordion class="btn" close-others="oneAtATime">
-            <div style="float:left;">
-                <img src="~/Images/words.jpg" alt=""/><label><b>LEARN WORDS IN: </b>{{dictionaries}}</label>
+            <div style="float:right;">
+                <img src="~/Images/words.jpg" alt="" /><label><b>LEARN WORDS IN: </b>{{dictionaries}}</label>
             </div>
-            <div style="float:right;"><img src="{{image}}"></div>
+            <div class="bubble" style="float:left;" ng-style="{'left':bubblePosition+'px'}"><img src="{{image}}"><a ng-hide="sound==null" ng-click="PlaySound(actualWord)">
+                                                                                                                     <img src="~/Images/sound.png" /> </a></div>
         </accordion>
     </div>
-    <div class="nav-header">
-       
-       </div>
     <div class="content">
         <div ng-repeat="word in wordsInPhrases">
-            <h1 ng-click="getWordName(word.WordId)" id="word{{word.WordId}}" class="phraseconte wordSeparation">{{word.WordName}}<span ng-show=" ! $last ">&nbsp;</span></h1>
+            <h1 ng-click="getWordName(word.WordId,$event)" id="word{{word.WordId}}" class="phraseconte wordSeparation">{{word.WordName}}<span ng-show=" ! $last ">&nbsp;</span></h1>
         </div>
     </div>
-    <div class="wordProperty"><span>{{description}}</span></div>
     <div class="wordProperty">
-        <button ng-hide="sound==null" class="primaryButton" type="button" ng-click="PlaySound(actualWord)">Play Sound ({{sound}})</button>
+       
         <nav>
             <ul class="pager">
                 <li><a ng-show="navLeft" ng-click="moveIndex(-1)">Previous</a></li>
                 <li><a ng-show="navRight" ng-click="moveIndex(1)">Next</a></li>
             </ul>
         </nav>
-        {{WikiContent}}
+        <table ng-hide="actualWord==''">
+            <thead><tr><th class="dictTblDescription">Description for {{actualWord}} </th></tr></thead>
+            <tbody>
+                <tr>
+                    <td class="dictTblPhraseDescription" ng-click="choosePhrase(phrase.PhraseText)">
+                        <div ng-bind-html="WikiContent"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <div ng-show="getErrorMessagStatus()" class="navsection" >
+    <div ng-show="getErrorMessagStatus()" class="navsection">
         <accordion class="btn" style="float:left;" close-others="oneAtATime">
             <span class="badge">Systems information: 1</span>
             <accordion-group class="btn" heading="(Show/Hide) ">

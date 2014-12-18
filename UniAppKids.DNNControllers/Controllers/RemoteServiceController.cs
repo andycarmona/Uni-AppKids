@@ -5,6 +5,7 @@
     using System.IO;
     using System.Net;
     using System.Net.Http;
+    using System.Text;
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Http;
@@ -42,16 +43,17 @@
         public HttpResponseMessage GetWordDescriptionFromWiki(string keyWord)
         {
             var urlToSearch = string.Format(
-                    "http://http://es.wikipedia.org/w/index.php?action=render&title={0}&prop=revisions&rvprop=content",
+                    "http://es.wikipedia.org/w/index.php?action=render&title={0}&prop=revisions&rvprop=content",
                     keyWord);
-            var jsonResult = "";
+
+            var encodedJsonResult = "";
             using (var webClient = new WebClient())
             {
-                jsonResult = webClient.DownloadString(urlToSearch);
-
-
+                var jsonResult = webClient.DownloadString(urlToSearch);
+                byte[] bytes = Encoding.Default.GetBytes(jsonResult);
+                encodedJsonResult = Encoding.UTF8.GetString(bytes);
             }
-            return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, jsonResult);
+            return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, encodedJsonResult);
         }
 
         [DnnAuthorize]

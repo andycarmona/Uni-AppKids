@@ -1,5 +1,5 @@
 ﻿"use strict";
-var LandingPageController = function ($scope, $http, $window, userService) {
+var LandingPageController = function ($scope, $http, $window, $sce, userService) {
 
 
 
@@ -68,7 +68,7 @@ var LandingPageController = function ($scope, $http, $window, userService) {
     }
 
     $scope.RenderWikiContent = function () {
-        userService.GetRequest(urlWikiContent).success(function (request) {
+        userService.GetRequest(urlWikiContent + $scope.actualWord).success(function (request) {
             applyRemoteWikiContent(request);
         }).error(function () {
             $scope.error = "An internal error has ocurred. " + request;
@@ -76,7 +76,8 @@ var LandingPageController = function ($scope, $http, $window, userService) {
     }
 
     function applyRemoteWikiContent(request) {
-        $scope.WikiContent = request;
+       
+        $scope.WikiContent =  $sce.trustAsHtml(request);
     }
 
 
@@ -159,15 +160,20 @@ var LandingPageController = function ($scope, $http, $window, userService) {
         return status;
     }
 
-    $scope.getWordName = function (wordId) {
+    $scope.getWordName = function (wordId,event) {
         var i = 0;
 
+
+        //console.log(event.x);
+
+        $scope.bubblePosition = event.x-40;
         for (; i < $scope.wordsInPhrases.length;) {
             if ($scope.wordsInPhrases[i].WordId == wordId) {
-                $scope.description = [$scope.wordsInPhrases[i].WordName] + ": " + $scope.wordsInPhrases[i].WordDescription;
                 $scope.sound = $scope.wordsInPhrases[i].SoundFile;
                 $scope.image = $scope.wordsInPhrases[i].Image;
                 $scope.actualWord = $scope.wordsInPhrases[i].WordName;
+
+                $scope.RenderWikiContent();
             }
             i++;
 
@@ -184,7 +190,7 @@ var LandingPageController = function ($scope, $http, $window, userService) {
 }
 
 
-LandingPageController.$inject = ['$scope', '$http', '$window', 'userService'];
+LandingPageController.$inject = ['$scope', '$http', '$window', '$sce', 'userService'];
 
 
 

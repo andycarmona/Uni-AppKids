@@ -847,11 +847,16 @@ tr.pager td {
     -ms-border-radius: 13px;
     border-radius: 13px;
     border: #F29D03 solid 2px;
-    height: 100px;
-    /*-webkit-box-shadow: #B3B3B3 19px 19px 19px;
-    -moz-box-shadow: #B3B3B3 19px 19px 19px;
-    -ms-box-shadow: #B3B3B3 19px 19px 19px;
-    box-shadow: #B3B3B3 19px 19px 19px;*/
+    height: 132px;
+    width: 100px;
+    -webkit-box-shadow: #0F0E0E 10px 10px 10px;
+    -moz-box-shadow: #0F0E0E 10px 10px 10px;
+    -ms-box-shadow: #0F0E0E 10px 10px 10px;
+   box-shadow: #0F0E0E 10px 10px 10px;
+}
+
+.verticalMove {
+    
 }
 
     .bubble:after {
@@ -866,6 +871,7 @@ tr.pager td {
         margin-left: -15px;
         bottom: -15px;
         left: 27%;
+     
     }
 
     .bubble:before {
@@ -880,6 +886,7 @@ tr.pager td {
         margin-left: -18px;
         bottom: -22px;
         left: 27%;
+
     }
 
 .bubbleLeft {
@@ -891,9 +898,10 @@ tr.pager td {
     border-radius: 13px;
     border: #F29D03 solid 2px;
     padding: 20px;
+ 
 }
 
-/*.bubbleLeft:after 
+.bubbleLeft:after 
 {
 content: '';
 position: absolute;
@@ -906,6 +914,7 @@ z-index: 1;
 margin-top: -15px;
 left: -15px;
 top: 27%;
+   
 }
 
 .bubbleLeft:before 
@@ -921,7 +930,8 @@ z-index: 0;
 margin-top: -18px;
 left: -22px;
 top: 27%;
-}*/
+
+}
 
 
 .bottomleft {
@@ -950,6 +960,7 @@ top: 27%;
 }
 
 .navsection .btn {
+    height: 92px;
     width: 99%;
     padding: 5px;
 }
@@ -1083,6 +1094,39 @@ tr {
     .tableDict th {
         font-size:1em;
     }
+
+  
+    .tableWiki {
+    height: 200px;
+    width: 100%;
+}
+
+    
+
+    .tableWiki tbody {
+        overflow-y: scroll;
+        height: 200px;
+        width: 100%;
+        position: fixed;
+    }
+
+        .tableWiki tbody tr {
+            /*display:-webkit-box;*/
+            text-align: left;
+        }
+
+    .tableWiki td {
+        overflow: hidden;
+        display: inline-block;
+        white-space: nowrap;
+        font-size: 13px;
+        color: gray;
+    }
+
+    .tableWiki th {
+        font-size:1em;
+    }
+ 
 
   .dictTblDescription {
         width: 40%;
@@ -1242,4 +1286,14 @@ h1:hover {
     .animate-hide.animate-hide-active {
         -ms-opacity: 0;
         opacity: 0;
+    }
+    /*Wiki css*/
+    .ambox-text {
+      visibility: hidden;
+    }
+    .ambox-image {
+        visibility: hidden;
+    }
+     .rellink{
+        visibility: hidden;
     }
