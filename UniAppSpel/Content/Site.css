@@ -749,7 +749,7 @@ tr.pager td {
     .phraseconte {
         color: white;
         font-family: Dotum;
-        font-size: 24px;
+        font-size: 33px;
         font-weight: normal;
         font-style: normal;
     }
@@ -965,7 +965,6 @@ top: 27%;
 }
 
 .navsection .btn {
-    height: 92px;
     width: 99%;
     padding: 5px;
 }
@@ -1001,6 +1000,7 @@ top: 27%;
 
 .CenterTextAlign {
     text-align: center;
+    width: 80%;
 }
 /*Phrase form*/
 .leftSide {
@@ -1037,12 +1037,19 @@ top: 27%;
     .deviceFit {
         width: 97%;
     }
+   .wikiContent {
+text-align: center;
+    }
 }
 
 @media only screen and (max-width: 767px) {
     /* phones */
     .deviceFit {
         width: 88%;
+    }
+       .wikiContent {
+     width: 200px;
+text-align: center;
     }
 }
 
@@ -1051,6 +1058,40 @@ top: 27%;
     .deviceFit {
         width: 88%;
     }
+    .wikiContent {
+     width: 200px;
+text-align: center;
+    }
+    .bubble .preview {
+    height: 35px;
+    width: 50px;
+}
+    .bubble {
+        height: 69px;
+width: 50px;
+    }
+    .bubble:before {
+
+border-width: 27px 15px 0;
+margin-left: -14px;
+bottom: -27px;
+left: 27%;
+    }
+         .raeword-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 35px;
+    height: 0;
+         width: 250px;
+    overflow: hidden;
+}
+     .raeword-container iframe {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+}
 }
 /*Bootstrap table*/
 tr {
@@ -1302,3 +1343,24 @@ h1:hover {
      .rellink{
         visibility: hidden;
     }
+
+     .wikiContent li {
+         visibility: hidden;
+     }
+
+     /*Rae frame content*/
+     .raeword-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 35px;
+    height: 0;
+         width: 1000px;
+    overflow: hidden;
+}
+     .raeword-container iframe {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 1000px;
+    height: 100%;
+}

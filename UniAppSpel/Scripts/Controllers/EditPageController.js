@@ -31,7 +31,9 @@ var EditPageController = function ($scope, $http, $window, userService) {
     function GetWordList(url) {
         userService.GetRequest(url).success(function (request) {
             applyRemoteDataToWordList(request);
+            $scope.wordsInList = true;
         }).error(function (request) {
+            $scope.wordsInList = false;
             $scope.error = "An internal error has ocurred. " + request;
         });
 

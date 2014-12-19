@@ -33,22 +33,19 @@
                 <li><a ng-show="navRight" ng-click="moveIndex(1)">Next</a></li>
             </ul>
         </nav>
-     
+
     </div>
     <div ng-hide="actualWord==''" class="CenterTextAlign">
         <accordion class="btn" close-others="oneAtATime">
-            <accordion-group class="btn" heading="Show description for {{actualWord}}">
+            <accordion-group class="btn" heading="Show 'WIKI' description for {{actualWord}}">
+                <div class="bubbleLeft wikiContent" ng-bind-html="WikiContent">
+                </div>
+            </accordion-group>
+            <accordion-group class="btn" heading="Show 'RAE' description for {{actualWord}}">
                 <div class="bubbleLeft">
-                    <table ng-hide="actualWord==''">
-                        <thead><tr><th class="dictTblDescription">Description for {{actualWord}} </th></tr></thead>
-                        <tbody>
-                            <tr>
-                                <td class="dictTblPhraseDescription" ng-click="choosePhrase(phrase.PhraseText)">
-                                    <div ng-bind-html="WikiContent"></div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="raeword-container">
+                        <iframe ng-src="{{RaeWordResult}}"></iframe>
+                    </div>
                 </div>
             </accordion-group>
         </accordion>

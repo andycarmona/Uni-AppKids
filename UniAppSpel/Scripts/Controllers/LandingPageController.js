@@ -23,6 +23,8 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
 
     var urlWikiContent = "http://dnndev.me/DesktopModules/DataExchange/API/RemoteService/GetWordDescriptionFromWiki?keyWord=";
 
+    var urlRaeContent = "http://dnndev.me/DesktopModules/DataExchange/API/RemoteService/GetWordDescriptionFromRae?keyWord=";
+
     GetDictionary();
     GetPhrase();
 
@@ -66,11 +68,15 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
         });
     }
 
+    $scope.RenderRaeContent = function () {
+        $scope.RaeWordResult = $sce.trustAsResourceUrl("http://lema.rae.es/drae/srv/search?val=" + $scope.actualWord);
+    }
+
     function applyRemoteWikiContent(request) {
        
         $scope.WikiContent =  $sce.trustAsHtml(request);
     }
-
+ 
 
     function applyRemoteDataToPhrase(request) {
         console.log("request "+request);
@@ -159,6 +165,7 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
                 $scope.actualWord = $scope.wordsInPhrases[i].WordName;
 
                 $scope.RenderWikiContent();
+                $scope.RenderRaeContent();
             }
             i++;
 

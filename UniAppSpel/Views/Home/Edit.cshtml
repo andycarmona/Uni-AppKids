@@ -8,8 +8,8 @@
     <div style="float:right;" class="editnavcenter">
         <div class="navsection">
             <accordion class="btn" close-others="oneAtATime">
-                <span class="badge">Words in dictionary: {{words_in_dictionary.length}}</span>
-                <accordion-group class="btn" heading="(Show/Hide)">
+                <span ng-show="wordsInList" class="badge">Words in dictionary: {{words_in_dictionary.length}}</span>
+                <accordion-group ng-show="wordsInList" class="btn" heading="(Show/Hide)">
                     <label>Click on a word to add it to your custom sentence.</label>
                     <table class="tableDict">
                         <thead><tr><th class="dictTblName">Name</th><th class="dictTblDescription">Description</th><th class="dictTbLImg">Image</th><th class="dictTblSound">Sound</th></tr></thead>
