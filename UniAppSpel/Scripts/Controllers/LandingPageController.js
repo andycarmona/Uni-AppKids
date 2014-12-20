@@ -63,15 +63,24 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
     $scope.RenderWikiContent = function () {
         userService.GetRequest(urlWikiContent + $scope.actualWord).success(function (request) {
             applyRemoteWikiContent(request);
-        }).error(function () {
+        }).error(function (request) {
             $scope.error = "An internal error has ocurred. " + request;
         });
     }
 
     $scope.RenderRaeContent = function () {
-        $scope.RaeWordResult = $sce.trustAsResourceUrl("http://lema.rae.es/drae/srv/search?val=" + $scope.actualWord);
+        userService.GetRequest(urlRaeContent + $scope.actualWord).success(function (request) {
+            applyRemoteRaeContent(request);
+        }).error(function (request) {
+            $scope.error = "An internal error has ocurred. " + request;
+            applyRemoteRaeContent(request);
+        });
+        
     }
 
+    function applyRemoteRaeContent(request) {
+        $scope.RaeWordResult = $sce.trustAsResourceUrl(request);
+    }
     function applyRemoteWikiContent(request) {
        
         $scope.WikiContent =  $sce.trustAsHtml(request);
@@ -79,7 +88,7 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
  
 
     function applyRemoteDataToPhrase(request) {
-        console.log("request "+request);
+       
         $scope.Phrases = request;
         $scope.wordsInPhrases = request[$scope.actualPhraseIndex].ListOfWords;
         updateNavButtonVisibility();
@@ -161,15 +170,13 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
             if ($scope.wordsInPhrases[i].WordId == wordId) {
                 $scope.sound = $scope.wordsInPhrases[i].SoundFile;
                 $scope.image = $scope.wordsInPhrases[i].Image;
-                console.log($scope.image);
                 $scope.actualWord = $scope.wordsInPhrases[i].WordName;
-
                 $scope.RenderWikiContent();
                 $scope.RenderRaeContent();
             }
             i++;
 
-        }console.log(wordId);
+        }
         return null;
     };
 

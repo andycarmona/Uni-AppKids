@@ -42,36 +42,47 @@
         [AcceptVerbs("GET")]
         public HttpResponseMessage GetWordDescriptionFromWiki(string keyWord)
         {
-            var urlToSearch = string.Format(
-                    "http://es.wikipedia.org/w/index.php?action=render&title={0}&prop=revisions&rvprop=content",
-                    keyWord);
-
-            string encodedJsonResult;
-            using (var webClient = new WebClient())
+            try
             {
-                var jsonResult = webClient.DownloadString(urlToSearch);
-                byte[] bytes = Encoding.Default.GetBytes(jsonResult);
-                encodedJsonResult = Encoding.UTF8.GetString(bytes);
+                var strippedWord = WordFilterTool.RemoveSpecialCharacters(keyWord);
+                var cleanWordResult = WordFilterTool.RemoveAccentOnVowels(strippedWord);
+                var urlToSearch =
+                    string.Format(
+                        "http://es.wikipedia.org/w/index.php?action=render&title={0}&prop=revisions&rvprop=content",
+                        cleanWordResult);
+
+                string encodedJsonResult;
+                using (var webClient = new WebClient())
+                {
+                    var jsonResult = webClient.DownloadString(urlToSearch);
+                    byte[] bytes = Encoding.Default.GetBytes(jsonResult);
+                    encodedJsonResult = Encoding.UTF8.GetString(bytes);
+                }
+
+                return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, encodedJsonResult);
             }
-            return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, encodedJsonResult);
+            catch (Exception)
+            {
+                return this.ControllerContext.Request.CreateResponse(HttpStatusCode.BadRequest, "<p>No encontre resultados para esta palabra</p> ");
+            }
         }
 
         [AllowAnonymous]
         [AcceptVerbs("GET")]
         public HttpResponseMessage GetWordDescriptionFromRae(string keyWord)
         {
-            var urlToSearch = string.Format(
-                    "http://buscon.rae.es/drae/srv/search?val={0}",
-                    keyWord);
-
-            string encodedJsonResult;
-            using (var webClient = new WebClient())
+            try
             {
-                var jsonResult = webClient.DownloadString(urlToSearch);
-                byte[] bytes = Encoding.Default.GetBytes(jsonResult);
-                encodedJsonResult = Encoding.UTF8.GetString(bytes);
+                var strippedWord = WordFilterTool.RemoveSpecialCharacters(keyWord);
+                var cleanWordResult = WordFilterTool.RemoveAccentOnVowels(strippedWord);
+                var urlToSearch = string.Format("http://lema.rae.es/drae/srv/search?val={0}", cleanWordResult);
+
+                return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, urlToSearch);
             }
-            return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, encodedJsonResult);
+            catch (Exception)
+            {
+                return this.ControllerContext.Request.CreateResponse(HttpStatusCode.BadRequest, "Invalid words");
+            }
         }
 
         [DnnAuthorize]

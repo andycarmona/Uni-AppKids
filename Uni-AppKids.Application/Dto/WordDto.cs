@@ -15,5 +15,7 @@
         public string WordDescription { get; set; }
 
         public DateTime CreationTime { get; set; }
+
+        public bool Repeated { get; set; }
     }
 }

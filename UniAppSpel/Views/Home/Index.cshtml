@@ -4,21 +4,22 @@
 
 <div ng-app="UniAppSpelApp" ng-controller="LandingPageController">
     <div class="navsection">
-        <accordion class="btn" close-others="oneAtATime">
+        <div class="editWordHeader">
             <div style="float:right;">
                 <img src="~/Images/words.jpg" alt="" /><label><b>LEARN WORDS IN: </b>{{dictionaries}}</label>
             </div>
             <div ng-hide="actualWord==''" class="bubble" style="float:left;" ng-style="{'left':bubblePosition+'px'}">
+                <div>
+                    <a ng-hide="sound==null" ng-click="PlaySound(actualWord)"> <img src="~/Images/sound.png" /></a>
+                </div>
                 <div class="preview">
+
+
                     <img src="{{image}}">
                 </div>
-                <div class="soundIcon">
-                    <a ng-hide="sound==null" ng-click="PlaySound(actualWord)">
-                        <img src="~/Images/sound.png" />
-                    </a>
-                </div>
+
             </div>
-        </accordion>
+        </div>
     </div>
     <div class="content">
         <div ng-repeat="word in wordsInPhrases">
@@ -33,22 +34,18 @@
                 <li><a ng-show="navRight" ng-click="moveIndex(1)">Next</a></li>
             </ul>
         </nav>
-
     </div>
-    <div ng-hide="actualWord==''" class="CenterTextAlign">
-        <accordion class="btn" close-others="oneAtATime">
-            <accordion-group class="btn" heading="Show 'WIKI' description for {{actualWord}}">
-                <div class="bubbleLeft wikiContent" ng-bind-html="WikiContent">
-                </div>
-            </accordion-group>
-            <accordion-group class="btn" heading="Show 'RAE' description for {{actualWord}}">
-                <div class="bubbleLeft">
+    <div ng-hide="actualWord==''">
+        <div class="bubbleTop">
+            <tabset justified="true">
+                <tab heading="RAE">
                     <div class="raeword-container">
                         <iframe ng-src="{{RaeWordResult}}"></iframe>
                     </div>
-                </div>
-            </accordion-group>
-        </accordion>
+                </tab>
+                <tab heading="WIKI"><div class="innerContent" ng-bind-html="WikiContent"></div></tab>
+            </tabset>
+        </div>
     </div>
     <div ng-show="getErrorMessagStatus()" class="navsection">
         <accordion class="btn" style="float:left;" close-others="oneAtATime">

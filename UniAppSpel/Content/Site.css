@@ -785,7 +785,7 @@ tr.pager td {
 
 .content {
     padding-bottom: 100px;
-    padding-top: 50px;
+    padding-top: 30px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
@@ -795,6 +795,10 @@ tr.pager td {
     height: 51px;
     width: 100%;
     margin: auto;
+       -webkit-box-shadow: #0F0E0E 10px 10px 10px;
+    -moz-box-shadow: #0F0E0E 10px 10px 10px;
+    -ms-box-shadow: #0F0E0E 10px 10px 10px;
+    box-shadow: #0F0E0E 10px 10px 10px;
 }
 
 .mainlayout {
@@ -848,21 +852,17 @@ tr.pager td {
     border-radius: 13px;
     border: #F29D03 solid 2px;
     height: 122px;
-    width: 100px;
     -webkit-box-shadow: #0F0E0E 10px 10px 10px;
     -moz-box-shadow: #0F0E0E 10px 10px 10px;
     -ms-box-shadow: #0F0E0E 10px 10px 10px;
-   box-shadow: #0F0E0E 10px 10px 10px;
+    box-shadow: #0F0E0E 10px 10px 10px;
 }
 
-.bubble .preview {
-    height: 75px;
-    width: 100px;
-}
+ 
 
-.bubble .soundIcon {
-    padding: 27px;
-}
+    .bubble .soundIcon {
+        padding: 2px;
+    }
 
     .bubble:after {
         content: '';
@@ -876,7 +876,6 @@ tr.pager td {
         margin-left: -15px;
         bottom: -15px;
         left: 27%;
-     
     }
 
     .bubble:before {
@@ -891,7 +890,6 @@ tr.pager td {
         margin-left: -18px;
         bottom: -22px;
         left: 27%;
-
     }
 
 .bubbleLeft {
@@ -903,7 +901,6 @@ tr.pager td {
     border-radius: 13px;
     border: #F29D03 solid 2px;
     padding: 20px;
- 
 }
 
 /*.bubbleLeft:after 
@@ -938,6 +935,48 @@ top: 27%;
 
 }*/
 
+.bubbleTop {
+    position: relative;
+padding: 10px;
+background: #FFFFFF;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    border-radius: 10px;
+border: #f29d03 solid 2px;
+   -webkit-box-shadow: #0F0E0E 10px 10px 10px;
+    -moz-box-shadow: #0F0E0E 10px 10px 10px;
+    -ms-box-shadow: #0F0E0E 10px 10px 10px;
+    box-shadow: #0F0E0E 10px 10px 10px;
+}
+
+.bubbleTop:after 
+{
+content: '';
+position: absolute;
+border-style: solid;
+border-width: 0 15px 62px;
+border-color: #FFFFFF transparent;
+display: block;
+width: 0;
+z-index: 1;
+top: -62px;
+left: 116px;
+}
+
+.bubbleTop:before 
+{
+content: '';
+position: absolute;
+border-style: solid;
+border-width: 0 16px 63px;
+border-color: #f29d03 transparent;
+display: block;
+width: 0;
+z-index: 0;
+top: -65px;
+left: 115px;
+}
 
 .bottomleft {
     position: relative;
@@ -1037,8 +1076,9 @@ top: 27%;
     .deviceFit {
         width: 97%;
     }
-   .wikiContent {
-text-align: center;
+
+    .wikiContent {
+        text-align: center;
     }
 }
 
@@ -1047,9 +1087,10 @@ text-align: center;
     .deviceFit {
         width: 88%;
     }
-       .wikiContent {
-     width: 200px;
-text-align: center;
+
+    .wikiContent {
+        width: 200px;
+        text-align: center;
     }
 }
 
@@ -1058,40 +1099,41 @@ text-align: center;
     .deviceFit {
         width: 88%;
     }
-    .wikiContent {
-     width: 200px;
-text-align: center;
-    }
-    .bubble .preview {
-    height: 35px;
-    width: 50px;
-}
-    .bubble {
-        height: 69px;
-width: 50px;
-    }
-    .bubble:before {
 
-border-width: 27px 15px 0;
-margin-left: -14px;
-bottom: -27px;
-left: 27%;
+    .wikiContent {
+        width: 200px;
+        text-align: center;
     }
-         .raeword-container {
-    position: relative;
-    padding-bottom: 56.25%;
-    padding-top: 35px;
-    height: 0;
-         width: 250px;
-    overflow: hidden;
-}
-     .raeword-container iframe {
-    position: absolute;
-    top:0;
-    left: 0;
-    width: 250px;
-    height: 100%;
-}
+
+    /*.bubble {
+        height: 69px;
+        width: 50px;
+    }
+
+        .bubble:before {
+            border-width: 27px 15px 0;
+            margin-left: -14px;
+            bottom: -27px;
+            left: 27%;
+        }*/
+
+    .raeword-container {
+
+        position: relative;
+        padding-bottom: 56.25%;
+        padding-top: 35px;
+        height: 0;
+        width: 100%;
+        overflow: hidden;
+    }
+
+        .raeword-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
 }
 /*Bootstrap table*/
 tr {
@@ -1138,16 +1180,16 @@ tr {
     }
 
     .tableDict th {
-        font-size:1em;
+        font-size: 1em;
     }
 
-  
-    .tableWiki {
+
+.tableWiki {
     height: 200px;
     width: 100%;
 }
 
-    
+
 
     .tableWiki tbody {
         overflow-y: scroll;
@@ -1170,29 +1212,29 @@ tr {
     }
 
     .tableWiki th {
-        font-size:1em;
-    }
- 
-
-  .dictTblDescription {
-        width: 40%;
+        font-size: 1em;
     }
 
-   .dictTblName {
-        width: 18%;
-    }
 
-     .dictTbLImg {
-        width: 9%;
-    }
+.dictTblDescription {
+    width: 40%;
+}
 
-   .dictTblSound {
-        width: 18%;
-    }
+.dictTblName {
+    width: 18%;
+}
 
-    .tableDict .dictTblPhraseDescription {
-        width: 80%;
-    }
+.dictTbLImg {
+    width: 9%;
+}
+
+.dictTblSound {
+    width: 18%;
+}
+
+.tableDict .dictTblPhraseDescription {
+    width: 80%;
+}
 
 .tableImages tbody {
     overflow-y: scroll;
@@ -1290,7 +1332,7 @@ h1:hover {
     box-shadow: 8px 8px 5px #888888;
 }
 
-.animate-me.ng-hide-add {
+    .animate-me.ng-hide-add {
         -ms-opacity: 1.0;
         opacity: 1.0;
         display: block !important;
@@ -1333,34 +1375,70 @@ h1:hover {
         -ms-opacity: 0;
         opacity: 0;
     }
-    /*Wiki css*/
-    .ambox-text {
-      visibility: hidden;
-    }
-    .ambox-image {
-        visibility: hidden;
-    }
-     .rellink{
-        visibility: hidden;
-    }
+/*Wiki css*/
+.ambox-text {
+    visibility: hidden;
+}
 
-     .wikiContent li {
-         visibility: hidden;
-     }
+.ambox-image {
+    visibility: hidden;
+}
 
-     /*Rae frame content*/
-     .raeword-container {
+.rellink {
+    visibility: hidden;
+}
+
+.innerContent li {
+    visibility: hidden;
+}
+
+/*Rae frame content*/
+.raeword-container {
     position: relative;
     padding-bottom: 56.25%;
     padding-top: 35px;
     height: 0;
-         width: 1000px;
     overflow: hidden;
+        -webkit-box-shadow: 1px 1px 10px #999;
+    -ms-box-shadow: 1px 1px 10px #999;
+    box-shadow: 1px 1px 10px #999;
 }
-     .raeword-container iframe {
-    position: absolute;
-    top:0;
-    left: 0;
-    width: 1000px;
-    height: 100%;
+
+    .raeword-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+       
+    }
+  
+.innerContent  {
+    -webkit-box-shadow: 1px 1px 10px #999;
+    -ms-box-shadow: 1px 1px 10px #999;
+    box-shadow: 1px 1px 10px #999;
+    margin: 2px;
+    max-height: 200px;
+    cursor: pointer;
+    display:inline-block;
+    *display:inline;/* For IE7*/
+    *zoom:1;/* For IE7*/
+    vertical-align:top;
+    overflow-x: scroll;
 }
+
+.editWordHeader {
+   height:120px;
+   background-image: -webkit-linear-gradient(#FFFFFF,#F3FAFE 60%,#BBDFF4);
+}
+
+/*preview window*/
+  .bubble .preview {
+       height: 75px;
+width: 100px;
+    }
+
+    .bubble .preview img {
+       height: 100%;
+width: 100%;
+    }

@@ -38,6 +38,7 @@ var EditPageController = function ($scope, $http, $window, userService) {
         });
 
     }
+
     function GetPhraseList(url) {
         var dictionaryId = 1;
         var totalPages = 10;
@@ -167,6 +168,10 @@ var EditPageController = function ($scope, $http, $window, userService) {
        var wordsJsonFormat = JSON.stringify($scope.words, null, '');
    
         userService.PostRequest(urlPhrase + wordsJsonFormat).success(function (request) {
+            for (var i = 0; i < request.length; i++) {
+
+                console.log("la palabra " + request[i].WordName +" es "+ request[i].Repeated);
+            }
             GetPhraseList(urlPhraseList, 10);
             $scope.iconSuccess = true;
         }).error(function (request) {

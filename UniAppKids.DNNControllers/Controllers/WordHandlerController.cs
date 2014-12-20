@@ -35,7 +35,7 @@ namespace UniAppKids.DNNControllers.Controllers
         private readonly PhraseService aPhraseService = new PhraseService();
 
         [DnnAuthorize]
-        [System.Web.Http.AcceptVerbs("POST")]
+        [AcceptVerbs("POST")]
         public async Task<HttpResponseMessage> AddPhrase(string listOfWords, int dictionaryId)
         {
             var errorMessage = new StringBuilder(string.Empty);
@@ -104,10 +104,18 @@ namespace UniAppKids.DNNControllers.Controllers
             }
             catch (FormatException)
             {
-                errorMessage.Append(string.Format(
-                    "These words doesn't exist in the {0} dictionary: {1}",
-                    language,
-                    string.Join(",", listOfNotAcceptedWords)));
+                foreach (var aWord in wordList)
+                {
+                    foreach (var notAcceptedWord in listOfNotAcceptedWords)
+                    {
+                        if (aWord.WordName == notAcceptedWord)
+                        {
+                            aWord.Repeated = true;
+                        }
+                    }
+                }
+
+                return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, wordList);
             }
 
             return this.ControllerContext.Request.CreateResponse(HttpStatusCode.BadRequest, errorMessage.ToString());
