@@ -58,6 +58,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="FakeEntityModels\FakeWordModel.cs" />
+    <Compile Include="GameObjectRepositoryTest.cs" />
     <Compile Include="RepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -15,15 +15,15 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
     $scope.WikiContent = "";
     $scope.image = "";
 
-    var urlDictionary = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/GetDictionary?dictionaryId=1";
+    var urlDictionary = "/DesktopModules/DataExchange/API/WordHandler/GetDictionary?dictionaryId=1";
 
-    var urlPhrase = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/GetWordsList?dictionaryId=1&indexOfPhraseList=0&totalPages=10";
+    var urlPhrase = "/DesktopModules/DataExchange/API/WordHandler/GetWordsList?dictionaryId=1&indexOfPhraseList=0&totalPages=10";
 
-    var urlCheckFileExist = "http://dnndev.me/DesktopModules/DataExchange/API/RemoteService/CheckIfFileExists?path=";
+    var urlCheckFileExist = "/DesktopModules/DataExchange/API/RemoteService/CheckIfFileExists?path=";
 
-    var urlWikiContent = "http://dnndev.me/DesktopModules/DataExchange/API/RemoteService/GetWordDescriptionFromWiki?keyWord=";
+    var urlWikiContent = "/DesktopModules/DataExchange/API/RemoteService/GetWordDescriptionFromWiki?keyWord=";
 
-    var urlRaeContent = "http://dnndev.me/DesktopModules/DataExchange/API/RemoteService/GetWordDescriptionFromRae?keyWord=";
+    var urlRaeContent = "/DesktopModules/DataExchange/API/RemoteService/GetWordDescriptionFromRae?keyWord=";
 
     GetDictionary();
     GetPhrase();

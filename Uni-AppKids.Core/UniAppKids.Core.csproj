@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityModels\GameList.cs" />
+    <Compile Include="EntityModels\GameObject.cs" />
     <Compile Include="EntityModels\Phrase.cs" />
     <Compile Include="EntityModels\PhraseDictionary.cs" />
     <Compile Include="EntityModels\Word.cs" />

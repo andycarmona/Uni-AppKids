@@ -2,11 +2,11 @@
 
 var EditPageController = function ($scope, $http, $window, userService) {
 
-    var urlPhrase = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/AddPhrase?dictionaryId=1&listOfWords=";
-    var urlPhraseList = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/GetAllPhrasesInDictionary?";
-    var urlWordList = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/GetAllWordsInDictionary";
-    var urlDictionary = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/GetDictionary?dictionaryId=1";
-    var urlDeletePhrase = "http://dnndev.me/DesktopModules/DataExchange/API/WordHandler/DeletePhrase?";
+    var urlPhrase = "/DesktopModules/DataExchange/API/WordHandler/AddPhrase?dictionaryId=1&listOfWords=";
+    var urlPhraseList = "/DesktopModules/DataExchange/API/WordHandler/GetAllPhrasesInDictionary?";
+    var urlWordList = "/DesktopModules/DataExchange/API/WordHandler/GetAllWordsInDictionary";
+    var urlDictionary = "/DesktopModules/DataExchange/API/WordHandler/GetDictionary?dictionaryId=1";
+    var urlDeletePhrase = "/DesktopModules/DataExchange/API/WordHandler/DeletePhrase?";
 
 
   
@@ -73,7 +73,7 @@ var EditPageController = function ($scope, $http, $window, userService) {
     }
 
     $scope.GetImageList = function (keyWord) {
-        var url = "http://dnndev.me/DesktopModules/DataExchange/API/RemoteService/GetListOfImageUrl?wordToSearch=";
+        var url = "/DesktopModules/DataExchange/API/RemoteService/GetListOfImageUrl?wordToSearch=";
         userService.GetRequest(url + keyWord).success(function (request) {
             applyRemoteDataToImageList(request);
         }).error(function (request) {

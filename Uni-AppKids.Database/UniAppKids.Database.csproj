@@ -55,7 +55,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntityFramework\DNNUniAppContext.cs" />
     <Compile Include="EntityFramework\UniAppKidsDbContext.cs" />
     <Compile Include="Migrations\201411280728032_NewAttributesToWordModel.cs" />
     <Compile Include="Migrations\201411280728032_NewAttributesToWordModel.Designer.cs">
@@ -64,6 +63,18 @@
     <Compile Include="Migrations\201411280753179_UpdatUsernAmeInfo.cs" />
     <Compile Include="Migrations\201411280753179_UpdatUsernAmeInfo.Designer.cs">
       <DependentUpon>201411280753179_UpdatUsernAmeInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201501021545257_AddGameObjectTable.cs" />
+    <Compile Include="Migrations\201501021545257_AddGameObjectTable.Designer.cs">
+      <DependentUpon>201501021545257_AddGameObjectTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201501021713445_AddGameListTable.cs" />
+    <Compile Include="Migrations\201501021713445_AddGameListTable.Designer.cs">
+      <DependentUpon>201501021713445_AddGameListTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201501030521183_DifficultyLevelAttribute.cs" />
+    <Compile Include="Migrations\201501030521183_DifficultyLevelAttribute.Designer.cs">
+      <DependentUpon>201501030521183_DifficultyLevelAttribute.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,6 +99,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201411280753179_UpdatUsernAmeInfo.resx">
       <DependentUpon>201411280753179_UpdatUsernAmeInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501021545257_AddGameObjectTable.resx">
+      <DependentUpon>201501021545257_AddGameObjectTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501021713445_AddGameListTable.resx">
+      <DependentUpon>201501021713445_AddGameListTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501030521183_DifficultyLevelAttribute.resx">
+      <DependentUpon>201501030521183_DifficultyLevelAttribute.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

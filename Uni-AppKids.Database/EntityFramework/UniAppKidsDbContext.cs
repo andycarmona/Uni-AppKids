@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="LearnSchoolDbContext.cs" company="Uni-app">
+// <copyright file="UniAppKidsDbContext.cs" company="Uni-app">
 //   -
 // </copyright>
 // <summary>
@@ -32,6 +32,8 @@ namespace Uni_AppKids.Database.EntityFramework
             modelBuilder.Entity<Word>().ToTable("Words");
             modelBuilder.Entity<Phrase>().ToTable("Phrases");
             modelBuilder.Entity<PhraseDictionary>().ToTable("PhraseDictionary");
+            modelBuilder.Entity<GameObject>().ToTable("GameObject");
+            modelBuilder.Entity<GameList>().ToTable("GameList");
         }
     }
 }

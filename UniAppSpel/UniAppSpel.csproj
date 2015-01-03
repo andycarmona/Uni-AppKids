@@ -309,6 +309,7 @@
     <Content Include="Scripts\angular\angular-animate.min.js.map" />
     <Content Include="Scripts\angular\angular.min.js.map" />
     <None Include="Properties\PublishProfiles\uni-app.pubxml" />
+    <None Include="Properties\PublishProfiles\uniappSpel.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-custom-0.8.0.min.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-custom-tpls-0.8.0.min.js" />
@@ -318,7 +319,6 @@
     <Content Include="Scripts\AudioRecorder\js\main.js" />
     <Content Include="Scripts\AudioRecorder\js\recorderjs\recorder.js" />
     <Content Include="Scripts\AudioRecorder\js\recorderjs\recorderWorker.js" />
-    <Content Include="Scripts\Controllers\Controllers.js" />
     <Content Include="Scripts\Controllers\EditPageController.js" />
     <Content Include="Scripts\Controllers\LandingPageController.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
@@ -1116,7 +1116,15 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>7274</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://uniapp.dev/Uni-app</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://uniapp.dev/Uni-app</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>
