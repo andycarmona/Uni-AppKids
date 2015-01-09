@@ -25,7 +25,7 @@ namespace Uni_AppKids.Database.Repositories
             context = uniAppKidsDbContext;
         }
 
-        public List<Phrase> GetPhrasesInDictionary(int dictionaryId,int totalPages)
+        public List<Phrase> GetPhrasesInDictionary(int dictionaryId, int totalPages)
         {
             var listOfPhrases = context.Phrases.Where(x => x.AssignedDictionaryId == dictionaryId).Take(totalPages).ToList();
 

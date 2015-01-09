@@ -16,13 +16,11 @@ namespace Uni_AppKids.Application.Services
             GetMappedEntities();
         }
 
-        public List<PhraseDto> GetListOfPhrase(int dictionaryId,int totalPages)
+        public List<PhraseDto> GetListOfPhrase(int dictionaryId, int totalPages)
         {
-
-            List<Phrase> listOfPhrases = unitOfWork.GetPhraseRepository().GetPhrasesInDictionary(dictionaryId,totalPages);
+            var listOfPhrases = unitOfWork.GetPhraseRepository().GetPhrasesInDictionary(dictionaryId,totalPages);
             var mappedListOfWords = Mapper.Map<List<Phrase>, List<PhraseDto>>(listOfPhrases);
             return mappedListOfWords;
-
         }
 
         public void DeletePhrase(int phraseId)
@@ -43,7 +41,6 @@ namespace Uni_AppKids.Application.Services
             Mapper.CreateMap<PhraseDto, Phrase>();
             Mapper.CreateMap<Phrase, PhraseDto>();
             Mapper.CreateMap<Word, WordDto>();
-
         }
     }
 }

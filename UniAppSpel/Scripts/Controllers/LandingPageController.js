@@ -3,7 +3,7 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
 
 
 
-    $scope.dictionaryName = "";
+    $scope.dictionaryName = "Spanish";
     $scope.actualWord="";
     $scope.Phrases = [];
     $scope.wordsInPhrases = [];
@@ -15,17 +15,7 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
     $scope.WikiContent = "";
     $scope.image = "";
 
-    var urlDictionary = "/DesktopModules/DataExchange/API/WordHandler/GetDictionary?dictionaryId=1";
-
-    var urlPhrase = "/DesktopModules/DataExchange/API/WordHandler/GetWordsList?dictionaryId=1&indexOfPhraseList=0&totalPages=10";
-
-    var urlCheckFileExist = "/DesktopModules/DataExchange/API/RemoteService/CheckIfFileExists?path=";
-
-    var urlWikiContent = "/DesktopModules/DataExchange/API/RemoteService/GetWordDescriptionFromWiki?keyWord=";
-
-    var urlRaeContent = "/DesktopModules/DataExchange/API/RemoteService/GetWordDescriptionFromRae?keyWord=";
-
-    GetDictionary();
+   
     GetPhrase();
 
     $scope.getErrorMessagStatus = function () {
@@ -38,29 +28,17 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
         return status;
     }
 
-
-    function GetDictionary() {
-        userService.GetRequest(urlDictionary).success(function (request) {
-            applyRemoteDataToDictionary(request);
-        }).error(function (request) {
-            $scope.error = "An internal error has ocurred. " + request;
-        });
-    }
-
     function GetPhrase() {
+        var urlPhrase = "/DesktopModules/DataExchange/API/WordHandler/GetWordsList?dictionaryId=1&indexOfPhraseList=0&totalPages=10";
         userService.GetRequest(urlPhrase).success(function (request) {
             applyRemoteDataToPhrase(request);
         }).error(function (request) {
             $scope.error = "An internal error has ocurred. " + request;
         });
-
-    }
-
-    function applyRemoteDataToDictionary(request) {
-        $scope.dictionaries = request.DictionaryName;
     }
 
     $scope.RenderWikiContent = function () {
+        var urlWikiContent = "/DesktopModules/DataExchange/API/RemoteService/GetWordDescriptionFromWiki?keyWord=";
         userService.GetRequest(urlWikiContent + $scope.actualWord).success(function (request) {
             applyRemoteWikiContent(request);
         }).error(function (request) {
@@ -69,6 +47,7 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
     }
 
     $scope.RenderRaeContent = function () {
+        var urlRaeContent = "/DesktopModules/DataExchange/API/RemoteService/GetWordDescriptionFromRae?keyWord=";
         userService.GetRequest(urlRaeContent + $scope.actualWord).success(function (request) {
             applyRemoteRaeContent(request);
         }).error(function (request) {
@@ -81,8 +60,8 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
     function applyRemoteRaeContent(request) {
         $scope.RaeWordResult = $sce.trustAsResourceUrl(request);
     }
+
     function applyRemoteWikiContent(request) {
-       
         $scope.WikiContent =  $sce.trustAsHtml(request);
     }
  
@@ -113,7 +92,7 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
     }
 
     $scope.CheckFileExist = function (keyWord) {
-        //alert(keyWord);
+        var urlCheckFileExist = "/DesktopModules/DataExchange/API/RemoteService/CheckIfFileExists?path=";
         userService.GetRequest(urlCheckFileExist+"/Uploads/"+keyWord+"RecordSound.wav")
             .success(function (request) {
             return request;

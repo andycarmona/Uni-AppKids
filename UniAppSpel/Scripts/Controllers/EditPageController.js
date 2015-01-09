@@ -2,7 +2,7 @@
 
 var EditPageController = function ($scope, $http, $window, userService) {
 
-    var urlPhrase = "/DesktopModules/DataExchange/API/WordHandler/AddPhrase?dictionaryId=1&listOfWords=";
+   
     var urlPhraseList = "/DesktopModules/DataExchange/API/WordHandler/GetAllPhrasesInDictionary?";
     var urlWordList = "/DesktopModules/DataExchange/API/WordHandler/GetAllWordsInDictionary";
     var urlDictionary = "/DesktopModules/DataExchange/API/WordHandler/GetDictionary?dictionaryId=1";
@@ -108,7 +108,7 @@ var EditPageController = function ($scope, $http, $window, userService) {
     $scope.SetSoundFile = function (keyWord) {
        
         var iterator = 0;
-        angular.forEach($scope.words, function (word, index) {
+        angular.forEach($scope.words, function (word) {
             if (word["WordName"] === keyWord) {
                 $scope.words[iterator].SoundFile = keyWord + "RecordSound.wav";
             }
@@ -121,7 +121,7 @@ var EditPageController = function ($scope, $http, $window, userService) {
     $scope.chooseImage = function (imageUrl, keyWord) {
 
         var iterator = 0;
-        angular.forEach($scope.words, function (word, index) {
+        angular.forEach($scope.words, function (word) {
             if (word["WordName"] === keyWord) {
                 $scope.words[iterator].Image = imageUrl;
             }
@@ -166,7 +166,8 @@ var EditPageController = function ($scope, $http, $window, userService) {
     $scope.processForm = function () {
        
        var wordsJsonFormat = JSON.stringify($scope.words, null, '');
-   
+       var urlPhrase = "/DesktopModules/DataExchange/API/WordHandler/AddPhrase?dictionaryId=1&listOfWords=";
+
         userService.PostRequest(urlPhrase + wordsJsonFormat).success(function (request) {
             for (var i = 0; i < request.length; i++) {
 

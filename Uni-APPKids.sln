@@ -24,6 +24,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniAppKids.DNNControllers.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniAppKids.Database.Test", "UniAppKids.Database.Test\UniAppKids.Database.Test.csproj", "{F4E24270-A8FD-4202-AF43-F4CF008283FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniAppKids.Xml", "UniAppKids.Xml\UniAppKids.Xml.csproj", "{8D7C9E12-910B-49E6-A432-0D98301B289E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniAppKids.Xml.Test", "UniAppKids.Xml.Test\UniAppKids.Xml.Test.csproj", "{AF2CC22C-BD7E-4125-A7A5-3BF4AAD12829}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +62,14 @@ Global
 		{F4E24270-A8FD-4202-AF43-F4CF008283FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4E24270-A8FD-4202-AF43-F4CF008283FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4E24270-A8FD-4202-AF43-F4CF008283FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D7C9E12-910B-49E6-A432-0D98301B289E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D7C9E12-910B-49E6-A432-0D98301B289E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D7C9E12-910B-49E6-A432-0D98301B289E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D7C9E12-910B-49E6-A432-0D98301B289E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF2CC22C-BD7E-4125-A7A5-3BF4AAD12829}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF2CC22C-BD7E-4125-A7A5-3BF4AAD12829}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF2CC22C-BD7E-4125-A7A5-3BF4AAD12829}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF2CC22C-BD7E-4125-A7A5-3BF4AAD12829}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

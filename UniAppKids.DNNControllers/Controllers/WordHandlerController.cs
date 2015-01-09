@@ -38,6 +38,7 @@ namespace UniAppKids.DNNControllers.Controllers
         [AcceptVerbs("POST")]
         public async Task<HttpResponseMessage> AddPhrase(string listOfWords, int dictionaryId)
         {
+           
             var errorMessage = new StringBuilder(string.Empty);
             var listOfNotAcceptedWords = new List<string>();
             const string Delimiter = " ";

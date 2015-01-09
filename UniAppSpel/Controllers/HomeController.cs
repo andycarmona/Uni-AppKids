@@ -1,17 +1,12 @@
 ﻿namespace UniAppSpel.Controllers
 {
-    using System.Collections.Generic;
-    using System.Drawing;
     using System.Web.Mvc;
 
-    using Google.API.Search;
-
+    [OutputCache(Duration = 30, VaryByParam = "none")]
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
-          
-
             return View();
         }
         public ActionResult Edit()

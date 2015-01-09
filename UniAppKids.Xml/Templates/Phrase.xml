@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?> 
+<Phrases>
+    <Phrase>
+      <PhraseId></PhraseId>
+      <PhraseText></PhraseText>
+      <WordsIds>1,2,3</WordsIds>
+      <AssignedDictionary>1</AssignedDictionary>
+    </Phrase>
+  </Phrases>

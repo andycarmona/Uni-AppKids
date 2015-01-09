@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Phrases>
+  <Phrase>
+    <PhraseId>1</PhraseId>
+    <PhraseText>Una casa bonita</PhraseText>
+    <WordsIds>1,2,3</WordsIds>
+    <AssignedDictionary>1</AssignedDictionary>
+  </Phrase>
+  <Phrase>
+    <PhraseId>2</PhraseId>
+    <PhraseText>Otra casa</PhraseText>
+  </Phrase>
+</Phrases>
