@@ -11,13 +11,11 @@ namespace Uni_AppKids.Database.Repositories
 {
     using System;
     using System.Collections.Generic;
-    using System.Data;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
     using System.Linq.Expressions;
 
-    using Uni_AppKids.Core.EntityModels;
     using Uni_AppKids.Database.EntityFramework;
 
     public class GenericRepository<TEntity> where TEntity : class
@@ -40,7 +38,7 @@ namespace Uni_AppKids.Database.Repositories
         public virtual bool Compare<TEntity>(TEntity object1, TEntity object2)
         {
             // Get the type of the object
-            Type type = typeof(TEntity);
+            var type = typeof(TEntity);
 
             // return false if any of the object is false
             if (object1 == null || object2 == null)
@@ -113,7 +111,6 @@ namespace Uni_AppKids.Database.Repositories
         public virtual void Insert(TEntity entity)
         {
             dbSet.Add(entity);
-         
         }
 
         public virtual void Delete(object id)
@@ -128,13 +125,13 @@ namespace Uni_AppKids.Database.Repositories
             {
                 dbSet.Attach(entityToDelete);
             }
+
             dbSet.Remove(entityToDelete);
         }
 
         public virtual void Update(TEntity entityToUpdate)
         {
             dbSet.AddOrUpdate(entityToUpdate);
-      
         }
 
         public virtual IEnumerable<TEntity> GetAllData()

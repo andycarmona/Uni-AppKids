@@ -7,10 +7,11 @@
     <ProjectGuid>{8D7C9E12-910B-49E6-A432-0D98301B289E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UniAppKids.Xml</RootNamespace>
+    <RootNamespace>Uni_AppKids.Xml</RootNamespace>
     <AssemblyName>UniAppKids.Xml</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

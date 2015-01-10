@@ -16,6 +16,16 @@ namespace Uni_AppKids.Application.Services
             GetMappedEntities();
         }
 
+        public void SetSqlPhraseRepository()
+        {
+            unitOfWork.SetSqlPhraseRepository();
+        }
+
+        public void SetXmlPhraseRepository()
+        {
+            unitOfWork.SetXmlPhraseRepository();
+        }
+
         public List<PhraseDto> GetListOfPhrase(int dictionaryId, int totalPages)
         {
             var listOfPhrases = unitOfWork.GetPhraseRepository().GetPhrasesInDictionary(dictionaryId,totalPages);

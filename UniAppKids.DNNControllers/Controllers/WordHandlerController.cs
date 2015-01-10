@@ -32,7 +32,7 @@ namespace UniAppKids.DNNControllers.Controllers
         private readonly DictionaryService aDictionaryService = new DictionaryService();
 
         private readonly WordService aWordService = new WordService();
-        private readonly PhraseService aPhraseService = new PhraseService();
+        private readonly PhraseService aGenericPhraseService = new PhraseService();
 
         [DnnAuthorize]
         [AcceptVerbs("POST")]
@@ -93,7 +93,7 @@ namespace UniAppKids.DNNControllers.Controllers
                     UserName = DotNetNuke.Entities.Users.UserController.GetCurrentUserInfo().Username
                 };
 
-                this.aPhraseService.InsertPhrase(aPhrase);
+                this.aGenericPhraseService.InsertPhrase(aPhrase);
                 return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, wordList);
             }
             catch (DuplicateKeyException)
@@ -149,7 +149,7 @@ namespace UniAppKids.DNNControllers.Controllers
         {
             try
             {
-                aPhraseService.DeletePhrase(phraseId);
+                aGenericPhraseService.DeletePhrase(phraseId);
 
                 return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK);
             }
@@ -165,7 +165,9 @@ namespace UniAppKids.DNNControllers.Controllers
         [AcceptVerbs("GET")]
         public HttpResponseMessage GetAllPhrasesInDictionary(int dictionaryId, int totalPages)
         {
-            var phraseList = this.aPhraseService.GetListOfPhrase(dictionaryId, totalPages);
+            var aPhraseService = new PhraseService();
+            aPhraseService.SetSqlPhraseRepository();
+            var phraseList = aPhraseService.GetListOfPhrase(dictionaryId, totalPages);
 
             if (!phraseList.Any())
             {
@@ -181,10 +183,12 @@ namespace UniAppKids.DNNControllers.Controllers
         [AcceptVerbs("GET")]
         public HttpResponseMessage GetWordsList(int dictionaryId, int indexOfPhraseList, int totalPages)
         {
+            var aPhraseService = new PhraseService();
             string errorMessage;
             try
             {
-                var listOfPhrase = this.aPhraseService.GetListOfPhrase(dictionaryId, totalPages);
+                aPhraseService.SetXmlPhraseRepository();
+                var listOfPhrase = aPhraseService.GetListOfPhrase(dictionaryId, totalPages);
                 foreach (var aPhrase in listOfPhrase)
                 {
                     var wordsId = aPhrase.WordsIds;

@@ -11,8 +11,10 @@ namespace Uni_AppKids.Application.Services
 {
     using System;
 
+    using Uni_AppKids.Xml.Repositories;
     using Uni_AppKids.Application.Interface;
     using Uni_AppKids.Core.EntityModels;
+    using Uni_AppKids.Core.Interface;
     using Uni_AppKids.Database.Repositories;
 
     using Uni_AppKids.Database.EntityFramework;
@@ -31,7 +33,7 @@ namespace Uni_AppKids.Application.Services
 
         private WordRepository customWordRepository;
 
-        private PhraseRepository phraseRepository;
+        private IPhraseRepository phraseRepository;
 
 
         private bool disposed = false;
@@ -47,6 +49,15 @@ namespace Uni_AppKids.Application.Services
             GC.SuppressFinalize(this);
         }
 
+        public void SetXmlPhraseRepository()
+        {
+            phraseRepository = new XmlPhraseRepository();
+        }
+
+        public void SetSqlPhraseRepository()
+        {
+            phraseRepository = new PhraseRepository(this.context);
+        }
 
         public PhraseDictionaryRepository GetCustomPhraseDictionaryRepository()
         {
@@ -59,9 +70,9 @@ namespace Uni_AppKids.Application.Services
             return this.customWordRepository ?? (this.customWordRepository = new WordRepository(this.context));
         }
 
-        public PhraseRepository GetPhraseRepository()
+        public IPhraseRepository GetPhraseRepository()
         {
-            return this.phraseRepository ?? (this.phraseRepository = new PhraseRepository(this.context));
+            return this.phraseRepository;
         }
 
         public GenericRepository<Phrase> GetGenericPhraseRepository()

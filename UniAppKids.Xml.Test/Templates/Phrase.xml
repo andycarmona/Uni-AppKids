@@ -4,10 +4,14 @@
     <PhraseId>1</PhraseId>
     <PhraseText>Una casa bonita</PhraseText>
     <WordsIds>1,2,3</WordsIds>
+    <CreationTime>2014-12-19 08:58:04.457</CreationTime>
     <AssignedDictionary>1</AssignedDictionary>
   </Phrase>
   <Phrase>
     <PhraseId>2</PhraseId>
     <PhraseText>Otra casa</PhraseText>
+    <WordsIds>1,2,3</WordsIds>
+    <CreationTime>2014-12-19 08:58:04.457</CreationTime>
+    <AssignedDictionary>1</AssignedDictionary>
   </Phrase>
 </Phrases>

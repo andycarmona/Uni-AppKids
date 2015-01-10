@@ -6,9 +6,8 @@ namespace UniAppKids.Xml.Test
     using System.Collections.Generic;
     using System.Xml.Linq;
 
-    using UniAppKids.Xml.Repositories;
-
     using Uni_AppKids.Core.EntityModels;
+    using Uni_AppKids.Xml.Repositories;
 
     [TestClass]
     public class RepositoryTest
@@ -17,7 +16,7 @@ namespace UniAppKids.Xml.Test
         public void Test_Get_All_Phrases()
         {
             var aXMLRepository = new XmlPhraseRepository();
-            var aListOfPhrases = aXMLRepository.GetAllPhrases(@"../../Templates/Phrase.xml");
+            var aListOfPhrases = aXMLRepository.GetAllPhrases();
             if (aListOfPhrases != null)
             {
                 Assert.AreEqual("Una casa bonita", aListOfPhrases[0].PhraseText);
@@ -36,8 +35,27 @@ namespace UniAppKids.Xml.Test
                                         WordsIds = "1,2,3",
                                         AssignedDictionaryId = 1
                                     };
-            aXMLRepository.AddNewPhrase(aNewPhrase, @"../../Templates/Phrase.xml");
+            aXMLRepository.AddNewPhrase(aNewPhrase);
           
+        }
+        [TestMethod]
+        public void Test_Get_All_Phrases_Repository_Right_Values()
+        {
+            var aXMLRepository = new XmlPhraseRepository();
+
+            var aListOfPhrases = aXMLRepository.GetPhrasesInDictionary(1, 10);
+            if (aListOfPhrases != null)
+            {
+                Assert.AreEqual("Una casa bonita", aListOfPhrases[0].PhraseText);
+          
+            }
+            aListOfPhrases=aXMLRepository.GetPhrasesInDictionary(2, 10);
+
+            if (aListOfPhrases != null)
+            {
+            
+                Assert.AreEqual("Otra casa", aListOfPhrases[0].PhraseText);
+            }
         }
     }
 }
