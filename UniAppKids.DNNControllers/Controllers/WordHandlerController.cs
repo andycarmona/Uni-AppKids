@@ -123,7 +123,7 @@ namespace UniAppKids.DNNControllers.Controllers
         }
 
         [DnnAuthorize]
-        [System.Web.Http.AcceptVerbs("GET")]
+        [AcceptVerbs("GET")]
         public HttpResponseMessage GetAllWordsInDictionary()
         {
             var wordList = this.aWordService.GetAllWords();
@@ -187,7 +187,7 @@ namespace UniAppKids.DNNControllers.Controllers
             string errorMessage;
             try
             {
-                aPhraseService.SetXmlPhraseRepository();
+                aPhraseService.SetSqlPhraseRepository();
                 var listOfPhrase = aPhraseService.GetListOfPhrase(dictionaryId, totalPages);
                 foreach (var aPhrase in listOfPhrase)
                 {

@@ -12,13 +12,12 @@
                 <accordion-group ng-show="wordsInList" class="btn" heading="(Show/Hide)">
                     <label>Click on a word to add it to your custom sentence.</label>
                     <table class="tableDict">
-                        <thead><tr><th class="dictTblName">Name</th><th class="dictTblDescription">Description</th><th class="dictTbLImg">Image</th><th class="dictTblSound">Sound</th></tr></thead>
+                        <thead><tr><th class="dictTblName">Name</th><th class="dictTbLImg">Image</th><th class="dictTblSound">Sound</th></tr></thead>
                         <tbody>
                             <tr ng-repeat="words in words_in_dictionary | orderBy:'WordName':false">
                                 <td class="dictTblName" ng-click="addWordFromDictionary(words.WordName)"><p>{{words.WordName}}</p></td>
-                                <td class="dictTblDescription" ng-click="addWordFromDictionary(words.WordName)"><p>{{words.WordDescription || "No description."}}</p></td>
                                 <td class="dictTbLImg" ng-click="addWordFromDictionary(words.WordName)"><div class="dictionaryImg"><p ng-show="!words.Image">No image.</p><img ng-show="words.Image" alt="{{words.WordName}}" ng-src="{{words.Image}}" /></div></td>
-                                <td class="dictTblSound" ng-click="addWordFromDictionary(words.WordName)"><p>{{words.SoundFile || "No sound."}}</p></td>
+                                <td class="dictTblSound" ng-click="addWordFromDictionary(words.WordName)"><img ng-hide="words.SoundFile==null" src="~/Images/sound.png" alt="Play sound" /></td>
                             </tr>
                         </tbody>
                     </table>

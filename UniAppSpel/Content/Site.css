@@ -455,6 +455,7 @@ input[type="checkbox"].input-validation-error {
 /*Buttons*/
 button.primaryButton,
 a.primaryButton {
+    width: 40%;
     display: inline-block;
     padding: 12px 20px;
     margin-bottom: 5px;
@@ -1216,20 +1217,18 @@ tr {
     }
 
 
-.dictTblDescription {
-    width: 40%;
-}
+
 
 .dictTblName {
-    width: 18%;
+    width: 20%;
 }
 
 .dictTbLImg {
-    width: 9%;
+    width: 60%;
 }
 
 .dictTblSound {
-    width: 18%;
+    width: 20%;
 }
 
 .tableDict .dictTblPhraseDescription {

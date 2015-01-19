@@ -199,7 +199,19 @@ var EditPageController = function ($scope, $http, $window, userService) {
         }
 
     };
+    $scope.PlaySound = function (keyword) {
 
+        if ($scope.soundObject != null) {
+            document.body.removeChild($scope.soundObject);
+            $scope.soundObject.removed = true;
+            $scope.soundObject = null;
+        }
+        $scope.soundObject = document.createElement("embed");
+        $scope.soundObject.setAttribute("src", "/Uploads/" + keyword + "RecordSound.wav");
+        $scope.soundObject.setAttribute("hidden", true);
+        $scope.soundObject.setAttribute("autostart", true);
+        document.body.appendChild($scope.soundObject);
+    }
 
 
     $scope.addWordFromDictionary = function (aWord) {
