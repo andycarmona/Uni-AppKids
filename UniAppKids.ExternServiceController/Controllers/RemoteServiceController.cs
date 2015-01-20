@@ -9,14 +9,18 @@
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Http;
+    using System.Web.Http.Cors;
+
     using Helpers;
 
     using Uni_AppKids.Application.Dto;
 
+    [EnableCors(origins: "http://uniappspel.azurewebsites.net", headers: "*", methods: "*")]
+    [RoutePrefix("api/ExternalDataController")]
     public class RemoteServiceController : ApiController
     {
-
         [AcceptVerbs("GET")]
+        [Route("CheckIfFileExists")]
         public HttpResponseMessage CheckIfFileExists(string path)
         {
             try
@@ -33,8 +37,8 @@
             }
         }
 
-        [AllowAnonymous]
         [AcceptVerbs("GET")]
+        [Route("GetWordDescriptionFromWiki")]
         public HttpResponseMessage GetWordDescriptionFromWiki(string keyWord)
         {
             try
@@ -63,8 +67,8 @@
             }
         }
 
-        [AllowAnonymous]
         [AcceptVerbs("GET")]
+        [Route("GetWordDescriptionFromRae")]
         public HttpResponseMessage GetWordDescriptionFromRae(string keyWord)
         {
             try
@@ -81,8 +85,8 @@
             }
         }
 
-
         [AcceptVerbs("GET")]
+        [Route("GetListOfImageUrl")]
         public async Task<HttpResponseMessage> GetListOfImageUrl(string wordToSearch)
         {
             try
@@ -100,8 +104,8 @@
             }
         }
 
-      
         [AcceptVerbs("POST")]
+        [Route("PostSoundFileAsync")]
         public async Task<List<string>> PostSoundFileAsync()
         {
             if (this.Request.Content.IsMimeMultipartContent())

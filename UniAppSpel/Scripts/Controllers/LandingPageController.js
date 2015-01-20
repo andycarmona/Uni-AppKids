@@ -29,7 +29,7 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
     }
 
     function GetPhrase() {
-        var urlPhrase = "/DesktopModules/DataExchange/API/WordHandler/GetWordsList?dictionaryId=1&indexOfPhraseList=0&totalPages=10";
+        var urlPhrase = "http://uniappexternalservice.azurewebsites.net/api/WordHandler/GetWordsList?dictionaryId=1&indexOfPhraseList=0&totalPages=10";
         userService.GetRequest(urlPhrase).success(function (request) {
             applyRemoteDataToPhrase(request);
         }).error(function (request) {
@@ -38,7 +38,7 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
     }
 
     $scope.RenderWikiContent = function () {
-        var urlWikiContent = "/DesktopModules/DataExchange/API/RemoteService/GetWordDescriptionFromWiki?keyWord=";
+        var urlWikiContent = "http://uniappexternalservice.azurewebsites.net/api/ExternalDataController/GetWordDescriptionFromWiki?keyWord=";
         userService.GetRequest(urlWikiContent + $scope.actualWord).success(function (request) {
             applyRemoteWikiContent(request);
         }).error(function (request) {
@@ -47,7 +47,7 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
     }
 
     $scope.RenderRaeContent = function () {
-        var urlRaeContent = "/DesktopModules/DataExchange/API/RemoteService/GetWordDescriptionFromRae?keyWord=";
+        var urlRaeContent = "http://uniappexternalservice.azurewebsites.net/api/ExternalDataController/GetWordDescriptionFromRae?keyWord=";
         userService.GetRequest(urlRaeContent + $scope.actualWord).success(function (request) {
             applyRemoteRaeContent(request);
         }).error(function (request) {
@@ -92,7 +92,7 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
     }
 
     $scope.CheckFileExist = function (keyWord) {
-        var urlCheckFileExist = "/DesktopModules/DataExchange/API/RemoteService/CheckIfFileExists?path=";
+        var urlCheckFileExist = "http://uniappexternalservice.azurewebsites.net/api/ExternalDataController/CheckIfFileExists?path=";
         userService.GetRequest(urlCheckFileExist+"/Uploads/"+keyWord+"RecordSound.wav")
             .success(function (request) {
             return request;

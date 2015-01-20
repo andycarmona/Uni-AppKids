@@ -1,6 +1,7 @@
 ﻿namespace UniAppSpel.Controllers
 {
     using System.Web.Mvc;
+    using Helpers;
 
     [OutputCache(Duration = 30, VaryByParam = "none")]
     public class HomeController : Controller
@@ -9,10 +10,24 @@
         {
             return View();
         }
+
         public ActionResult Edit()
         {
-        
+            var configHandler = new ConfigSettingsHandler();
+            ViewBag.urlWorldHandler = configHandler.ReadSetting("WordServiceUrl");
             return View();
+        }
+
+        public JsonResult GetWordServiceUrl()
+        {
+            var configHandler = new ConfigSettingsHandler();
+            return this.Json(configHandler.ReadSetting("WordServiceUrl"), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetExternalWordServiceUrl()
+        {
+            var configHandler = new ConfigSettingsHandler();
+            return this.Json(configHandler.ReadSetting("ExternalServiceUrl"), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -30,6 +45,6 @@
         {
             return this.View();
         }
-        
+
     }
 }

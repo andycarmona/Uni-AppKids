@@ -20,11 +20,14 @@ namespace UniAppKids.DNNControllers.Controllers
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Http;
+    using System.Web.Http.Cors;
 
     using UniAppKids.DNNControllers.Helpers;
     using Uni_AppKids.Application.Dto;
     using Uni_AppKids.Application.Services;
 
+     [EnableCors(origins: "http://uniappspel.azurewebsites.net", headers: "*", methods: "*")]
+    [RoutePrefix("api/WordHandler")]
     public class WordHandlerController : ApiController
     {
         private readonly DictionaryService aDictionaryService = new DictionaryService();
@@ -32,8 +35,8 @@ namespace UniAppKids.DNNControllers.Controllers
         private readonly WordService aWordService = new WordService();
         private readonly PhraseService aGenericPhraseService = new PhraseService();
 
-   
         [AcceptVerbs("POST")]
+        [Route("AddPhrase")]
         public async Task<HttpResponseMessage> AddPhrase(string listOfWords, int dictionaryId)
         {
            
@@ -48,7 +51,7 @@ namespace UniAppKids.DNNControllers.Controllers
             }
 
             var language = this.aDictionaryService.GetADictionary(dictionaryId).DictionaryName;
-            List<WordDto> wordList = (List<WordDto>)Newtonsoft.Json.JsonConvert.DeserializeObject(listOfWords);
+            var wordList = (List<WordDto>)Newtonsoft.Json.JsonConvert.DeserializeObject(listOfWords);
             var verifiedWordList = WordFilterTool.GetListWithValidWordName(wordList);
             verifiedWordList.Select(c =>
             {
@@ -121,6 +124,7 @@ namespace UniAppKids.DNNControllers.Controllers
         }
 
         [AcceptVerbs("GET")]
+        [Route("GetAllWordsInDictionary")]
         public HttpResponseMessage GetAllWordsInDictionary()
         {
             var wordList = this.aWordService.GetAllWords();
@@ -140,8 +144,8 @@ namespace UniAppKids.DNNControllers.Controllers
             return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, wordList);
         }
 
-
         [AcceptVerbs("GET")]
+        [Route("DeletePhrase")]
         public HttpResponseMessage DeletePhrase(int phraseId)
         {
             try
@@ -158,8 +162,8 @@ namespace UniAppKids.DNNControllers.Controllers
             }
         }
 
-
         [AcceptVerbs("GET")]
+        [Route("GetAllPhrasesInDictionary")]
         public HttpResponseMessage GetAllPhrasesInDictionary(int dictionaryId, int totalPages)
         {
             var aPhraseService = new PhraseService();
@@ -176,8 +180,8 @@ namespace UniAppKids.DNNControllers.Controllers
             return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, phraseList);
         }
 
-        [AllowAnonymous]
         [AcceptVerbs("GET")]
+        [Route("GetWordsList")]
         public HttpResponseMessage GetWordsList(int dictionaryId, int indexOfPhraseList, int totalPages)
         {
             var aPhraseService = new PhraseService();
@@ -210,8 +214,8 @@ namespace UniAppKids.DNNControllers.Controllers
                       errorMessage);
         }
 
-        [AllowAnonymous]
         [AcceptVerbs("GET")]
+        [Route("GetDictionary")]
         public HttpResponseMessage GetDictionary(int dictionaryId)
         {
             var actualDictionary = this.aDictionaryService.GetADictionary(dictionaryId);
