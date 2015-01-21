@@ -15,7 +15,7 @@
 
     using Uni_AppKids.Application.Dto;
 
-    [EnableCors(origins: "http://uniappspel.azurewebsites.net", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/ExternalDataController")]
     public class RemoteServiceController : ApiController
     {

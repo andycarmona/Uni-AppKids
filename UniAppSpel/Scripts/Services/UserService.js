@@ -7,6 +7,7 @@
     this.GetRequest = function (aUrl) {
         var request = $http({
             method: "get",
+            cache:true,
             url: aUrl
         });
         return (request);

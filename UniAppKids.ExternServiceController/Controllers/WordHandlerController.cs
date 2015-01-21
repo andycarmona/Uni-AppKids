@@ -26,7 +26,7 @@ namespace UniAppKids.DNNControllers.Controllers
     using Uni_AppKids.Application.Dto;
     using Uni_AppKids.Application.Services;
 
-     [EnableCors(origins: "http://uniappspel.azurewebsites.net", headers: "*", methods: "*")]
+     [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/WordHandler")]
     public class WordHandlerController : ApiController
     {

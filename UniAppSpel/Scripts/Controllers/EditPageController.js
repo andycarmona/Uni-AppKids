@@ -3,10 +3,10 @@
 var EditPageController = function ($scope, $http, $window, userService) {
 
    
-    var urlPhraseList = "/DesktopModules/DataExchange/API/WordHandler/GetAllPhrasesInDictionary?";
-    var urlWordList = "/DesktopModules/DataExchange/API/WordHandler/GetAllWordsInDictionary";
-    var urlDictionary = "/DesktopModules/DataExchange/API/WordHandler/GetDictionary?dictionaryId=1";
-    var urlDeletePhrase = "/DesktopModules/DataExchange/API/WordHandler/DeletePhrase?";
+    var urlPhraseList = "http://uniappexternalservice.azurewebsites.net/api/WordHandler/GetAllPhrasesInDictionary?";
+    var urlWordList = "http://uniappexternalservice.azurewebsites.net/api/WordHandler/GetAllWordsInDictionary";
+    var urlDictionary = "http://uniappexternalservice.azurewebsites.net/api/WordHandler/GetDictionary?dictionaryId=1";
+    var urlDeletePhrase = "http://uniappexternalservice.azurewebsites.net/api/WordHandler/DeletePhrase?";
 
 
   
@@ -73,7 +73,7 @@ var EditPageController = function ($scope, $http, $window, userService) {
     }
 
     $scope.GetImageList = function (keyWord) {
-        var url = "/DesktopModules/DataExchange/API/RemoteService/GetListOfImageUrl?wordToSearch=";
+        var url = "http://uniappexternalservice.azurewebsites.net/api/ExternalDataController/GetListOfImageUrl?wordToSearch=";
         userService.GetRequest(url + keyWord).success(function (request) {
             applyRemoteDataToImageList(request);
         }).error(function (request) {

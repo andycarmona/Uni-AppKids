@@ -2,7 +2,7 @@
 var LandingPageController = function ($scope, $http, $window, $sce, userService) {
 
 
-
+   
     $scope.dictionaryName = "Spanish";
     $scope.actualWord="";
     $scope.Phrases = [];
@@ -15,9 +15,23 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
     $scope.WikiContent = "";
     $scope.image = "";
 
+    ServiceInit();
    
-    GetPhrase();
 
+    function ServiceInit() {
+        userService.GetRequest("/Home/GetServiceUrl").success(function(request) {
+            $scope.urlWordService = request[1];
+            $scope.urlExternalService = request[0];
+            if ($scope.urlWordService !== undefined) {
+                console.log($scope.urlWordService);
+                GetPhrase();
+            }
+        }).error(function(request) {
+            $scope.error = "An internal error has ocurred. " + request;
+        });
+        
+    }
+   
     $scope.getErrorMessagStatus = function () {
         var status = false;
         if ($scope.error != null) {
@@ -29,7 +43,8 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
     }
 
     function GetPhrase() {
-        var urlPhrase = "http://uniappexternalservice.azurewebsites.net/api/WordHandler/GetWordsList?dictionaryId=1&indexOfPhraseList=0&totalPages=10";
+        var urlPhrase = $scope.urlWordService + "GetWordsList?dictionaryId=1&indexOfPhraseList=0&totalPages=10";
+        console.log(urlPhrase);
         userService.GetRequest(urlPhrase).success(function (request) {
             applyRemoteDataToPhrase(request);
         }).error(function (request) {
@@ -38,7 +53,7 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
     }
 
     $scope.RenderWikiContent = function () {
-        var urlWikiContent = "http://uniappexternalservice.azurewebsites.net/api/ExternalDataController/GetWordDescriptionFromWiki?keyWord=";
+        var urlWikiContent = $scope.urlExternalService+"GetWordDescriptionFromWiki?keyWord=";
         userService.GetRequest(urlWikiContent + $scope.actualWord).success(function (request) {
             applyRemoteWikiContent(request);
         }).error(function (request) {
@@ -47,7 +62,7 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
     }
 
     $scope.RenderRaeContent = function () {
-        var urlRaeContent = "http://uniappexternalservice.azurewebsites.net/api/ExternalDataController/GetWordDescriptionFromRae?keyWord=";
+        var urlRaeContent = $scope.urlExternalService+"GetWordDescriptionFromRae?keyWord=";
         userService.GetRequest(urlRaeContent + $scope.actualWord).success(function (request) {
             applyRemoteRaeContent(request);
         }).error(function (request) {
@@ -70,6 +85,7 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
        
         $scope.Phrases = request;
         $scope.wordsInPhrases = request[$scope.actualPhraseIndex].ListOfWords;
+        console.log($scope.Phrases[0]);
         updateNavButtonVisibility();
     }
 
@@ -92,7 +108,7 @@ var LandingPageController = function ($scope, $http, $window, $sce, userService)
     }
 
     $scope.CheckFileExist = function (keyWord) {
-        var urlCheckFileExist = "http://uniappexternalservice.azurewebsites.net/api/ExternalDataController/CheckIfFileExists?path=";
+        var urlCheckFileExist = $scope.urlExternalService+"CheckIfFileExists?path=";
         userService.GetRequest(urlCheckFileExist+"/Uploads/"+keyWord+"RecordSound.wav")
             .success(function (request) {
             return request;

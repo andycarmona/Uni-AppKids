@@ -1,5 +1,6 @@
 ﻿namespace UniAppSpel.Controllers
 {
+    using System.Collections.Generic;
     using System.Web.Mvc;
     using Helpers;
 
@@ -13,21 +14,18 @@
 
         public ActionResult Edit()
         {
-            var configHandler = new ConfigSettingsHandler();
-            ViewBag.urlWorldHandler = configHandler.ReadSetting("WordServiceUrl");
             return View();
         }
 
-        public JsonResult GetWordServiceUrl()
+        public JsonResult GetServiceUrl()
         {
             var configHandler = new ConfigSettingsHandler();
-            return this.Json(configHandler.ReadSetting("WordServiceUrl"), JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult GetExternalWordServiceUrl()
-        {
-            var configHandler = new ConfigSettingsHandler();
-            return this.Json(configHandler.ReadSetting("ExternalServiceUrl"), JsonRequestBehavior.AllowGet);
+            var urlList = new List<string>
+                              {
+                                  configHandler.ReadSetting("ExternalServiceUrl"),
+                                  configHandler.ReadSetting("WordServiceUrl")
+                              };
+            return this.Json(urlList, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

@@ -13,11 +13,8 @@
                     <a ng-hide="sound==null" ng-click="PlaySound(actualWord)"> <img src="~/Images/sound.png" /></a>
                 </div>
                 <div class="preview">
-
-
-                    <img src="{{image}}">
+                    <img src="{{image}}" alt="preview">
                 </div>
-
             </div>
         </div>
     </div>
@@ -27,7 +24,6 @@
         </div>
     </div>
     <div class="wordProperty">
-
         <nav>
             <ul class="pager">
                 <li><a ng-show="navLeft" ng-click="moveIndex(-1)">Previous</a></li>
