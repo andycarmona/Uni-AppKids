@@ -30,16 +30,17 @@
             {
                 foreach (var aProperty in result)
                 {
-                    if (!string.IsNullOrEmpty(aProperty.SelectToken("tbUrl").ToString()))
+                    if (string.IsNullOrEmpty(aProperty.SelectToken("tbUrl").ToString()))
                     {
-                        var aWord = new WordDto
-                                        {
-                                            CreationTime = DateTime.Now,
-                                            WordName = keyWord,
-                                            Image = aProperty.SelectToken("tbUrl").ToString()
-                                        };
-                        listUrl.Add(aWord);
+                        continue;
                     }
+                    var aWord = new WordDto
+                                    {
+                                        CreationTime = DateTime.Now,
+                                        WordName = keyWord,
+                                        Image = aProperty.SelectToken("tbUrl").ToString()
+                                    };
+                    listUrl.Add(aWord);
                 }
                
                 return listUrl;

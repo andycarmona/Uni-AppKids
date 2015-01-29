@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace UniAppKids.DNNControllers.Controllers
+namespace UniAppKids.ExternServiceController.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -22,16 +22,19 @@ namespace UniAppKids.DNNControllers.Controllers
     using System.Web.Http;
     using System.Web.Http.Cors;
 
+    using Newtonsoft.Json.Linq;
+
     using UniAppKids.DNNControllers.Helpers;
+    using UniAppKids.ExternServiceController.Helpers;
+
     using Uni_AppKids.Application.Dto;
     using Uni_AppKids.Application.Services;
 
-     [EnableCors(origins: "*", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/WordHandler")]
     public class WordHandlerController : ApiController
     {
         private readonly DictionaryService aDictionaryService = new DictionaryService();
-
         private readonly WordService aWordService = new WordService();
         private readonly PhraseService aGenericPhraseService = new PhraseService();
 
@@ -39,10 +42,10 @@ namespace UniAppKids.DNNControllers.Controllers
         [Route("AddPhrase")]
         public async Task<HttpResponseMessage> AddPhrase(string listOfWords, int dictionaryId)
         {
-           
             var errorMessage = new StringBuilder(string.Empty);
             var listOfNotAcceptedWords = new List<string>();
             const string Delimiter = " ";
+
             if (listOfWords.Length == 0)
             {
                 return this.ControllerContext.Request.CreateResponse(
@@ -51,14 +54,9 @@ namespace UniAppKids.DNNControllers.Controllers
             }
 
             var language = this.aDictionaryService.GetADictionary(dictionaryId).DictionaryName;
-            var wordList = (List<WordDto>)Newtonsoft.Json.JsonConvert.DeserializeObject(listOfWords);
-            var verifiedWordList = WordFilterTool.GetListWithValidWordName(wordList);
-            verifiedWordList.Select(c =>
-            {
-                c.CreationTime = DateTime.Now;
-                c.WordDescription = string.IsNullOrEmpty(c.WordDescription) ? "No description" : c.WordDescription;
-                return c;
-            }).ToList();
+            var wordList = (JArray)Newtonsoft.Json.JsonConvert.DeserializeObject(listOfWords, typeof(List<WordDto>));
+            var deserializeWordList = wordList.ToObject<List<WordDto>>();
+            var verifiedWordList = WordFilterTool.GetListWithValidWordName(deserializeWordList);
 
             try
             {
@@ -70,10 +68,7 @@ namespace UniAppKids.DNNControllers.Controllers
                     pathToDictionary,
                     out listOfNotAcceptedWords);
 
-                foreach (var aWord in listNoRepeatedElements)
-                {
-                    aWord.Image = CheckUrlIsAValidImage(aWord);
-                }
+                WordFilterTool.AddExtraInformationWordList(listNoRepeatedElements);
 
                 await this.aWordService.BulkInsertOfWords(listNoRepeatedElements);
 
@@ -82,18 +77,7 @@ namespace UniAppKids.DNNControllers.Controllers
                     return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK);
                 }
 
-                var sentence = verifiedWordList.Select(i => i.WordName).Aggregate((i, j) => i + Delimiter + j);
-                var listOfWordsId = await this.aWordService.GetIdOfWords(verifiedWordList);
-
-                var aPhrase = new PhraseDto
-                {
-                    PhraseText = sentence,
-                    CreationTime = DateTime.Now,
-                    WordsIds = string.Join(",", listOfWordsId),
-                    AssignedDictionaryId = dictionaryId,
-                    UserName = "Anonymous"
-                };
-
+                var aPhrase = this.PreparePhraseToAdd(dictionaryId, verifiedWordList, Delimiter);
                 this.aGenericPhraseService.InsertPhrase(aPhrase);
                 return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, wordList);
             }
@@ -106,7 +90,7 @@ namespace UniAppKids.DNNControllers.Controllers
             }
             catch (FormatException)
             {
-                foreach (var aWord in wordList)
+                foreach (var aWord in deserializeWordList)
                 {
                     foreach (var notAcceptedWord in listOfNotAcceptedWords)
                     {
@@ -138,7 +122,7 @@ namespace UniAppKids.DNNControllers.Controllers
 
             foreach (var aWord in wordList)
             {
-                aWord.Image = CheckUrlIsAValidImage(aWord);
+                aWord.Image = WordFilterTool.CheckUrlIsAValidImageInWord(aWord);
             }
 
             return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, wordList);
@@ -150,7 +134,7 @@ namespace UniAppKids.DNNControllers.Controllers
         {
             try
             {
-                aGenericPhraseService.DeletePhrase(phraseId);
+                this.aGenericPhraseService.DeletePhrase(phraseId);
 
                 return this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK);
             }
@@ -231,22 +215,21 @@ namespace UniAppKids.DNNControllers.Controllers
                 "Couldn't find any dictionary.");
         }
 
-        private static string CheckUrlIsAValidImage(WordDto aWord)
+        private PhraseDto PreparePhraseToAdd(int dictionaryId, List<WordDto> verifiedWordList, string delimiter)
         {
-            using (var wc = new WebClient())
-            {
-                try
-                {
-                    wc.DownloadData(aWord.Image);
-                }
-                catch (Exception)
-                {
-                    aWord.Image =
-                        "http://t1.gstatic.com/images?q=tbn:ANd9GcRI4C4XDT85bAGvjFK2x6BF5J12CxqFFWVz0JuLiJKSFySzdxD9kBGBl1pL";
-                }
-            }
+            var sentence = verifiedWordList.Select(i => i.WordName).Aggregate((i, j) => i + delimiter + j);
+            var listOfWordsId = this.aWordService.GetIdOfWords(verifiedWordList);
 
-            return aWord.Image;
+            var aPhrase = new PhraseDto
+            {
+                PhraseText = sentence,
+                CreationTime = DateTime.Now,
+                WordsIds = string.Join(",", listOfWordsId),
+                AssignedDictionaryId = dictionaryId,
+                UserName = "Anonymous"
+            };
+            return aPhrase;
         }
+
     }
 }

@@ -21,7 +21,8 @@ namespace Uni_AppKids.Application.Services
 
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private readonly UniAppKidsDbContext context = new UniAppKidsDbContext();
+
+        private readonly UniAppKidsDbContext context;
 
         private GenericRepository<PhraseDictionary> genericPhraseDictionaryRepository;
 
@@ -35,8 +36,12 @@ namespace Uni_AppKids.Application.Services
 
         private IPhraseRepository phraseRepository;
 
-
         private bool disposed = false;
+
+        public UnitOfWork(UniAppKidsDbContext _context)
+        {
+            context = _context;
+        }
 
         public void Save()
         {

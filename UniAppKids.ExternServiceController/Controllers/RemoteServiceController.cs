@@ -1,4 +1,4 @@
-﻿namespace UniAppKids.DNNControllers.Controllers
+﻿namespace UniAppKids.ExternServiceController.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,8 @@
     using System.Web.Http;
     using System.Web.Http.Cors;
 
-    using Helpers;
+    using UniAppKids.DNNControllers.Helpers;
+    using UniAppKids.ExternServiceController.Helpers;
 
     using Uni_AppKids.Application.Dto;
 

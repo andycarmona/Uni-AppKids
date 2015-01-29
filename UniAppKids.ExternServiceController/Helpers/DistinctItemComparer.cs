@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace UniAppSpel.Helpers
+﻿namespace UniAppKids.ExternServiceController.Helpers
 {
+    using System.Collections.Generic;
+
     using Uni_AppKids.Application.Dto;
 
     class DistinctItemComparer : IEqualityComparer<WordDto>

@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniAppKids.ExternServiceCon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniAppKids.ExternalWCFService", "UniAppKids.ExternalWCFService\UniAppKids.ExternalWCFService.csproj", "{FFEA121C-62E7-4903-BA32-3579765479FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniAppKids.Application.Test", "UniAppKids.Application.Test\UniAppKids.Application.Test.csproj", "{2C788D05-F7B9-4FBE-8A60-CA370BCC8F11}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{FFEA121C-62E7-4903-BA32-3579765479FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFEA121C-62E7-4903-BA32-3579765479FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFEA121C-62E7-4903-BA32-3579765479FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C788D05-F7B9-4FBE-8A60-CA370BCC8F11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C788D05-F7B9-4FBE-8A60-CA370BCC8F11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C788D05-F7B9-4FBE-8A60-CA370BCC8F11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C788D05-F7B9-4FBE-8A60-CA370BCC8F11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

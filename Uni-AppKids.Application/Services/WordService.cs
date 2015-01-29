@@ -6,10 +6,11 @@
     using AutoMapper;
     using Uni_AppKids.Application.Dto;
     using Uni_AppKids.Core.EntityModels;
+    using Uni_AppKids.Database.EntityFramework;
 
     public class WordService
     {
-        private readonly UnitOfWork unitOfWork = new UnitOfWork();
+        private readonly UnitOfWork unitOfWork = new UnitOfWork(new UniAppKidsDbContext());
 
         public WordService()
         {

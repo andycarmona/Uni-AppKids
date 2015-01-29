@@ -6,10 +6,11 @@ namespace Uni_AppKids.Application.Services
     using AutoMapper;
     using Uni_AppKids.Application.Dto;
     using Uni_AppKids.Core.EntityModels;
+    using Uni_AppKids.Database.EntityFramework;
 
     public class PhraseService
     {
-        private readonly UnitOfWork unitOfWork = new UnitOfWork();
+        private readonly UnitOfWork unitOfWork = new UnitOfWork(new UniAppKidsDbContext());
 
         public PhraseService()
         {

@@ -1,14 +1,13 @@
-﻿namespace UniAppKids.DNNControllers.Helpers
+﻿namespace UniAppKids.ExternServiceController.Helpers
 {
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
     using System.Linq;
+    using System.Net;
     using System.Text;
     using System.Text.RegularExpressions;
-
-    using UniAppSpel.Helpers;
 
     using Uni_AppKids.Application.Dto;
 
@@ -25,8 +24,39 @@
         {
             rawWord = rawWord.ToLower();
             var specialSymbolFilter = new Regex("(?:[^a-zöäåñáéíóú]|(?<=['\"])s)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
-            var strippedWord = specialSymbolFilter.Replace(rawWord, string.Empty);
+            var strippedWord = specialSymbolFilter.Replace(rawWord, String.Empty);
             return strippedWord;
+        }
+
+        public static string CheckUrlIsAValidImageInWord(WordDto aWord)
+        {
+            using (var wc = new WebClient())
+            {
+                try
+                {
+                    wc.DownloadData(aWord.Image);
+                }
+                catch (Exception)
+                {
+                    aWord.Image =
+                        "http://t1.gstatic.com/images?q=tbn:ANd9GcRI4C4XDT85bAGvjFK2x6BF5J12CxqFFWVz0JuLiJKSFySzdxD9kBGBl1pL";
+                }
+            }
+
+            return aWord.Image;
+        }
+
+        public static void AddExtraInformationWordList(List<WordDto> verifiedWordList)
+        {
+           
+            verifiedWordList.Select(
+                aWord =>
+                    {
+                        aWord.CreationTime = DateTime.Now;
+                        aWord.WordDescription = string.IsNullOrEmpty(aWord.WordDescription) ? "No description" : aWord.WordDescription;
+                        aWord.Image = CheckUrlIsAValidImageInWord(aWord);
+                        return aWord;
+                    }).ToList();
         }
 
         public static List<WordDto> GetListWithValidWordName(List<WordDto> listToVerify)
@@ -39,12 +69,9 @@
             var normalized = rawWord.Normalize(NormalizationForm.FormD);
             var builder = new StringBuilder();
 
-            foreach (var ch in normalized)
+            foreach (var ch in normalized.Where(ch => CharUnicodeInfo.GetUnicodeCategory(ch) != UnicodeCategory.NonSpacingMark))
             {
-                if (CharUnicodeInfo.GetUnicodeCategory(ch) != UnicodeCategory.NonSpacingMark)
-                {
-                    builder.Append(ch);
-                }
+                builder.Append(ch);
             }
 
             return builder.ToString().Normalize(NormalizationForm.FormC);
@@ -52,38 +79,17 @@
 
         public static void GetWordsNotAccepted(List<WordDto> listNoRepeatedElements, string language, string pathToDictionary, out List<string> listOfNotAcceptedWords)
         {
-            listOfNotAcceptedWords = new List<string>();
-
-            foreach (var aWord in listNoRepeatedElements)
-            {
-                var strippedWord = RemoveSpecialCharacters(aWord.WordName);
-                var removedAccentWord = RemoveAccentOnVowels(strippedWord);
-                var result = CheckWordIsInDictionary(removedAccentWord, language, pathToDictionary);
-
-                if (!result)
-                {
-                    listOfNotAcceptedWords.Add(aWord.WordName);
-                }
-            }
+            listOfNotAcceptedWords = (from aWord in listNoRepeatedElements let strippedWord = RemoveSpecialCharacters(aWord.WordName) let removedAccentWord = RemoveAccentOnVowels(strippedWord) let result = CheckWordIsInDictionary(removedAccentWord, language, pathToDictionary) where !result select aWord.WordName).ToList();
 
             if (listOfNotAcceptedWords != null && listOfNotAcceptedWords.Any())
+            {
                 throw new FormatException();
-
+            }
         }
 
         public static bool CheckWordIsInDictionary(string word, string language, string path)
         {
-            foreach (var line in File.ReadLines(path, Encoding.UTF8))
-            {
-
-                var match = Regex.Match(word, @"\b" + Regex.Escape(line) + @"\b", RegexOptions.IgnoreCase);
-                if (match.Success) 
-                {
-                  return match.Success;
-                }
-            }
-
-            return false;
+            return (from line in File.ReadLines(path, Encoding.UTF8) select Regex.Match(word, @"\b" + Regex.Escape(line) + @"\b", RegexOptions.IgnoreCase) into match where match.Success select match.Success).FirstOrDefault();
         }
 
         public static List<WordDto> ListNoRepeatedElements(List<WordDto> wordList)
